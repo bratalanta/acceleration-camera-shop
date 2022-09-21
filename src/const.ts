@@ -1,5 +1,6 @@
 enum AppRoute {
-  Catalog = '/catalog'
+  Catalog = '/catalog',
+  Product = '/product/:id'
 }
 
 export {
