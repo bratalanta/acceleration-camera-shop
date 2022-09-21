@@ -1,4 +1,5 @@
 import { cameras } from '../../../../mocks';
+import ProductTabs from './product-tabs/product-tabs';
 
 function ProductDetails() {
   const product = cameras[0];
@@ -10,12 +11,7 @@ function ProductDetails() {
     previewImgWebp2x,
     rating,
     reviewCount,
-    category,
-    description,
-    level,
     price,
-    vendorCode,
-    type
   } = product;
 
   return (
@@ -61,35 +57,7 @@ function ProductDetails() {
                 <use xlinkHref="#icon-add-basket" />
               </svg>Добавить в корзину
             </button>
-            <div className="tabs product__tabs">
-              <div className="tabs__controls product__tabs-controls">
-                <button className="tabs__control is-active" type="button">Характеристики</button>
-                <button className="tabs__control" type="button">Описание</button>
-              </div>
-              <div className="tabs__content">
-                <div className="tabs__element">
-                  <ul className="product__tabs-list">
-                    <li className="item-list"><span className="item-list__title">Артикул:</span>
-                      <p className="item-list__text"> {vendorCode}</p>
-                    </li>
-                    <li className="item-list"><span className="item-list__title">Категория:</span>
-                      <p className="item-list__text">{category}</p>
-                    </li>
-                    <li className="item-list"><span className="item-list__title">Тип камеры:</span>
-                      <p className="item-list__text">{type}</p>
-                    </li>
-                    <li className="item-list"><span className="item-list__title">Уровень:</span>
-                      <p className="item-list__text">{level}</p>
-                    </li>
-                  </ul>
-                </div>
-                <div className="tabs__element is-active">
-                  <div className="product__tabs-text">
-                    <p>{description}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ProductTabs product={product}/>
           </div>
         </div>
       </section>

@@ -1,4 +1,4 @@
-export type Camera = {
+export type TCamera = {
   id: number;
   name: string;
   vendorCode: string;

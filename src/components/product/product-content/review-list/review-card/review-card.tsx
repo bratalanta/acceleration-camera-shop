@@ -1,8 +1,8 @@
-import { Review } from '../../../../../types/review';
+import { TReview } from '../../../../../types/review';
 import { humanizeDate } from '../../../../../utils/date';
 
 type ReviewProps = {
-  review: Review
+  review: TReview
 }
 
 function ReviewCard({review}: ReviewProps) {

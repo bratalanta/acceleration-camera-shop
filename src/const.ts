@@ -1,4 +1,4 @@
-enum AppRoute {
+const enum AppRoute {
   Catalog = '/catalog',
   Product = '/product/:id'
 }

@@ -1,7 +1,7 @@
-import { Camera } from './types/camera';
-import { Review } from './types/review';
+import { TCamera } from './types/camera';
+import { TReview } from './types/review';
 
-const cameras: Camera[] = [
+const cameras: TCamera[] = [
   {
     id: 1,
     name: 'Ретрокамера Dus Auge lV',
@@ -53,7 +53,7 @@ const cameras: Camera[] = [
 
 ];
 
-const reviews: Review[] = [
+const reviews: TReview[] = [
   {
     id: '2ab4a018-2e53-4f7c-abc7-7f8682093e9a5',
     userName: 'vf',
