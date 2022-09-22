@@ -1,4 +1,4 @@
-export type TReview = {
+type TReview = {
   id: string;
   userName: string;
   advantage: string;
@@ -7,4 +7,18 @@ export type TReview = {
   rating: number;
   createAt: string;
   cameraId: number;
+};
+
+type TReviewPost = {
+  cameraId: 1,
+  userName: 'Кирилл',
+  advantage: 'Легкая в плане веса, удобная в интерфейсе',
+  disadvantage: 'Быстро садиться зарядка',
+  review: 'Это моя первая камера. Я в восторге, нареканий нет',
+  rating: 4,
+}
+
+export type {
+  TReview,
+  TReviewPost
 };

@@ -1,6 +1,19 @@
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../../../hooks';
+import { fetchSimilarCamerasAction } from '../../../../store/api-actions/cameras-api';
+import { selectSimilarCameras } from '../../../../store/slices/cameras-slice/selectors';
 import ProductCardList from '../../../product-card-list/product-card-list';
 
 function SimilarProducts() {
+  const {id} = useParams();
+  const dispatch = useAppDispatch();
+  const similarCameras = useAppSelector(selectSimilarCameras);
+
+  useEffect(() => {
+    dispatch(fetchSimilarCamerasAction(Number(id)));
+  }, [id]);
+
   return (
     <div className="page-content__section">
       <section className="product-similar">
@@ -8,7 +21,7 @@ function SimilarProducts() {
           <h2 className="title title--h3">Похожие товары</h2>
           <div className="product-similar__slider">
             <div className="product-similar__slider-list">
-              <ProductCardList />
+              <ProductCardList cameras={similarCameras}/>
             </div>
             <button className="slider-controls slider-controls--prev" type="button" aria-label="Предыдущий слайд" disabled>
               <svg width={7} height={12} aria-hidden="true">

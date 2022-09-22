@@ -1,3 +1,6 @@
+import { useAppSelector } from '../../hooks';
+import { selectCamera } from '../../store/slices/cameras-slice/selectors';
+
 type CatalogBreadcrumbsProps = {
   isCatalog: boolean;
   isProduct?: never;
@@ -11,6 +14,7 @@ type ProductBreadcrumbsProps = {
 type BreadcrumbsProps = CatalogBreadcrumbsProps | ProductBreadcrumbsProps;
 
 function Breadcrumbs({isCatalog, isProduct}: BreadcrumbsProps) {
+  const {name} = useAppSelector(selectCamera);
 
   return (
     <div className="breadcrumbs">
@@ -44,7 +48,7 @@ function Breadcrumbs({isCatalog, isProduct}: BreadcrumbsProps) {
                 </li>
                 <li className="breadcrumbs__item">
                   <span className="breadcrumbs__link breadcrumbs__link--active">
-                          нэйм
+                    {name}
                   </span>
                 </li>
               </>

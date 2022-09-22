@@ -3,8 +3,12 @@ import Banner from '../../components/catalog/banner/banner';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import ProductCardList from '../../components/product-card-list/product-card-list';
+import { useAppSelector } from '../../hooks';
+import { selectCameras } from '../../store/slices/cameras-slice/selectors';
 
 function Catalog() {
+  const cameras = useAppSelector(selectCameras);
+
   return (
     <div className="wrapper">
       <Header />
@@ -131,7 +135,7 @@ function Catalog() {
                     </form>
                   </div>
                   <div className="cards catalog__cards">
-                    <ProductCardList />
+                    <ProductCardList cameras={cameras}/>
                   </div>
                   <div className="pagination">
                     <ul className="pagination__list">

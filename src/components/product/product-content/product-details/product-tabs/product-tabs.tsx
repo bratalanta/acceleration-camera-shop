@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import cn from 'classnames';
 import { TCamera } from '../../../../../types/camera';
+import browserHistory from '../../../../../browser-history';
 
-const enum ProductTab {
-  Features = 'features',
-  Description = 'description'
+const enum Hash {
+  Features = '#features',
+  Description = '#description'
 }
 
 type ProductTabsProps = {
@@ -12,7 +13,12 @@ type ProductTabsProps = {
 }
 
 function ProductTabs({product}: ProductTabsProps) {
-  const [currentTab, setCurrentTab] = useState(ProductTab.Description);
+  const [currentHash, setCurrentHash] = useState(browserHistory.location.hash || Hash.Description);
+
+  useLayoutEffect(() => {
+    browserHistory.push(currentHash);
+  }, [currentHash]);
+
 
   const {
     vendorCode,
@@ -26,13 +32,13 @@ function ProductTabs({product}: ProductTabsProps) {
     Element: cn(
       'tabs__element',
       {
-        'is-active': currentTab === ProductTab.Features
+        'is-active': currentHash === Hash.Features
       }
     ),
     Control: cn(
       'tabs__control',
       {
-        'is-active': currentTab === ProductTab.Features
+        'is-active': currentHash === Hash.Features
       }
     ),
   } as const;
@@ -41,31 +47,31 @@ function ProductTabs({product}: ProductTabsProps) {
     Element: cn(
       'tabs__element',
       {
-        'is-active': currentTab === ProductTab.Description
+        'is-active': currentHash === Hash.Description
       }
     ),
     Control: cn(
       'tabs__control',
       {
-        'is-active': currentTab === ProductTab.Description
+        'is-active': currentHash === Hash.Description
       }
     ),
   } as const;
 
   return (
     <div className="tabs product__tabs">
-      <div className="tabs__controls product__tabs-controls" onClick={(evt) => console.log(evt.target)}>
+      <div className="tabs__controls product__tabs-controls">
         <button
           className={FeatureTabCn.Control}
           type="button"
-          onClick={() => console.log(1)}
+          onClick={() => setCurrentHash(Hash.Features)}
         >
           Характеристики
         </button>
         <button
           className={DescriptionTabCn.Control}
           type="button"
-          onChange={() => setCurrentTab(ProductTab.Description)}
+          onClick={() => setCurrentHash(Hash.Description)}
         >
           Описание
         </button>
