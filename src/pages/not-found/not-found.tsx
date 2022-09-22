@@ -6,7 +6,7 @@ function NotFound(): JSX.Element {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <h1 className={styles.code}>404</h1>
+        <div className={styles.code}>404</div>
         <div className={styles.text}>Упс, что-то пошло не так</div>
         <Link
           className={styles.toCatalog}
