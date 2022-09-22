@@ -1,6 +1,7 @@
 import { Route, Routes, BrowserRouter, Navigate} from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Catalog from '../../pages/catalog/catalog';
+import NotFound from '../../pages/not-found/not-found';
 import Product from '../../pages/product/product';
 
 function App() {
@@ -18,6 +19,10 @@ function App() {
         <Route
           path={AppRoute.Product}
           element={<Product />}
+        />
+        <Route
+          path={AppRoute.NotFound}
+          element={<NotFound />}
         />
       </Routes>
     </BrowserRouter>

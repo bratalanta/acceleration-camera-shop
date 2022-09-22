@@ -1,3 +1,4 @@
+import { MAX_RATING } from '../../../../../const';
 import { TReview } from '../../../../../types/review';
 import { humanizeDate } from '../../../../../utils/date';
 
@@ -24,9 +25,9 @@ function ReviewCard({review}: ReviewProps) {
         </time>
       </div>
       <div className="rate review-card__rate">
-        {Array.from({length: rating}, (_, k) => (
+        {Array.from({length: MAX_RATING}, (_, k) => (
           <svg width={17} height={16} aria-hidden="true" key={k}>
-            <use xlinkHref="#icon-full-star" />
+            <use xlinkHref={`#icon${k <= rating ? '-full' : ''}-star`} />
           </svg>
         ))}
         <p className="visually-hidden">Оценка: {rating}</p>

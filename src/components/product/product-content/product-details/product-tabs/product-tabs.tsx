@@ -25,22 +25,30 @@ function ProductTabs({product}: ProductTabsProps) {
   const FeatureTabCn = {
     Element: cn(
       'tabs__element',
-      currentTab === ProductTab.Features && 'is-active'
+      {
+        'is-active': currentTab === ProductTab.Features
+      }
     ),
     Control: cn(
       'tabs__control',
-      currentTab === ProductTab.Features && 'is-active'
+      {
+        'is-active': currentTab === ProductTab.Features
+      }
     ),
   } as const;
 
   const DescriptionTabCn = {
     Element: cn(
       'tabs__element',
-      currentTab === ProductTab.Description && 'is-active'
+      {
+        'is-active': currentTab === ProductTab.Description
+      }
     ),
     Control: cn(
       'tabs__control',
-      currentTab === ProductTab.Description && 'is-active'
+      {
+        'is-active': currentTab === ProductTab.Description
+      }
     ),
   } as const;
 

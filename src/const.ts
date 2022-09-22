@@ -1,8 +1,12 @@
 const enum AppRoute {
   Catalog = '/catalog',
-  Product = '/product/:id'
+  Product = '/product/:id',
+  NotFound = '*'
 }
 
+const MAX_RATING = 5;
+
 export {
-  AppRoute
+  AppRoute,
+  MAX_RATING
 };
