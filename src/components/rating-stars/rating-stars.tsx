@@ -1,4 +1,4 @@
-import { MAX_RATING } from '../../const';
+const MAX_RATING = 5;
 
 type RatingStarsProps = {
   rating: number;

@@ -12,7 +12,7 @@ function SimilarProducts() {
 
   useEffect(() => {
     dispatch(fetchSimilarCamerasAction(Number(id)));
-  }, [id]);
+  }, [dispatch, id]);
 
   return (
     <div className="page-content__section">

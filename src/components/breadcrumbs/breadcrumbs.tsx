@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { selectCamera } from '../../store/slices/cameras-slice/selectors';
 
@@ -21,11 +23,11 @@ function Breadcrumbs({isCatalog, isProduct}: BreadcrumbsProps) {
       <div className="container">
         <ul className="breadcrumbs__list">
           <li className="breadcrumbs__item">
-            <a className="breadcrumbs__link" href="index.html">Главная
+            <Link className="breadcrumbs__link" to={AppRoute.Catalog}>Главная
               <svg width={5} height={8} aria-hidden="true">
                 <use xlinkHref="#icon-arrow-mini" />
               </svg>
-            </a>
+            </Link>
           </li>
           {
             isCatalog &&
@@ -39,12 +41,12 @@ function Breadcrumbs({isCatalog, isProduct}: BreadcrumbsProps) {
             isProduct &&
               <>
                 <li className="breadcrumbs__item">
-                  <a className="breadcrumbs__link" href="catalog.html">
+                  <Link className="breadcrumbs__link" to={AppRoute.Catalog}>
                 Каталог
                     <svg width={5} height={8} aria-hidden="true">
                       <use xlinkHref="#icon-arrow-mini" />
                     </svg>
-                  </a>
+                  </Link>
                 </li>
                 <li className="breadcrumbs__item">
                   <span className="breadcrumbs__link breadcrumbs__link--active">

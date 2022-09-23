@@ -1,4 +1,4 @@
-export type TCamera = {
+type TCamera = {
   id: number;
   name: string;
   vendorCode: string;
@@ -13,4 +13,14 @@ export type TCamera = {
   previewImgWebp: string;
   previewImgWebp2x: string;
   reviewCount: number;
+};
+
+type TFetchCamerasActionPayload = {
+  limit: number;
+  page: number;
+}
+
+export type {
+  TFetchCamerasActionPayload,
+  TCamera
 };

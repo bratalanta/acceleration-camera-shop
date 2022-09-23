@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { TCamera } from '../../../../../types/camera';
 import browserHistory from '../../../../../browser-history';
@@ -15,7 +15,7 @@ type ProductTabsProps = {
 function ProductTabs({product}: ProductTabsProps) {
   const [currentHash, setCurrentHash] = useState(browserHistory.location.hash || Hash.Description);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     browserHistory.push(currentHash);
   }, [currentHash]);
 

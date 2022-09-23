@@ -3,6 +3,8 @@ import { LoadingStatus, NameSpace } from '../../../const';
 import { State } from '../../../types/state';
 
 const selectCameras = (state: State) => state[NameSpace.Cameras].cameras;
+const selectCamerasTotalCount = (state: State) => state[NameSpace.Cameras].camerasTotalCount;
+
 
 const selectCamera = (state: State) => state[NameSpace.Cameras].camera;
 const selectCameraLoadingStatus = (state: State) => state[NameSpace.Cameras].cameraLoadingStatus;
@@ -25,5 +27,6 @@ export {
   selectCamera,
   selectCameras,
   selectSimilarCameras,
-  cameraLoadingStatusSelector
+  cameraLoadingStatusSelector,
+  selectCamerasTotalCount
 };

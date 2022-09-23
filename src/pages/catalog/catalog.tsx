@@ -1,13 +1,34 @@
+import { useEffect, useState } from 'react';
+import browserHistory from '../../browser-history';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Banner from '../../components/catalog/banner/banner';
+import Pagination from '../../components/catalog/pagination/pagination';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import ProductCardList from '../../components/product-card-list/product-card-list';
-import { useAppSelector } from '../../hooks';
+import { MAX_CAMERAS_COUNT_PER_PAGE } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchCamerasAction } from '../../store/api-actions/cameras-api';
 import { selectCameras } from '../../store/slices/cameras-slice/selectors';
 
 function Catalog() {
   const cameras = useAppSelector(selectCameras);
+  const dispatch = useAppDispatch();
+
+  const [currentPage, setCurrentPage] = useState(
+    Number(browserHistory.location.search.at(-1)) || 1
+  );
+
+  useEffect(() => {
+    browserHistory.push(`?_page=${currentPage}`);
+  }, [currentPage]);
+
+  useEffect(() => {
+    dispatch(fetchCamerasAction({
+      limit: MAX_CAMERAS_COUNT_PER_PAGE,
+      page: currentPage
+    }));
+  }, [currentPage, dispatch]);
 
   return (
     <div className="wrapper">
@@ -137,18 +158,10 @@ function Catalog() {
                   <div className="cards catalog__cards">
                     <ProductCardList cameras={cameras}/>
                   </div>
-                  <div className="pagination">
-                    <ul className="pagination__list">
-                      <li className="pagination__item"><a className="pagination__link pagination__link--active">1</a>
-                      </li>
-                      <li className="pagination__item"><a className="pagination__link">2</a>
-                      </li>
-                      <li className="pagination__item"><a className="pagination__link">3</a>
-                      </li>
-                      <li className="pagination__item"><a className="pagination__link pagination__link--text">Далее</a>
-                      </li>
-                    </ul>
-                  </div>
+                  <Pagination
+                    currentPage={currentPage}
+                    onPaginationItemClick={(page) => setCurrentPage(page)}
+                  />
                 </div>
               </div>
             </div>

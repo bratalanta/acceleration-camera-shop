@@ -7,8 +7,9 @@ type TInitialState = {
   cameras: TCamera[];
   camera: TCamera;
   similarCameras: TCamera[];
-  camerasLoadingStatus: LoadingStatus
-  cameraLoadingStatus: LoadingStatus
+  camerasLoadingStatus: LoadingStatus;
+  cameraLoadingStatus: LoadingStatus;
+  camerasTotalCount: number;
 }
 
 const initialState: TInitialState = {
@@ -16,7 +17,8 @@ const initialState: TInitialState = {
   camera: {} as TCamera,
   similarCameras: [],
   camerasLoadingStatus: LoadingStatus.Idle,
-  cameraLoadingStatus: LoadingStatus.Idle
+  cameraLoadingStatus: LoadingStatus.Idle,
+  camerasTotalCount: 0
 };
 
 const camerasSlice = createSlice({
@@ -29,7 +31,8 @@ const camerasSlice = createSlice({
         state.camerasLoadingStatus = LoadingStatus.Pending;
       })
       .addCase(fetchCamerasAction.fulfilled, (state, action) => {
-        state.cameras = action.payload;
+        state.cameras = action.payload.data;
+        state.camerasTotalCount = action.payload.headers['x-total-count'];
         state.camerasLoadingStatus = LoadingStatus.Fulfilled;
       })
       .addCase(fetchCamerasAction.rejected, (state) => {

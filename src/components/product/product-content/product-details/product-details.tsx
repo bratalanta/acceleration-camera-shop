@@ -15,14 +15,14 @@ function ProductDetails() {
 
   useEffect(() => {
     dispatch(fetchCameraAction(Number(id)));
-  }, [id]);
+  }, [dispatch, id]);
 
   const {
     name,
-    // previewImg,
-    // previewImg2x,
-    // previewImgWebp,
-    // previewImgWebp2x,
+    previewImg,
+    previewImg2x,
+    previewImgWebp,
+    previewImgWebp2x,
     rating,
     reviewCount,
     price,
@@ -38,8 +38,14 @@ function ProductDetails() {
         <div className="container">
           <div className="product__img">
             <picture>
-              <source type="image/webp" srcSet="img/content/2000-go.webp, img/content/2000-go@2x.webp 2x" />
-              <img src="img/content/2000-go.jpg" srcSet="img/content/2000-go@2x.jpg 2x" width={560} height={480} alt="Ретрокамера Das Auge IV" />
+              <source type="image/webp" srcSet={`/${previewImgWebp}, /${previewImgWebp2x} 2x`} />
+              <img
+                src={previewImg}
+                srcSet={`${previewImg2x} 2x`}
+                width={560}
+                height={480}
+                alt={name}
+              />
             </picture>
           </div>
           <div className="product__content">

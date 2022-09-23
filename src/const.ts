@@ -8,12 +8,14 @@ const enum APIRoute {
   Cameras = '/cameras',
   Reviews = '/reviews',
   Similar = '/similar',
+  Promo = '/promo'
 }
 
 const enum NameSpace {
   App = 'app',
   Cameras = 'cameras',
-  Reviews = 'reviews'
+  Reviews = 'reviews',
+  Promo = 'promo'
 }
 
 const enum LoadingStatus {
@@ -23,12 +25,12 @@ const enum LoadingStatus {
   Rejected = 'rejected'
 }
 
-const MAX_RATING = 5;
+const MAX_CAMERAS_COUNT_PER_PAGE = 9;
 
 export {
   AppRoute,
-  MAX_RATING,
   APIRoute,
   NameSpace,
-  LoadingStatus
+  LoadingStatus,
+  MAX_CAMERAS_COUNT_PER_PAGE
 };

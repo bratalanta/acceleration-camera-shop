@@ -1,4 +1,19 @@
+import { useEffect } from 'react';
+import { generatePath, Link } from 'react-router-dom';
+import { AppRoute } from '../../../const';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { fetchPromoAction } from '../../../store/api-actions/promo-api';
+import { selectPromo } from '../../../store/slices/promo-slice/selectors';
+
 function Banner() {
+  const dispatch = useAppDispatch();
+  const {name, id} = useAppSelector(selectPromo);
+
+  useEffect(() => {
+    dispatch(fetchPromoAction());
+  }, []);
+
+
   return (
     <div className="banner">
       <picture>
@@ -16,9 +31,11 @@ function Banner() {
       </picture>
       <p className="banner__info">
         <span className="banner__message">Новинка!</span>
-        <span className="title title--h1">Cannonball&nbsp;Pro&nbsp;MX&nbsp;8i</span>
+        <span className="title title--h1">{name}</span>
         <span className="banner__text">Профессиональная камера от&nbsp;известного производителя</span>
-        <a className="btn" href="#">Подробнее</a>
+        <Link className="btn" to={generatePath(AppRoute.Product, {id: String(id)})}>
+          Подробнее
+        </Link>
       </p>
     </div>
   );
