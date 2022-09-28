@@ -10,15 +10,28 @@ type TReview = {
 };
 
 type TReviewPost = {
-  cameraId: 1,
-  userName: 'Кирилл',
-  advantage: 'Легкая в плане веса, удобная в интерфейсе',
-  disadvantage: 'Быстро садиться зарядка',
-  review: 'Это моя первая камера. Я в восторге, нареканий нет',
-  rating: 4,
+  cameraId: number;
+  userName: string;
+  advantage: string;
+  disadvantage: string;
+  review: string;
+  rating: number;
+}
+
+type TFetchReviewsActionPayload = {
+  id: number;
+  limit: number;
+  page: number;
+}
+
+type TFetchReviewsActionReturnedData = {
+  data: TReview[];
+  dataTotalCount: number;
 }
 
 export type {
   TReview,
-  TReviewPost
+  TReviewPost,
+  TFetchReviewsActionPayload,
+  TFetchReviewsActionReturnedData
 };

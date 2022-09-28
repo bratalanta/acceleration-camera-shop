@@ -5,35 +5,46 @@ import { fetchReviewsAction, postReviewAction } from '../../api-actions/reviews-
 
 type TInitialState = {
   reviews: TReview[];
-  postingStatus: LoadingStatus;
+  reviewPostingStatus: LoadingStatus;
+  reviewsTotalCount: number;
 }
 
 const initialState: TInitialState = {
   reviews: [],
-  postingStatus: LoadingStatus.Idle
+  reviewPostingStatus: LoadingStatus.Idle,
+  reviewsTotalCount: 0
 };
 
 const reviewsSlice = createSlice({
   name: NameSpace.Reviews,
   initialState,
-  reducers: {},
+  reducers: {
+    clearReviews: (state) => {
+      state.reviews = [];
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchReviewsAction.fulfilled, (state, action) => {
-        state.reviews = action.payload;
+        state.reviewsTotalCount = action.payload.dataTotalCount;
+        state.reviews.push(...action.payload.data);
       })
       .addCase(postReviewAction.fulfilled, (state, action) => {
-        state.postingStatus = LoadingStatus.Fulfilled;
-        state.reviews = action.payload;
+        state.reviewPostingStatus = LoadingStatus.Fulfilled;
+        state.reviews.push(action.payload);
       })
       .addCase(postReviewAction.pending, (state) => {
-        state.postingStatus = LoadingStatus.Pending;
+        state.reviewPostingStatus = LoadingStatus.Pending;
       })
       .addCase(postReviewAction.rejected, (state) => {
-        state.postingStatus = LoadingStatus.Rejected;
+        state.reviewPostingStatus = LoadingStatus.Rejected;
       });
   }
 });
+
+export const {
+  clearReviews
+} = reviewsSlice.actions;
 
 export {
   reviewsSlice

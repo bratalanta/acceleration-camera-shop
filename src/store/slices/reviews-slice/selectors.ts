@@ -1,19 +1,22 @@
-import { NameSpace } from '../../../const';
+import { createSelector } from 'reselect';
+import { LoadingStatus, NameSpace } from '../../../const';
 import { State } from '../../../types/state';
 
-export const selectReviews = (state: State) => state[NameSpace.Reviews].reviews;
-export const selectPostingStatus = (state: State) => state[NameSpace.Reviews].postingStatus;
+const selectReviews = (state: State) => state[NameSpace.Reviews].reviews;
+const selectReviewsTotalCount = (state: State) => state[NameSpace.Reviews].reviewsTotalCount;
 
-// export const getLimitedSortedReviews = createSelector(
-//   [selectReviews],
-//   (reviews) => ({
-//     limitedSortedReviews: [...reviews].sort(sortReviewsByDate).slice(0, REVIEWS_LIMIT)
-//   }));
+const selectReviewPostingStatus = (state: State) => state[NameSpace.Reviews].reviewPostingStatus;
 
-// export const getPostingStatus = createSelector(
-//   [selectPostingStatus],
-//   (status) => ({
-//     isPostingStatusFulfilled: status === LoadingStatus.Fulfilled,
-//     isPostingStatusPending: status === LoadingStatus.Pending,
-//     isPostingStatusRejected: status === LoadingStatus.Rejected,
-//   }));
+const reviewPostingStatusSelector = createSelector([
+  selectReviewPostingStatus
+], (status) => ({
+  isReviewPostingStatusFulfilled: status === LoadingStatus.Fulfilled,
+  isReviewPostingStatusPending: status === LoadingStatus.Pending,
+  isReviewPostingStatusRejected: status === LoadingStatus.Rejected,
+}));
+
+export {
+  selectReviews,
+  selectReviewsTotalCount,
+  reviewPostingStatusSelector
+};

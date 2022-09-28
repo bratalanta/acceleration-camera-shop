@@ -32,7 +32,7 @@ const camerasSlice = createSlice({
       })
       .addCase(fetchCamerasAction.fulfilled, (state, action) => {
         state.cameras = action.payload.data;
-        state.camerasTotalCount = action.payload.headers['x-total-count'];
+        state.camerasTotalCount = action.payload.dataTotalCount;
         state.camerasLoadingStatus = LoadingStatus.Fulfilled;
       })
       .addCase(fetchCamerasAction.rejected, (state) => {

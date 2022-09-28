@@ -17,10 +17,16 @@ type TCamera = {
 
 type TFetchCamerasActionPayload = {
   limit: number;
-  page: number;
+  page: string;
+}
+
+type TFetchCamerasActionReturnedData = {
+  data: TCamera[];
+  dataTotalCount: number;
 }
 
 export type {
   TFetchCamerasActionPayload,
-  TCamera
+  TCamera,
+  TFetchCamerasActionReturnedData
 };

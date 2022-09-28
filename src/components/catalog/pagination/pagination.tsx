@@ -1,18 +1,30 @@
 import cn from 'classnames';
-import { Link } from 'react-router-dom';
-import { AppRoute, MAX_CAMERAS_COUNT_PER_PAGE } from '../../../const';
-import { useAppSelector } from '../../../hooks';
-import { selectCamerasTotalCount } from '../../../store/slices/cameras-slice/selectors';
+import { useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { AppRoute } from '../../../const';
+import usePagination from '../../../hooks/use-pagination';
 
 type PaginationProps = {
-  currentPage: number;
-  onPaginationItemClick: (page: number) => void;
+  startPage: number;
+  pagesCount: number;
 }
 
-function Pagination({currentPage, onPaginationItemClick}: PaginationProps) {
-  const camerasTotalCount = useAppSelector(selectCamerasTotalCount);
-  const pagesCount = Math.ceil(camerasTotalCount / MAX_CAMERAS_COUNT_PER_PAGE);
+function Pagination({startPage, pagesCount}: PaginationProps) {
+  const [, setSearch] = useSearchParams();
 
+  const {
+    currentPage,
+    nextPage,
+    prevPage,
+    jump,
+  } = usePagination(startPage);
+
+  useEffect(() => {
+    setSearch({page: String(currentPage)});
+  }, [currentPage]);
+
+  console.log('pagination');
+  console.log('---------');
   return (
     <div className="pagination">
       <ul className="pagination__list">
@@ -21,7 +33,7 @@ function Pagination({currentPage, onPaginationItemClick}: PaginationProps) {
           <Link
             className="pagination__link pagination__link--text"
             to={AppRoute.Catalog}
-            onClick={() => onPaginationItemClick(currentPage - 1)}
+            onClick={prevPage}
           >
             Назад
           </Link>
@@ -41,7 +53,7 @@ function Pagination({currentPage, onPaginationItemClick}: PaginationProps) {
               <Link
                 className={linkCn}
                 to={AppRoute.Catalog}
-                onClick={() => onPaginationItemClick(pageNumber)}
+                onClick={() => jump(pageNumber)}
               >
                 {pageNumber}
               </Link>
@@ -54,7 +66,7 @@ function Pagination({currentPage, onPaginationItemClick}: PaginationProps) {
           <Link
             className="pagination__link pagination__link--text"
             to={AppRoute.Catalog}
-            onClick={() => onPaginationItemClick(currentPage + 1)}
+            onClick={nextPage}
           >
             Далее
           </Link>

@@ -1,5 +1,5 @@
 import { TReview } from '../../../../../types/review';
-import { humanizeDate } from '../../../../../utils/date';
+import { humanizeDate } from '../../../../../utils/utils';
 import RatingStars from '../../../../rating-stars/rating-stars';
 
 type ReviewProps = {
@@ -21,7 +21,7 @@ function ReviewCard({review}: ReviewProps) {
       <div className="review-card__head">
         <p className="title title--h4">{userName}</p>
         <time className="review-card__data" dateTime={humanizeDate(createAt, 'YYYY-MM-DD')}>
-          {humanizeDate(createAt, 'DD MMMM')}
+          {humanizeDate(createAt, 'D MMMM')}
         </time>
       </div>
       <div className="rate review-card__rate">

@@ -1,14 +1,18 @@
-import { useEffect, useState } from 'react';
-import browserHistory from '../browser-history';
+import { useState } from 'react';
 
-export default function usePagination() {
-  const [currentPage, setCurrentPage] = useState(
-    Number(browserHistory.location.search.at(-1)) || 1
-  );
+function usePagination(startPage: number) {
+  const [currentPage, setCurrentPage] = useState(startPage);
 
-  useEffect(() => {
-    browserHistory.push(`?_page=${currentPage}`);
-  }, [currentPage]);
+  const nextPage = () => setCurrentPage(currentPage + 1);
+  const prevPage = () => setCurrentPage(currentPage - 1);
+  const jump = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  return [currentPage, setCurrentPage];
+  return {
+    currentPage,
+    nextPage,
+    prevPage,
+    jump,
+  };
 }
+
+export default usePagination;

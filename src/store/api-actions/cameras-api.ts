@@ -1,10 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import { AppDispatch, State } from '../../types/state';
-import { TCamera, TFetchCamerasActionPayload } from '../../types/camera';
+import { TCamera, TFetchCamerasActionPayload, TFetchCamerasActionReturnedData } from '../../types/camera';
 import { APIRoute } from '../../const';
+import { toast } from 'react-toastify';
 
-const fetchCamerasAction = createAsyncThunk<AxiosResponse, TFetchCamerasActionPayload, {
+const fetchCamerasAction = createAsyncThunk<TFetchCamerasActionReturnedData, TFetchCamerasActionPayload, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
@@ -18,7 +19,10 @@ const fetchCamerasAction = createAsyncThunk<AxiosResponse, TFetchCamerasActionPa
       }
     });
 
-    return response;
+    return {
+      data: response.data,
+      dataTotalCount: Number(response.headers['x-total-count'])
+    };
   }
 );
 
@@ -42,9 +46,16 @@ const fetchSimilarCamerasAction = createAsyncThunk<TCamera[], number, {
 }>(
   'cameras/fetchSimilarCameras',
   async (id, {extra: api}) => {
-    const {data} = await api.get<TCamera[]>(`${APIRoute.Cameras}/${id}${APIRoute.Similar}`);
+    try {
+      const {data} = await api.get<TCamera[]>(`${APIRoute.Cameras}/${id}${APIRoute.Similar}`);
 
-    return data;
+      return data;
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        toast.warn('Не удалось загрузить похожие товары');
+      }
+      throw err;
+    }
   }
 );
 

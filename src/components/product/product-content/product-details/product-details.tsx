@@ -1,22 +1,10 @@
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../../hooks';
-import { fetchCameraAction } from '../../../../store/api-actions/cameras-api';
-import { cameraLoadingStatusSelector, selectCamera } from '../../../../store/slices/cameras-slice/selectors';
+import { useAppSelector } from '../../../../hooks';
+import { selectCamera } from '../../../../store/slices/cameras-slice/selectors';
 import RatingStars from '../../../rating-stars/rating-stars';
 import ProductTabs from './product-tabs/product-tabs';
 
 function ProductDetails() {
-  const {id} = useParams();
-  const dispatch = useAppDispatch();
-
   const camera = useAppSelector(selectCamera);
-  const {isCameraLoadingStatusPending} = useAppSelector(cameraLoadingStatusSelector);
-
-  useEffect(() => {
-    dispatch(fetchCameraAction(Number(id)));
-  }, [dispatch, id]);
-
   const {
     name,
     previewImg,
@@ -27,10 +15,6 @@ function ProductDetails() {
     reviewCount,
     price,
   } = camera;
-
-  if (isCameraLoadingStatusPending) {
-    return <h1>loading</h1>;
-  }
 
   return (
     <div className="page-content__section">

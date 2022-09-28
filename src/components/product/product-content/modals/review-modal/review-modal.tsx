@@ -1,0 +1,43 @@
+import cn from 'classnames';
+import useKeydown from '../../../../../hooks/use-keydown';
+import ReviewForm from './review-form/review-form';
+
+type ReviewModalProps = {
+  isModalOpened: boolean;
+  closeModal: () => void;
+}
+
+function ReviewModal({isModalOpened, closeModal}: ReviewModalProps) {
+  useKeydown('Escape', closeModal);
+
+  const modalCn = cn(
+    'modal',
+    {
+      'is-active': isModalOpened
+    }
+  );
+
+  return (
+    <div className={modalCn}>
+      <div className="modal__wrapper">
+        <div className="modal__overlay" onClick={() => closeModal()}/>
+        <div className="modal__content">
+          <p className="title title--h4">Оставить отзыв</p>
+          <ReviewForm />
+          <button
+            className="cross-btn"
+            type="button"
+            aria-label="Закрыть попап"
+            onClick={() => closeModal()}
+          >
+            <svg width={10} height={10} aria-hidden="true">
+              <use xlinkHref="#icon-close" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default ReviewModal;

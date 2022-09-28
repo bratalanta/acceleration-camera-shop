@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate, generatePath } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Catalog from '../../pages/catalog/catalog';
 import NotFound from '../../pages/not-found/not-found';
@@ -9,7 +9,11 @@ function App() {
     <Routes>
       <Route
         path='/'
-        element={<Navigate to={AppRoute.Catalog} />}
+        element={
+          <Navigate
+            to={generatePath(AppRoute.Catalog, {page: 'page_1'})}
+          />
+        }
       />
       <Route
         path={AppRoute.Catalog}

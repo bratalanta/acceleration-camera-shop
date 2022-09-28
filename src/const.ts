@@ -1,5 +1,5 @@
 const enum AppRoute {
-  Catalog = '/catalog',
+  Catalog = '/catalog/:page',
   Product = '/product/:id',
   NotFound = '*'
 }
@@ -25,12 +25,14 @@ const enum LoadingStatus {
   Rejected = 'rejected'
 }
 
-const MAX_CAMERAS_COUNT_PER_PAGE = 9;
+const MAX_PRODUCTS_COUNT_PER_PAGE = 9;
+const MAX_REVIEWS_COUNT_PER_PAGE = 3;
 
 export {
   AppRoute,
   APIRoute,
   NameSpace,
   LoadingStatus,
-  MAX_CAMERAS_COUNT_PER_PAGE
+  MAX_PRODUCTS_COUNT_PER_PAGE,
+  MAX_REVIEWS_COUNT_PER_PAGE
 };
