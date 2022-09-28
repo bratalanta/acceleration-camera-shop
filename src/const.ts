@@ -1,5 +1,5 @@
 const enum AppRoute {
-  Catalog = '/catalog/:page',
+  Catalog = '/catalog',
   Product = '/product/:id',
   NotFound = '*'
 }
