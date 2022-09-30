@@ -1,30 +1,14 @@
 import cn from 'classnames';
-import { useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { generatePath, Link } from 'react-router-dom';
 import { AppRoute } from '../../../const';
-import usePagination from '../../../hooks/use-pagination';
 
 type PaginationProps = {
-  startPage: number;
+  currentPage: number;
   pagesCount: number;
 }
 
-function Pagination({startPage, pagesCount}: PaginationProps) {
-  const [, setSearch] = useSearchParams();
-
-  const {
-    currentPage,
-    nextPage,
-    prevPage,
-    jump,
-  } = usePagination(startPage);
-
-  useEffect(() => {
-    setSearch({page: String(currentPage)});
-  }, [currentPage]);
-
-  console.log('pagination');
-  console.log('---------');
+function Pagination({currentPage, pagesCount}: PaginationProps) {
+  console.log('-----pagination-----');
   return (
     <div className="pagination">
       <ul className="pagination__list">
@@ -32,8 +16,7 @@ function Pagination({startPage, pagesCount}: PaginationProps) {
         <li className="pagination__item">
           <Link
             className="pagination__link pagination__link--text"
-            to={AppRoute.Catalog}
-            onClick={prevPage}
+            to={generatePath(AppRoute.Catalog, {pageNumber: String(currentPage - 1)})}
           >
             Назад
           </Link>
@@ -52,8 +35,7 @@ function Pagination({startPage, pagesCount}: PaginationProps) {
             <li className="pagination__item" key={k}>
               <Link
                 className={linkCn}
-                to={AppRoute.Catalog}
-                onClick={() => jump(pageNumber)}
+                to={generatePath(AppRoute.Catalog, {pageNumber: String(pageNumber)})}
               >
                 {pageNumber}
               </Link>
@@ -65,8 +47,7 @@ function Pagination({startPage, pagesCount}: PaginationProps) {
         <li className="pagination__item">
           <Link
             className="pagination__link pagination__link--text"
-            to={AppRoute.Catalog}
-            onClick={nextPage}
+            to={generatePath(AppRoute.Catalog, {pageNumber: String(currentPage + 1)})}
           >
             Далее
           </Link>

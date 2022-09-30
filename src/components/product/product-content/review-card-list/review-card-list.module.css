@@ -1,7 +1,5 @@
-.lastElement {
-  bottom: -380px;
+.intersected {
+  height: 5px;
   position: absolute;
-  height: 20px;
-  left: 50%;
-  width: 1px;
+  bottom: 0;
 }

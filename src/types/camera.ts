@@ -17,7 +17,7 @@ type TCamera = {
 
 type TFetchCamerasActionPayload = {
   limit: number;
-  page: string;
+  page: number;
 }
 
 type TFetchCamerasActionReturnedData = {

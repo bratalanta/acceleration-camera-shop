@@ -2,6 +2,7 @@ import { useAppSelector } from '../../../../hooks';
 import { selectCamera } from '../../../../store/slices/cameras-slice/selectors';
 import RatingStars from '../../../rating-stars/rating-stars';
 import ProductTabs from './product-tabs/product-tabs';
+import ReviewsTotalCount from './reviews-total-count/reviews-total-count';
 
 function ProductDetails() {
   const camera = useAppSelector(selectCamera);
@@ -37,7 +38,7 @@ function ProductDetails() {
             <div className="rate product__rate">
               <RatingStars rating={rating}/>
               <p className="visually-hidden">Рейтинг: {rating}</p>
-              <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
+              <ReviewsTotalCount reviewCount={reviewCount}/>
             </div>
             <p className="product__price"><span className="visually-hidden">Цена:</span>{price} ₽</p>
             <button className="btn btn--purple" type="button">

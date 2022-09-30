@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <footer className="footer">
+    <footer className="footer" style={{position: 'relative'}}>
       <div className="container">
         <div className="footer__info">
           <a className="footer__logo" href="index.html" aria-label="Переход на главную">

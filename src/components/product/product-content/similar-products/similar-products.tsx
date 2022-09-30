@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { TCamera } from '../../../../types/camera';
 import ProductCardList from '../../../product-card-list/product-card-list';
 
@@ -11,7 +11,7 @@ type SimilarProductsProps = {
 function SimilarProducts({products}: SimilarProductsProps) {
   const [currentSlide, setCurrentSlide] = useState(1);
 
-  const slidesCount = Math.ceil(products.length / MAX_PRODUCTS_COUNT_PER_SLIDE);
+  const slidesCount = useMemo(() => Math.ceil(products.length / MAX_PRODUCTS_COUNT_PER_SLIDE), [products]);
   const currentCameras = products.slice(
     (currentSlide - 1) * MAX_PRODUCTS_COUNT_PER_SLIDE, currentSlide * MAX_PRODUCTS_COUNT_PER_SLIDE
   );

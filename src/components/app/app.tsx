@@ -1,5 +1,5 @@
-import { Route, Routes, Navigate } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { Route, Routes, Navigate, generatePath } from 'react-router-dom';
+import { AppRoute, DEFAULT_PAGE } from '../../const';
 import Catalog from '../../pages/catalog/catalog';
 import NotFound from '../../pages/not-found/not-found';
 import Product from '../../pages/product/product';
@@ -11,7 +11,7 @@ function App() {
         path='/'
         element={
           <Navigate
-            to={AppRoute.Catalog}
+            to={generatePath(AppRoute.Catalog, {pageNumber: DEFAULT_PAGE})}
           />
         }
       />

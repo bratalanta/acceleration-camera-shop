@@ -1,24 +1,15 @@
-import { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { TCamera } from '../../../../../types/camera';
+import { useLocation } from 'react-router-dom';
 import browserHistory from '../../../../../browser-history';
-
-const enum Hash {
-  Features = '#features',
-  Description = '#description'
-}
+import { Anchor } from '../../../../../const';
 
 type ProductTabsProps = {
   product: TCamera;
 }
 
 function ProductTabs({product}: ProductTabsProps) {
-  const [currentHash, setCurrentHash] = useState(browserHistory.location.hash || Hash.Description);
-
-  useEffect(() => {
-    browserHistory.push(currentHash);
-  }, [currentHash]);
-
+  const {hash} = useLocation();
 
   const {
     vendorCode,
@@ -32,13 +23,13 @@ function ProductTabs({product}: ProductTabsProps) {
     Element: cn(
       'tabs__element',
       {
-        'is-active': currentHash === Hash.Features
+        'is-active': hash === Anchor.Features
       }
     ),
     Control: cn(
       'tabs__control',
       {
-        'is-active': currentHash === Hash.Features
+        'is-active': hash === Anchor.Features
       }
     ),
   } as const;
@@ -47,13 +38,13 @@ function ProductTabs({product}: ProductTabsProps) {
     Element: cn(
       'tabs__element',
       {
-        'is-active': currentHash === Hash.Description
+        'is-active': hash === Anchor.Description
       }
     ),
     Control: cn(
       'tabs__control',
       {
-        'is-active': currentHash === Hash.Description
+        'is-active': hash === Anchor.Description
       }
     ),
   } as const;
@@ -64,14 +55,14 @@ function ProductTabs({product}: ProductTabsProps) {
         <button
           className={FeatureTabCn.Control}
           type="button"
-          onClick={() => setCurrentHash(Hash.Features)}
+          onClick={() => browserHistory.replace({hash: Anchor.Features})}
         >
           Характеристики
         </button>
         <button
           className={DescriptionTabCn.Control}
           type="button"
-          onClick={() => setCurrentHash(Hash.Description)}
+          onClick={() => browserHistory.replace({hash: Anchor.Description})}
         >
           Описание
         </button>

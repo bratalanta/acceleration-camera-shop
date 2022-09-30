@@ -20,7 +20,7 @@ function useInfiniteScroll(reviews: TReview[], reviewsTotalCount: number, produc
   }, [productId]);
 
   useEffect(() => {
-    if (entry?.isIntersecting && currentPage !== pagesCount) {
+    if (entry?.isIntersecting) {
       setCurrentPage(currentPage + 1);
       console.log('scroll effect');
       const payload = {
@@ -47,16 +47,6 @@ function useInfiniteScroll(reviews: TReview[], reviewsTotalCount: number, produc
       setIsButtonPressed(false);
     }
   }, [isButtonPressed]);
-
-  useEffect(() => {
-    const payload = {
-      id: productId,
-      limit: MAX_REVIEWS_COUNT_PER_PAGE,
-      page: currentPage
-    };
-
-    dispatch(fetchReviewsAction(payload));
-  }, [productId]);
 
   const nextPage = () => {
     setIsButtonPressed(true);

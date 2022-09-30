@@ -1,5 +1,5 @@
 import { generatePath, Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { Anchor, AppRoute } from '../../const';
 import { TCamera } from '../../types/camera';
 import RatingStars from '../rating-stars/rating-stars';
 
@@ -41,7 +41,13 @@ function ProductCard({product}: ProductCardProps) {
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button">Купить
         </button>
-        <Link className="btn btn--transparent" to={generatePath(AppRoute.Product, {id: String(id)})}>
+        <Link
+          className="btn btn--transparent"
+          to={{
+            pathname: generatePath(AppRoute.Product, {id: String(id)}),
+            hash: Anchor.Description,
+          }}
+        >
           Подробнее
         </Link>
       </div>

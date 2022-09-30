@@ -10,7 +10,7 @@ function ProductCardList({cameras}: ProductCardListProps) {
   return (
     <>
       {cameras.map((camera) => (
-        <ProductCard key={camera.id} product={camera}/>
+        <ProductCard key={camera.id} product={camera} />
       ))}
     </>
   );

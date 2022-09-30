@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { generatePath, Link } from 'react-router-dom';
+import { AppRoute, DEFAULT_PAGE } from '../../const';
 import { useAppSelector } from '../../hooks';
+import { selectCurrentCatalogPage } from '../../store/slices/app-slice/selectors';
 import { selectCamera } from '../../store/slices/cameras-slice/selectors';
 
 type CatalogBreadcrumbsProps = {
@@ -17,13 +18,14 @@ type BreadcrumbsProps = CatalogBreadcrumbsProps | ProductBreadcrumbsProps;
 
 function Breadcrumbs({isCatalog, isProduct}: BreadcrumbsProps) {
   const {name} = useAppSelector(selectCamera);
+  const currentCatalogPage = useAppSelector(selectCurrentCatalogPage);
 
   return (
     <div className="breadcrumbs">
       <div className="container">
         <ul className="breadcrumbs__list">
           <li className="breadcrumbs__item">
-            <Link className="breadcrumbs__link" to={AppRoute.Catalog}>Главная
+            <Link className="breadcrumbs__link" to='#'>Главная
               <svg width={5} height={8} aria-hidden="true">
                 <use xlinkHref="#icon-arrow-mini" />
               </svg>
@@ -41,7 +43,10 @@ function Breadcrumbs({isCatalog, isProduct}: BreadcrumbsProps) {
             isProduct &&
               <>
                 <li className="breadcrumbs__item">
-                  <Link className="breadcrumbs__link" to={AppRoute.Catalog}>
+                  <Link
+                    className="breadcrumbs__link"
+                    to={generatePath(AppRoute.Catalog, {pageNumber: currentCatalogPage || DEFAULT_PAGE})}
+                  >
                 Каталог
                     <svg width={5} height={8} aria-hidden="true">
                       <use xlinkHref="#icon-arrow-mini" />

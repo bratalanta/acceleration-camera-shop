@@ -7,12 +7,14 @@ type TInitialState = {
   reviews: TReview[];
   reviewPostingStatus: LoadingStatus;
   reviewsTotalCount: number;
+  reviewsLoadingStatus: LoadingStatus;
 }
 
 const initialState: TInitialState = {
   reviews: [],
   reviewPostingStatus: LoadingStatus.Idle,
-  reviewsTotalCount: 0
+  reviewsTotalCount: 0,
+  reviewsLoadingStatus: LoadingStatus.Idle
 };
 
 const reviewsSlice = createSlice({
@@ -28,10 +30,16 @@ const reviewsSlice = createSlice({
       .addCase(fetchReviewsAction.fulfilled, (state, action) => {
         state.reviewsTotalCount = action.payload.dataTotalCount;
         state.reviews.push(...action.payload.data);
+        state.reviewsLoadingStatus = LoadingStatus.Fulfilled;
       })
-      .addCase(postReviewAction.fulfilled, (state, action) => {
+      .addCase(fetchReviewsAction.pending, (state) => {
+        state.reviewsLoadingStatus = LoadingStatus.Pending;
+      })
+      .addCase(fetchReviewsAction.rejected, (state) => {
+        state.reviewsLoadingStatus = LoadingStatus.Rejected;
+      })
+      .addCase(postReviewAction.fulfilled, (state) => {
         state.reviewPostingStatus = LoadingStatus.Fulfilled;
-        state.reviews.push(action.payload);
       })
       .addCase(postReviewAction.pending, (state) => {
         state.reviewPostingStatus = LoadingStatus.Pending;

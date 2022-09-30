@@ -7,7 +7,7 @@ import {toast} from 'react-toastify';
 
 const REVIEWS_SORTING_QUERY = '_sort=createAt&_order=desc';
 
-const postReviewAction = createAsyncThunk<TReview, TReviewPost, {
+const postReviewAction = createAsyncThunk<void, TReviewPost, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
@@ -15,9 +15,7 @@ const postReviewAction = createAsyncThunk<TReview, TReviewPost, {
   'reviews/postReview',
   async (review, {extra: api}) => {
     try {
-      const {data} = await api.post<TReview>(APIRoute.Reviews, review);
-
-      return data;
+      await api.post<TReview>(APIRoute.Reviews, review);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         toast.warn('Не удалось отправить данные. Попробуйте позже');
@@ -39,7 +37,7 @@ const fetchReviewsAction = createAsyncThunk<TFetchReviewsActionReturnedData, TFe
         params: {
           _limit: limit,
           _page: page
-        }
+        },
       }
     );
 
