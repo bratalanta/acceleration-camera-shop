@@ -45,7 +45,7 @@ function Breadcrumbs({isCatalog, isProduct}: BreadcrumbsProps) {
                 <li className="breadcrumbs__item">
                   <Link
                     className="breadcrumbs__link"
-                    to={generatePath(AppRoute.Catalog, {pageNumber: currentCatalogPage || DEFAULT_PAGE})}
+                    to={generatePath(AppRoute.Catalog, {pageNumber: currentCatalogPage ? String(currentCatalogPage) : DEFAULT_PAGE})}
                   >
                 Каталог
                     <svg width={5} height={8} aria-hidden="true">

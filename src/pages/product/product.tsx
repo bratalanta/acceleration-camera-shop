@@ -14,9 +14,10 @@ import { Helmet } from 'react-helmet';
 import { clearReviews } from '../../store/slices/reviews-slice/reviews-slice';
 
 function Product() {
+  const dispatch = useAppDispatch();
+
   const {id} = useParams();
   const {name} = useAppSelector(selectCamera);
-  const dispatch = useAppDispatch();
   const {isCameraLoadingStatusPending} = useAppSelector(cameraLoadingStatusSelector);
 
   const productId = Number(id);

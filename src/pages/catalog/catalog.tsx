@@ -15,25 +15,28 @@ import { setCurrentCatalogPage } from '../../store/slices/app-slice/app-slice';
 import { camerasLoadingStatusSelector, selectCameras, selectCamerasTotalCount } from '../../store/slices/cameras-slice/selectors';
 import NotFound from '../not-found/not-found';
 import { Helmet } from 'react-helmet';
+import Error from '../error/error';
 
 function Catalog() {
   const dispatch = useAppDispatch();
+
   const cameras = useAppSelector(selectCameras);
   const camerasTotalCount = useAppSelector(selectCamerasTotalCount);
-  const {isCamerasLoadingStatusPending} = useAppSelector(camerasLoadingStatusSelector);
+  const {isCamerasLoadingStatusRejected, isCamerasLoadingStatusPending} = useAppSelector(camerasLoadingStatusSelector);
   const {pathname} = useLocation();
+
   const pagesCount = useMemo(() => (
     Math.ceil(camerasTotalCount / MAX_PRODUCTS_COUNT_PER_PAGE)
   ), [camerasTotalCount]);
 
-  const currentPage = pathname.split('_')[1];
+  const currentPage = Number(pathname.split('_')[1]);
 
   useEffect(() => {
     if (currentPage) {
       dispatch(setCurrentCatalogPage(currentPage));
       dispatch(fetchCamerasAction({
         limit: MAX_PRODUCTS_COUNT_PER_PAGE,
-        page: Number(currentPage)
+        page: currentPage
       }));
     }
   }, [currentPage, dispatch]);
@@ -42,11 +45,15 @@ function Catalog() {
     dispatch(fetchPromoAction());
   }, []);
 
-  if (isCamerasLoadingStatusPending) {
+  if (!pagesCount && isCamerasLoadingStatusPending) {
     return <FullPageLoader />;
   }
 
-  if (Number(currentPage) > pagesCount || Number(currentPage) < 1) {
+  if (isCamerasLoadingStatusRejected) {
+    return <Error />;
+  }
+
+  if (currentPage > pagesCount || currentPage < 1) {
     return <NotFound />;
   }
 
@@ -182,7 +189,7 @@ function Catalog() {
                     <div className="cards catalog__cards">
                       <ProductCardList cameras={cameras} />
                     </div>
-                    <Pagination currentPage={Number(currentPage)} pagesCount={pagesCount} />
+                    <Pagination pagesCount={pagesCount} />
                   </div>
                 </div>
               </div>

@@ -6,7 +6,6 @@ type ProductCardListProps = {
 }
 
 function ProductCardList({cameras}: ProductCardListProps) {
-
   return (
     <>
       {cameras.map((camera) => (

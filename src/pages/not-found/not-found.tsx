@@ -1,6 +1,6 @@
 import styles from '../not-found/not-found.module.css';
 import { generatePath, Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, DEFAULT_PAGE } from '../../const';
 
 function NotFound(): JSX.Element {
   return (
@@ -10,7 +10,7 @@ function NotFound(): JSX.Element {
         <div className={styles.text}>Упс, что-то пошло не так</div>
         <Link
           className={styles.toCatalog}
-          to={generatePath(AppRoute.Catalog, {pageNumber: '1'})}
+          to={generatePath(AppRoute.Catalog, {pageNumber: DEFAULT_PAGE})}
         >
           Вернуться в каталог
         </Link>

@@ -1,16 +1,28 @@
 import cn from 'classnames';
 import { generatePath, Link } from 'react-router-dom';
 import { AppRoute } from '../../../const';
+import { useAppSelector } from '../../../hooks';
+import { selectCurrentCatalogPage } from '../../../store/slices/app-slice/selectors';
+import { camerasLoadingStatusSelector } from '../../../store/slices/cameras-slice/selectors';
+import styles from './pagination.module.css';
 
 type PaginationProps = {
-  currentPage: number;
   pagesCount: number;
 }
 
-function Pagination({currentPage, pagesCount}: PaginationProps) {
-  console.log('-----pagination-----');
+function Pagination({pagesCount}: PaginationProps) {
+  const {isCamerasLoadingStatusPending} = useAppSelector(camerasLoadingStatusSelector);
+  const currentPage = useAppSelector(selectCurrentCatalogPage);
+
+  const paginationCn = cn(
+    'pagination',
+    {
+      [styles.inactive]: isCamerasLoadingStatusPending
+    }
+  );
+
   return (
-    <div className="pagination">
+    <div className={paginationCn} >
       <ul className="pagination__list">
         {currentPage !== 1 &&
         <li className="pagination__item">

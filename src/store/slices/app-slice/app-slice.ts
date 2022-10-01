@@ -3,12 +3,12 @@ import { NameSpace } from '../../../const';
 
 type TInitialState = {
   isReviewModalOpened: boolean;
-  currentCatalogPage: string;
+  currentCatalogPage: number;
 }
 
 const initialState: TInitialState = {
   isReviewModalOpened: false,
-  currentCatalogPage: ''
+  currentCatalogPage: 0
 };
 
 const appSlice = createSlice({
