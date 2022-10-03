@@ -4,13 +4,23 @@ import { rootReducer } from './root-reducer';
 
 const api = createAPI();
 
-export const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => (
-    getDefaultMiddleware({
-      thunk: {
-        extraArgument: api
-      }
-    })
-  )
-});
+const createStore = (initialState = {}) => (
+  configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => (
+      getDefaultMiddleware({
+        thunk: {
+          extraArgument: api
+        }
+      })
+    ),
+    preloadedState: initialState
+  })
+);
+
+const store = createStore();
+
+export {
+  createStore,
+  store
+};

@@ -2,12 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../../const';
 
 type TInitialState = {
-  isReviewModalOpened: boolean;
   currentCatalogPage: number;
 }
 
 const initialState: TInitialState = {
-  isReviewModalOpened: false,
   currentCatalogPage: 0
 };
 
@@ -15,9 +13,6 @@ const appSlice = createSlice({
   name: NameSpace.App,
   initialState,
   reducers: {
-    setIsReviewModalOpened: (state, action) => {
-      state.isReviewModalOpened = action.payload;
-    },
     setCurrentCatalogPage: (state, action) => {
       state.currentCatalogPage = action.payload;
     }
@@ -29,6 +24,5 @@ export {
 };
 
 export const {
-  setIsReviewModalOpened,
   setCurrentCatalogPage
 } = appSlice.actions;

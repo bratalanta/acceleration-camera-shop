@@ -1,6 +1,6 @@
-import styles from './error.module.css';
+import styles from './error-message.module.css';
 
-function Error() {
+function ErrorMessage() {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -17,4 +17,4 @@ function Error() {
   );
 }
 
-export default Error;
+export default ErrorMessage;

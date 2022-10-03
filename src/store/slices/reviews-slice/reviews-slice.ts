@@ -1,16 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { LoadingStatus, NameSpace } from '../../../const';
 import {TReview} from '../../../types/review';
-import { fetchReviewsAction, postReviewAction } from '../../api-actions/reviews-api';
+import { fetchReviewsAction, postReviewAction } from '../../api-actions/reviews-api/reviews-api';
 
-type TInitialState = {
+type TReviewsSliceState = {
   reviews: TReview[];
   reviewPostingStatus: LoadingStatus;
   reviewsTotalCount: number;
   reviewsLoadingStatus: LoadingStatus;
 }
 
-const initialState: TInitialState = {
+const initialState: TReviewsSliceState = {
   reviews: [],
   reviewPostingStatus: LoadingStatus.Idle,
   reviewsTotalCount: 0,
@@ -20,17 +20,20 @@ const initialState: TInitialState = {
 const reviewsSlice = createSlice({
   name: NameSpace.Reviews,
   initialState,
-  reducers: {
-    clearReviews: (state) => {
-      state.reviews = [];
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchReviewsAction.fulfilled, (state, action) => {
-        state.reviewsTotalCount = action.payload.dataTotalCount;
-        state.reviews.push(...action.payload.data);
         state.reviewsLoadingStatus = LoadingStatus.Fulfilled;
+        state.reviewsTotalCount = action.payload.dataTotalCount;
+
+        if (action.payload.replace) {
+          state.reviews = action.payload.data;
+
+          return;
+        }
+
+        state.reviews.push(...action.payload.data);
       })
       .addCase(fetchReviewsAction.pending, (state) => {
         state.reviewsLoadingStatus = LoadingStatus.Pending;
@@ -50,10 +53,10 @@ const reviewsSlice = createSlice({
   }
 });
 
-export const {
-  clearReviews
-} = reviewsSlice.actions;
-
 export {
   reviewsSlice
+};
+
+export type {
+  TReviewsSliceState
 };

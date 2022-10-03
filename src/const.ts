@@ -30,10 +30,16 @@ const enum Anchor {
   Description = '#description'
 }
 
+const enum Modal {
+  Form = 'form',
+  Success = 'success'
+}
+
 const MAX_PRODUCTS_COUNT_PER_PAGE = 9;
 const MAX_REVIEWS_COUNT_PER_PAGE = 3;
 const DEFAULT_PAGE = '1';
 const DEFAULT_TITLE = 'Каталог-Фотошоп';
+const REVIEWS_SORTING_QUERY = '_sort=createAt&_order=desc';
 
 export {
   AppRoute,
@@ -44,5 +50,7 @@ export {
   MAX_REVIEWS_COUNT_PER_PAGE,
   Anchor,
   DEFAULT_PAGE,
-  DEFAULT_TITLE
+  DEFAULT_TITLE,
+  Modal,
+  REVIEWS_SORTING_QUERY
 };

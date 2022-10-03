@@ -22,11 +22,13 @@ type TFetchReviewsActionPayload = {
   id: number;
   limit: number;
   page: number;
+  replace?: boolean;
 }
 
 type TFetchReviewsActionReturnedData = {
   data: TReview[];
   dataTotalCount: number;
+  replace?: boolean;
 }
 
 export type {

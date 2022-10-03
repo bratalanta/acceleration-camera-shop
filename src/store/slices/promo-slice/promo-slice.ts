@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../../const';
 import { TPromo } from '../../../types/promo';
-import { fetchPromoAction } from '../../api-actions/promo-api';
+import { fetchPromoAction } from '../../api-actions/promo-api/promo-api';
 
 type TInitialState = {
   promo: TPromo;

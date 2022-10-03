@@ -9,13 +9,13 @@ import FullPageLoader from '../../components/loaders/full-page-loader/full-page-
 import ProductCardList from '../../components/product-card-list/product-card-list';
 import { DEFAULT_TITLE, MAX_PRODUCTS_COUNT_PER_PAGE } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchCamerasAction } from '../../store/api-actions/cameras-api';
-import { fetchPromoAction } from '../../store/api-actions/promo-api';
+import { fetchCamerasAction } from '../../store/api-actions/cameras-api/cameras-api';
+import { fetchPromoAction } from '../../store/api-actions/promo-api/promo-api';
 import { setCurrentCatalogPage } from '../../store/slices/app-slice/app-slice';
 import { camerasLoadingStatusSelector, selectCameras, selectCamerasTotalCount } from '../../store/slices/cameras-slice/selectors';
 import NotFound from '../not-found/not-found';
 import { Helmet } from 'react-helmet';
-import Error from '../error/error';
+import ErrorMessage from '../error-message/error-message';
 
 function Catalog() {
   const dispatch = useAppDispatch();
@@ -50,7 +50,7 @@ function Catalog() {
   }
 
   if (isCamerasLoadingStatusRejected) {
-    return <Error />;
+    return <ErrorMessage />;
   }
 
   if (currentPage > pagesCount || currentPage < 1) {

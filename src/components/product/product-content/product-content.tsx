@@ -1,10 +1,11 @@
+import ActiveModalProvider from '../../../contexts/active-modal-provider/active-modal-provider';
 import { useAppSelector } from '../../../hooks';
 import { selectSimilarCameras } from '../../../store/slices/cameras-slice/selectors';
 import { scrollToTop } from '../../../utils/utils';
 import Breadcrumbs from '../../breadcrumbs/breadcrumbs';
 import Modals from './modals/modals';
 import ProductDetails from './product-details/product-details';
-import ReviewСardList from './review-card-list/review-card-list';
+import ReviewBlock from './review-block/review-block';
 import SimilarProducts from './similar-products/similar-products';
 
 function ProductContent() {
@@ -16,7 +17,10 @@ function ProductContent() {
         <Breadcrumbs isProduct/>
         <ProductDetails />
         {similarCameras.length ? <SimilarProducts products={similarCameras}/> : ''}
-        <ReviewСardList />
+        <ActiveModalProvider>
+          <ReviewBlock />
+          <Modals />
+        </ActiveModalProvider>
       </div>
       <button
         className="up-btn"
@@ -26,7 +30,6 @@ function ProductContent() {
           <use xlinkHref="#icon-arrow2" />
         </svg>
       </button>
-      <Modals />
     </main>
   );
 }

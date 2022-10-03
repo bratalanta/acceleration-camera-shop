@@ -6,19 +6,19 @@ import FullPageLoader from '../../components/loaders/full-page-loader/full-page-
 import ProductContent from '../../components/product/product-content/product-content';
 import { DEFAULT_PAGE, MAX_REVIEWS_COUNT_PER_PAGE } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchCameraAction, fetchSimilarCamerasAction } from '../../store/api-actions/cameras-api';
-import { fetchReviewsAction } from '../../store/api-actions/reviews-api';
+import { fetchCameraAction, fetchSimilarCamerasAction } from '../../store/api-actions/cameras-api/cameras-api';
+import { fetchReviewsAction } from '../../store/api-actions/reviews-api/reviews-api';
 import { cameraLoadingStatusSelector, selectCamera } from '../../store/slices/cameras-slice/selectors';
 import { scrollToTop } from '../../utils/utils';
 import { Helmet } from 'react-helmet';
-import { clearReviews } from '../../store/slices/reviews-slice/reviews-slice';
+import ErrorMessage from '../error-message/error-message';
 
 function Product() {
   const dispatch = useAppDispatch();
 
   const {id} = useParams();
   const {name} = useAppSelector(selectCamera);
-  const {isCameraLoadingStatusPending} = useAppSelector(cameraLoadingStatusSelector);
+  const {isCameraLoadingStatusPending, isCameraLoadingStatusRejected} = useAppSelector(cameraLoadingStatusSelector);
 
   const productId = Number(id);
 
@@ -29,18 +29,18 @@ function Product() {
     dispatch(fetchReviewsAction({
       id: productId,
       limit: MAX_REVIEWS_COUNT_PER_PAGE,
-      page: Number(DEFAULT_PAGE)
+      page: Number(DEFAULT_PAGE),
+      replace: true
     }));
 
-    return () => {
-      dispatch(clearReviews());
-    };
   }, [dispatch, productId]);
 
   if (isCameraLoadingStatusPending) {
-    return (
-      <FullPageLoader />
-    );
+    return <FullPageLoader />;
+  }
+
+  if (isCameraLoadingStatusRejected) {
+    return <ErrorMessage />;
   }
 
   return (

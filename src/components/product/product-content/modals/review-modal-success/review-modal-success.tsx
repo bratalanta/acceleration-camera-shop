@@ -2,17 +2,17 @@ import cn from 'classnames';
 import useKeydown from '../../../../../hooks/use-keydown';
 
 type ReviewModalSuccessProps = {
-  isModalOpened: boolean;
+  isModalActive: boolean;
   closeModal: () => void;
 }
 
-function ReviewModalSuccess({isModalOpened, closeModal}: ReviewModalSuccessProps) {
+function ReviewModalSuccess({isModalActive, closeModal}: ReviewModalSuccessProps) {
   useKeydown('Escape', closeModal);
 
   const modalCn = cn(
     'modal',
     {
-      'is-active': isModalOpened
+      'is-active': isModalActive
     },
     'modal--narrow'
   );

@@ -3,17 +3,17 @@ import useKeydown from '../../../../../hooks/use-keydown';
 import ReviewForm from './review-form/review-form';
 
 type ReviewModalProps = {
-  isModalOpened: boolean;
+  isModalActive: boolean;
   closeModal: () => void;
 }
 
-function ReviewModal({isModalOpened, closeModal}: ReviewModalProps) {
+function ReviewModal({isModalActive, closeModal}: ReviewModalProps) {
   useKeydown('Escape', closeModal);
 
   const modalCn = cn(
     'modal',
     {
-      'is-active': isModalOpened
+      'is-active': isModalActive
     }
   );
 

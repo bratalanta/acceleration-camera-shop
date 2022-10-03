@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { LoadingStatus, NameSpace } from '../../../const';
 import { TCamera } from '../../../types/camera';
-import { fetchCameraAction, fetchCamerasAction, fetchSimilarCamerasAction } from '../../api-actions/cameras-api';
+import { fetchCameraAction, fetchCamerasAction, fetchSimilarCamerasAction } from '../../api-actions/cameras-api/cameras-api';
 
 type TInitialState = {
   cameras: TCamera[];

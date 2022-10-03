@@ -1,37 +1,33 @@
-import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../hooks';
+import { useEffect } from 'react';
+import { useAppSelector } from '../../../../hooks';
 import { reviewPostingStatusSelector } from '../../../../store/slices/reviews-slice/selectors';
 import ReviewModalSuccess from './review-modal-success/review-modal-success';
-import { selectIsReviewModalOpened } from '../../../../store/slices/app-slice/selectors';
-import { setIsReviewModalOpened } from '../../../../store/slices/app-slice/app-slice';
 import {RemoveScroll} from 'react-remove-scroll';
 import ReviewModal from './review-modal/review-modal';
+import { useActiveModal } from '../../../../contexts/active-modal-provider/active-modal-provider';
+import { Modal } from '../../../../const';
 
 function Modals() {
-  const dispatch = useAppDispatch();
   const {isReviewPostingStatusFulfilled} = useAppSelector(reviewPostingStatusSelector);
-  const isReviewModalOpened = useAppSelector(selectIsReviewModalOpened);
-
-  const [isReviewModalSuccessOpened, setIsReviewModalSuccessOpened] = useState(false);
+  const [activeModal, setActiveModal] = useActiveModal();
 
   useEffect(() => {
     if (isReviewPostingStatusFulfilled) {
-      dispatch(setIsReviewModalOpened(false));
-      setIsReviewModalSuccessOpened(true);
+      setActiveModal(Modal.Success);
     }
-  }, [dispatch, isReviewPostingStatusFulfilled]);
+  }, [isReviewPostingStatusFulfilled]);
 
   return (
-    <RemoveScroll enabled={isReviewModalOpened || isReviewModalSuccessOpened}>
-      {isReviewModalOpened &&
+    <RemoveScroll enabled={activeModal === Modal.Form || activeModal === Modal.Success}>
+      {activeModal === Modal.Form &&
         <ReviewModal
-          isModalOpened={isReviewModalOpened}
-          closeModal={() => dispatch(setIsReviewModalOpened(false))}
+          isModalActive={activeModal === Modal.Form}
+          closeModal={() => setActiveModal(null)}
         />}
-      {isReviewModalSuccessOpened &&
+      {activeModal === Modal.Success &&
         <ReviewModalSuccess
-          isModalOpened={isReviewModalSuccessOpened}
-          closeModal={() => setIsReviewModalSuccessOpened(false)}
+          isModalActive={activeModal === Modal.Success}
+          closeModal={() => setActiveModal(null)}
         />}
     </RemoveScroll>
   );

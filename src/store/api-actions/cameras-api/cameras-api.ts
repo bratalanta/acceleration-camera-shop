@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosInstance } from 'axios';
-import { AppDispatch, State } from '../../types/state';
-import { TCamera, TFetchCamerasActionPayload, TFetchCamerasActionReturnedData } from '../../types/camera';
-import { APIRoute } from '../../const';
+import { AppDispatch, State } from '../../../types/state';
+import { TCamera, TFetchCamerasActionPayload, TFetchCamerasActionReturnedData } from '../../../types/camera';
+import { APIRoute } from '../../../const';
 import { toast } from 'react-toastify';
 
 const fetchCamerasAction = createAsyncThunk<TFetchCamerasActionReturnedData, TFetchCamerasActionPayload, {

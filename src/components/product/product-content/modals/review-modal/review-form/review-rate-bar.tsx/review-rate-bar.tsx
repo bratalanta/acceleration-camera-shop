@@ -1,21 +1,15 @@
 import { Fragment, useState } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
-type TRateBarStatuses = readonly [
-  readonly [string, number],
-  readonly [string, number],
-  readonly [string, number],
-  readonly [string, number],
-  readonly [string, number],
-];
+type TRateBarStatus = [string, number][];
 
-const RateBarStatuses: TRateBarStatuses = [
+const rateBarStatuses: TRateBarStatus = [
   ['Отлично', 5],
   ['Хорошо', 4],
   ['Нормально', 3],
   ['Плохо', 2],
   ['Ужасно', 1],
-] as const;
+];
 
 type ReviewRateBarProps = {
   getRatingFieldCn: () => string;
@@ -34,7 +28,7 @@ function ReviewRateBar({getRatingFieldCn, ratingRegester}: ReviewRateBarProps) {
       </legend>
       <div className="rate__bar">
         <div className="rate__group">
-          {RateBarStatuses.map(([title, rate]) => (
+          {rateBarStatuses.map(([title, rate]) => (
             <Fragment key={rate}>
               <input
                 className="visually-hidden"

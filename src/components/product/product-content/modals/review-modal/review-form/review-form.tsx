@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useForm} from 'react-hook-form';
 import {TReviewPost} from '../../../../../../types/review';
 import { useAppDispatch } from '../../../../../../hooks';
-import { postReviewAction } from '../../../../../../store/api-actions/reviews-api';
+import { postReviewAction } from '../../../../../../store/api-actions/reviews-api/reviews-api';
 import cn from 'classnames';
 import ReviewRateBar from './review-rate-bar.tsx/review-rate-bar';
 
