@@ -1,4 +1,4 @@
-const MAX_RATING = 5;
+import { MAX_RATING } from '../../const';
 
 type RatingStarsProps = {
   rating: number;
@@ -11,7 +11,7 @@ function RatingStars({rating}: RatingStarsProps): JSX.Element {
         const iconCn = k <= rating ? '#icon-full-star' : '#icon-star';
 
         return (
-          <svg width={17} height={16} aria-hidden="true" key={k}>
+          <svg width={17} height={16} aria-hidden="true" key={k} data-testid='stars'>
             <use xlinkHref={iconCn} />
           </svg>
         );

@@ -4,12 +4,12 @@ import { reviewPostingStatusSelector } from '../../../../store/slices/reviews-sl
 import ReviewModalSuccess from './review-modal-success/review-modal-success';
 import {RemoveScroll} from 'react-remove-scroll';
 import ReviewModal from './review-modal/review-modal';
-import { useActiveModal } from '../../../../contexts/active-modal-provider/active-modal-provider';
 import { Modal } from '../../../../const';
+import { useReview } from '../../../../contexts/review-provider/review-provider';
 
 function Modals() {
   const {isReviewPostingStatusFulfilled} = useAppSelector(reviewPostingStatusSelector);
-  const [activeModal, setActiveModal] = useActiveModal();
+  const {activeModal, setActiveModal} = useReview();
 
   useEffect(() => {
     if (isReviewPostingStatusFulfilled) {

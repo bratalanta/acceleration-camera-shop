@@ -37,9 +37,11 @@ const enum Modal {
 
 const MAX_PRODUCTS_COUNT_PER_PAGE = 9;
 const MAX_REVIEWS_COUNT_PER_PAGE = 3;
+const COMMENT_MIN_LENGTH = 5;
 const DEFAULT_PAGE = '1';
 const DEFAULT_TITLE = 'Каталог-Фотошоп';
 const REVIEWS_SORTING_QUERY = '_sort=createAt&_order=desc';
+const MAX_RATING = 5;
 
 export {
   AppRoute,
@@ -52,5 +54,7 @@ export {
   DEFAULT_PAGE,
   DEFAULT_TITLE,
   Modal,
-  REVIEWS_SORTING_QUERY
+  REVIEWS_SORTING_QUERY,
+  COMMENT_MIN_LENGTH,
+  MAX_RATING
 };

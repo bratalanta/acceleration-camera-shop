@@ -18,7 +18,7 @@ function ProductDetails() {
   } = camera;
 
   return (
-    <div className="page-content__section">
+    <div className="page-content__section" data-testid='details'>
       <section className="product">
         <div className="container">
           <div className="product__img">

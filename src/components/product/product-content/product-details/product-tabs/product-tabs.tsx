@@ -50,12 +50,13 @@ function ProductTabs({product}: ProductTabsProps) {
   } as const;
 
   return (
-    <div className="tabs product__tabs">
+    <div className="tabs product__tabs" data-testid='tabs'>
       <div className="tabs__controls product__tabs-controls">
         <button
           className={FeatureTabCn.Control}
           type="button"
           onClick={() => browserHistory.replace({hash: Anchor.Features})}
+          data-testid='feat'
         >
           Характеристики
         </button>

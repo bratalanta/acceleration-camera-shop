@@ -27,7 +27,12 @@ describe('Cameras API', () => {
 
   it('should dispatch fetchCamerasAction when GET /cameras', async () => {
     mockAPI
-      .onGet(APIRoute.Cameras)
+      .onGet(APIRoute.Cameras, {
+        params: {
+          _limit: MAX_PRODUCTS_COUNT_PER_PAGE,
+          _page: defaultPage
+        }
+      })
       .reply(200, mockCameras);
 
     const store = mockStore();

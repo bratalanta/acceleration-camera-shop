@@ -3,7 +3,7 @@ import { LoadingStatus, NameSpace } from '../../../const';
 import { TCamera } from '../../../types/camera';
 import { fetchCameraAction, fetchCamerasAction, fetchSimilarCamerasAction } from '../../api-actions/cameras-api/cameras-api';
 
-type TInitialState = {
+type TCamerasSliceState = {
   cameras: TCamera[];
   camera: TCamera;
   similarCameras: TCamera[];
@@ -12,7 +12,7 @@ type TInitialState = {
   camerasTotalCount: number;
 }
 
-const initialState: TInitialState = {
+const initialState: TCamerasSliceState = {
   cameras: [],
   camera: {} as TCamera,
   similarCameras: [],
@@ -56,4 +56,8 @@ const camerasSlice = createSlice({
 
 export {
   camerasSlice
+};
+
+export type {
+  TCamerasSliceState
 };

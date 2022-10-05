@@ -9,7 +9,7 @@ function ReviewsTotalCount({reviewCount}: ReviewsTotalCountProps) {
   const currentTotal = useAppSelector(selectReviewsTotalCount);
 
   return (
-    <p className="rate__count">
+    <p className="rate__count" data-testid='count'>
       <span className="visually-hidden">Всего оценок:</span>
       {reviewCount !== currentTotal ? currentTotal : reviewCount}
     </p>

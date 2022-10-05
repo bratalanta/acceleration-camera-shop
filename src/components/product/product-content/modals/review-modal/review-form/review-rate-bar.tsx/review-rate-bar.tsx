@@ -20,7 +20,7 @@ function ReviewRateBar({getRatingFieldCn, ratingRegester}: ReviewRateBarProps) {
   const [currentRating, setCurrentRating] = useState(0);
 
   return (
-    <fieldset className={getRatingFieldCn()}>
+    <fieldset className={getRatingFieldCn()} data-testid='rate-bar'>
       <legend className="rate__caption">Рейтинг
         <svg width={9} height={9} aria-hidden="true">
           <use xlinkHref="#icon-snowflake" />
@@ -37,6 +37,7 @@ function ReviewRateBar({getRatingFieldCn, ratingRegester}: ReviewRateBarProps) {
                 defaultValue={rate}
                 {...ratingRegester}
                 onChange={() => setCurrentRating(rate)}
+                data-testid='rate-bar-input'
               />
               <label className="rate__label" htmlFor={`star-${rate}`} title={title} />
             </Fragment>

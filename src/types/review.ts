@@ -18,6 +18,10 @@ type TReviewPost = {
   rating: number;
 }
 
+type TPostReviewActionPayload = {
+  currentPage: number;
+} & TReviewPost
+
 type TFetchReviewsActionPayload = {
   id: number;
   limit: number;
@@ -35,5 +39,6 @@ export type {
   TReview,
   TReviewPost,
   TFetchReviewsActionPayload,
-  TFetchReviewsActionReturnedData
+  TFetchReviewsActionReturnedData,
+  TPostReviewActionPayload
 };

@@ -18,9 +18,9 @@ function ReviewModalSuccess({isModalActive, closeModal}: ReviewModalSuccessProps
   );
 
   return (
-    <div className={modalCn}>
+    <div className={modalCn} data-testid='review-modal-success'>
       <div className="modal__wrapper">
-        <div className="modal__overlay" onClick={() => closeModal()}/>
+        <div className="modal__overlay" onClick={() => closeModal()} data-testid='overlay'/>
         <div className="modal__content">
           <p className="title title--h4">Спасибо за отзыв</p>
           <svg className="modal__icon" width={80} height={78} aria-hidden="true">
@@ -31,6 +31,7 @@ function ReviewModalSuccess({isModalActive, closeModal}: ReviewModalSuccessProps
               className="btn btn--purple modal__btn modal__btn--fit-width"
               type="button"
               onClick={() => closeModal()}
+              data-testid='back-to-shop'
             >Вернуться к покупкам
             </button>
           </div>
@@ -39,6 +40,7 @@ function ReviewModalSuccess({isModalActive, closeModal}: ReviewModalSuccessProps
             type="button"
             aria-label="Закрыть попап"
             onClick={() => closeModal()}
+            data-testid='cross-btn'
           >
             <svg width={10} height={10} aria-hidden="true">
               <use xlinkHref="#icon-close" />

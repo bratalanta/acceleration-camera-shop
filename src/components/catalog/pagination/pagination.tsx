@@ -22,11 +22,12 @@ function Pagination({pagesCount}: PaginationProps) {
   );
 
   return (
-    <div className={paginationCn} >
+    <div className={paginationCn} data-testid='pagination'>
       <ul className="pagination__list">
         {currentPage !== 1 &&
         <li className="pagination__item">
           <Link
+            data-testid='prev-link'
             className="pagination__link pagination__link--text"
             to={generatePath(AppRoute.Catalog, {pageNumber: String(currentPage - 1)})}
           >
@@ -58,6 +59,7 @@ function Pagination({pagesCount}: PaginationProps) {
         {currentPage !== pagesCount &&
         <li className="pagination__item">
           <Link
+            data-testid='next-link'
             className="pagination__link pagination__link--text"
             to={generatePath(AppRoute.Catalog, {pageNumber: String(currentPage + 1)})}
           >

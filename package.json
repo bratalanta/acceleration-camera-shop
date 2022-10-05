@@ -10,6 +10,7 @@
     "history": "^5.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-focus-lock": "^2.9.1",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.36.1",
     "react-intersection-observer": "^9.4.0",
@@ -64,6 +65,7 @@
     "axios-mock-adapter": "^1.19.0",
     "eslint-config-htmlacademy": "^6.0.0",
     "faker": "^5.5.3",
+    "jest-location-mock": "^1.0.9",
     "redux-devtools-extension": "2.13",
     "typescript": "^4.8.3"
   }

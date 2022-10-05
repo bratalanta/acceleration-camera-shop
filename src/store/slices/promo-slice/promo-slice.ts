@@ -3,11 +3,11 @@ import { NameSpace } from '../../../const';
 import { TPromo } from '../../../types/promo';
 import { fetchPromoAction } from '../../api-actions/promo-api/promo-api';
 
-type TInitialState = {
+type TPromoSliceState = {
   promo: TPromo;
 }
 
-const initialState: TInitialState = {
+const initialState: TPromoSliceState = {
   promo: {} as TPromo,
 };
 
@@ -26,3 +26,8 @@ const promoSlice = createSlice({
 export {
   promoSlice
 };
+
+export type {
+  TPromoSliceState
+};
+

@@ -5,14 +5,15 @@ import { useAppDispatch } from '../../../../../../hooks';
 import { postReviewAction } from '../../../../../../store/api-actions/reviews-api/reviews-api';
 import cn from 'classnames';
 import ReviewRateBar from './review-rate-bar.tsx/review-rate-bar';
+import { useReview } from '../../../../../../contexts/review-provider/review-provider';
+import { COMMENT_MIN_LENGTH } from '../../../../../../const';
 
 type TReviewPostKey = keyof TReviewPost;
-
-const COMMENT_MIN_LENGTH = 5;
 
 function ReviewForm() {
   const dispatch = useAppDispatch();
   const {id} = useParams();
+  const {currentPage} = useReview();
 
   const {
     register,
@@ -46,14 +47,15 @@ function ReviewForm() {
   const sendData = (data: TReviewPost) => {
     const formData = {
       ...data,
-      rating: Number(data.rating)
+      rating: Number(data.rating),
+      currentPage,
     };
 
     dispatch(postReviewAction(formData));
   };
 
   return (
-    <div className="form-review">
+    <div className="form-review" data-testid='form'>
       <form onSubmit={handleSubmit(sendData)}>
         <div className="form-review__rate">
           <ReviewRateBar
@@ -72,6 +74,7 @@ function ReviewForm() {
                 </svg>
               </span>
               <input
+                autoFocus
                 type="text"
                 placeholder="Введите ваше имя"
                 {...register('userName', {
@@ -140,7 +143,7 @@ function ReviewForm() {
             </div>}
           </div>
         </div>
-        <button className="btn btn--purple form-review__btn" type="submit">Отправить отзыв</button>
+        <button data-testid='submit' className="btn btn--purple form-review__btn" type="submit">Отправить отзыв</button>
       </form>
     </div>
   );

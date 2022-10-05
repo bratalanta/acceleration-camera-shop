@@ -16,7 +16,7 @@ function AppRouter() {
         }
       />
       <Route
-        path={AppRoute.Catalog}
+        path={generatePath(AppRoute.Catalog, {pageNumber: DEFAULT_PAGE})}
         element={<Catalog />}
       />
       <Route

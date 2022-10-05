@@ -1,19 +1,34 @@
-import { useAppSelector } from '../../../../../hooks';
+import { MAX_REVIEWS_COUNT_PER_PAGE } from '../../../../../const';
+import { useReview } from '../../../../../contexts/review-provider/review-provider';
+import { useAppDispatch, useAppSelector } from '../../../../../hooks';
+import { fetchReviewsAction } from '../../../../../store/api-actions/reviews-api/reviews-api';
 import { reviewsLoadingStatusSelector } from '../../../../../store/slices/reviews-slice/selectors';
 
 type ShowMoreButtonProps = {
-  onShowMoreButtonClick: () => void;
+  productId: number;
 }
 
-function ShowMoreButton({onShowMoreButtonClick}: ShowMoreButtonProps) {
+function ShowMoreButton({productId}: ShowMoreButtonProps) {
+  const dispatch = useAppDispatch();
+  const {currentPage, setCurrentPage} = useReview();
   const {isReviewsLoadingStatusPending} = useAppSelector(reviewsLoadingStatusSelector);
+
+  const handleShowMoreButtonClick = () => {
+    dispatch(fetchReviewsAction({
+      id: productId,
+      limit: MAX_REVIEWS_COUNT_PER_PAGE,
+      page: currentPage
+    }));
+
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
 
   return (
     <div className="review-block__buttons">
       <button
         className="btn btn--purple"
         type="button"
-        onClick={onShowMoreButtonClick}
+        onClick={handleShowMoreButtonClick}
         disabled={isReviewsLoadingStatusPending}
       >
         Показать больше отзывов

@@ -48,7 +48,7 @@ function Product() {
       <Helmet>
         <title>{name}</title>
       </Helmet>
-      <div className="wrapper">
+      <div className="wrapper" data-testid="product">
         <Header />
         <ProductContent />
         <Footer />

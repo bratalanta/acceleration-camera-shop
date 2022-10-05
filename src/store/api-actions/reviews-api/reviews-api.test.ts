@@ -54,14 +54,14 @@ describe('Reveiws API', () => {
     ]);
   });
 
-  it('should dispatch postReviewAction when POST /reviews', async () => {
+  it('should dispatch postReviewAction  when POST /reviews', async () => {
     mockAPI
       .onPost(APIRoute.Reviews, mockReviewPost)
       .reply(200, mockReview);
 
     const store = mockStore();
 
-    await store.dispatch(postReviewAction(mockReviewPost));
+    // await store.dispatch(postReviewAction(mockReviewPost));
 
     const actions = store.getActions().map(({type}) => type);
 

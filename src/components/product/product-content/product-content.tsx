@@ -1,4 +1,5 @@
-import ActiveModalProvider from '../../../contexts/active-modal-provider/active-modal-provider';
+import ReactFocusLock from 'react-focus-lock';
+import ReviewProvider from '../../../contexts/review-provider/review-provider';
 import { useAppSelector } from '../../../hooks';
 import { selectSimilarCameras } from '../../../store/slices/cameras-slice/selectors';
 import { scrollToTop } from '../../../utils/utils';
@@ -17,10 +18,12 @@ function ProductContent() {
         <Breadcrumbs isProduct/>
         <ProductDetails />
         {similarCameras.length ? <SimilarProducts products={similarCameras}/> : ''}
-        <ActiveModalProvider>
+        <ReviewProvider>
           <ReviewBlock />
-          <Modals />
-        </ActiveModalProvider>
+          <ReactFocusLock>
+            <Modals />
+          </ReactFocusLock>
+        </ReviewProvider>
       </div>
       <button
         className="up-btn"

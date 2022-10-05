@@ -21,7 +21,7 @@ function Breadcrumbs({isCatalog, isProduct}: BreadcrumbsProps) {
   const currentCatalogPage = useAppSelector(selectCurrentCatalogPage);
 
   return (
-    <div className="breadcrumbs">
+    <div className="breadcrumbs" data-testid={'breadcrumbs'}>
       <div className="container">
         <ul className="breadcrumbs__list">
           <li className="breadcrumbs__item">
@@ -45,6 +45,7 @@ function Breadcrumbs({isCatalog, isProduct}: BreadcrumbsProps) {
                 <li className="breadcrumbs__item">
                   <Link
                     className="breadcrumbs__link"
+                    data-testid='bread-link'
                     to={generatePath(AppRoute.Catalog, {pageNumber: currentCatalogPage ? String(currentCatalogPage) : DEFAULT_PAGE})}
                   >
                 Каталог

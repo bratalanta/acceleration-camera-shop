@@ -6,7 +6,7 @@ import { TReview, TReviewPost } from '../../types/review';
 const MAX_CAMERA_RATING = 5;
 
 const makeFakeCamera = (): TCamera => ({
-  id: Number(faker.datatype.uuid),
+  id: faker.datatype.number(5),
   name: faker.name.title(),
   vendorCode: faker.datatype.string(),
   type: faker.datatype.string(),
@@ -23,7 +23,7 @@ const makeFakeCamera = (): TCamera => ({
 });
 
 const makeFakePromo = (): TPromo => ({
-  id: Number(faker.datatype.uuid),
+  id: faker.datatype.number(),
   name: faker.name.title(),
   previewImg: faker.random.image(),
   previewImg2x: faker.random.image(),
@@ -39,11 +39,11 @@ const makeFakeReview = (): TReview => ({
   review: faker.datatype.string(),
   rating: faker.datatype.number(MAX_CAMERA_RATING),
   createAt: faker.datatype.string(),
-  cameraId: Number(faker.datatype.uuid)
+  cameraId: faker.datatype.number(),
 });
 
 const makeFakeReviewPost = (): TReviewPost => ({
-  cameraId: Number(faker.datatype.uuid()),
+  cameraId: faker.datatype.number(),
   userName: faker.name.firstName(),
   advantage: faker.datatype.string(),
   disadvantage: faker.datatype.string(),
@@ -51,6 +51,7 @@ const makeFakeReviewPost = (): TReviewPost => ({
   rating: faker.datatype.number(MAX_CAMERA_RATING),
 });
 
+window.scrollTo = jest.fn();
 
 export {
   makeFakeCamera,

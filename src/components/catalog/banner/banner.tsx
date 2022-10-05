@@ -7,7 +7,7 @@ function Banner() {
   const {name, id} = useAppSelector(selectPromo);
 
   return (
-    <div className="banner">
+    <div className="banner" data-testid='banner'>
       <picture>
         <source
           type="image/webp"
@@ -27,6 +27,7 @@ function Banner() {
         <span className="banner__text">Профессиональная камера от&nbsp;известного производителя</span>
         <Link
           className="btn"
+          data-testid='banner-link'
           to={{
             pathname: generatePath(AppRoute.Product, {id: String(id)}),
             hash: Anchor.Description

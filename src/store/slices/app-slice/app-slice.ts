@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../../const';
 
-type TInitialState = {
+type TAppSliceState = {
   currentCatalogPage: number;
 }
 
-const initialState: TInitialState = {
+const initialState: TAppSliceState = {
   currentCatalogPage: 0
 };
 
@@ -26,3 +26,7 @@ export {
 export const {
   setCurrentCatalogPage
 } = appSlice.actions;
+
+export type {
+  TAppSliceState
+};
