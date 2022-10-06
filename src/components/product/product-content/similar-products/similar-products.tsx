@@ -1,8 +1,7 @@
 import { useMemo, useState } from 'react';
+import { MAX_PRODUCTS_COUNT_PER_SLIDE } from '../../../../const';
 import { TCamera } from '../../../../types/camera';
 import ProductCardList from '../../../product-card-list/product-card-list';
-
-const MAX_PRODUCTS_COUNT_PER_SLIDE = 3;
 
 type SimilarProductsProps = {
   products: TCamera[];
@@ -17,7 +16,7 @@ function SimilarProducts({products}: SimilarProductsProps) {
   );
 
   return (
-    <div className="page-content__section">
+    <div className="page-content__section" data-testid='similar'>
       <section className="product-similar">
         <div className="container">
           <h2 className="title title--h3">Похожие товары</h2>
@@ -31,6 +30,7 @@ function SimilarProducts({products}: SimilarProductsProps) {
               aria-label="Предыдущий слайд"
               onClick={() => setCurrentSlide(currentSlide - 1)}
               disabled={currentSlide === 1}
+              data-testid='prev-btn'
             >
               <svg width={7} height={12} aria-hidden="true">
                 <use xlinkHref="#icon-arrow" />

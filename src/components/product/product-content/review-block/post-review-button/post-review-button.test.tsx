@@ -5,7 +5,7 @@ import { Modal } from '../../../../../const';
 
 const openModal = jest.fn();
 
-describe('Component: ReviewModal', () => {
+describe('Component: PostReviewButton', () => {
   it('should render correctly', async () => {
     renderTestApp(<PostReviewButton />, {});
 

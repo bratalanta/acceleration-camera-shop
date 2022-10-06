@@ -5,7 +5,7 @@ import ReviewCard from './review-card';
 
 const mockReview = makeFakeReview();
 
-describe('Component: Header', () => {
+describe('Component: ReviewCard', () => {
   it('should render correctly', () => {
     renderTestApp(<ReviewCard review={mockReview}/>, {});
 

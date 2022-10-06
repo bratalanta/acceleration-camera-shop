@@ -38,7 +38,7 @@ function ReviewBlock() {
 
   return (
     <>
-      <div className="page-content__section">
+      <div className="page-content__section" data-testid='block'>
         <section className="review-block">
           <div className="container">
             <div className="page-content__headed">
@@ -46,11 +46,11 @@ function ReviewBlock() {
               <PostReviewButton />
             </div>
             <ReviewCardList />
-            {currentPage !== pagesCount + 1 && <ShowMoreButton productId={productId}/>}
+            {pagesCount !== 0 && currentPage !== pagesCount + 1 && <ShowMoreButton productId={productId}/>}
           </div>
         </section>
       </div>
-      <div className={styles.intersected} ref={inViewRef}></div>
+      <div className={styles.intersected} ref={inViewRef} data-testid='intersect'></div>
     </>
   );
 }

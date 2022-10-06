@@ -40,7 +40,9 @@ describe('Reveiws API', () => {
           _page: defaultPage
         }
       })
-      .reply(200, mockReviews);
+      .reply(200, mockReviews, {
+        'x-total-count': 10
+      });
 
     const store = mockStore();
 
@@ -61,12 +63,13 @@ describe('Reveiws API', () => {
 
     const store = mockStore();
 
-    // await store.dispatch(postReviewAction(mockReviewPost));
+    await store.dispatch(postReviewAction({...mockReviewPost, currentPage: Number(DEFAULT_PAGE)}));
 
     const actions = store.getActions().map(({type}) => type);
 
     expect(actions).toEqual([
       postReviewAction.pending.type,
+      fetchReviewsAction.pending.type,
       postReviewAction.fulfilled.type
     ]);
   });

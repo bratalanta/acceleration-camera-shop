@@ -42,6 +42,7 @@ const DEFAULT_PAGE = '1';
 const DEFAULT_TITLE = 'Каталог-Фотошоп';
 const REVIEWS_SORTING_QUERY = '_sort=createAt&_order=desc';
 const MAX_RATING = 5;
+const MAX_PRODUCTS_COUNT_PER_SLIDE = 3;
 
 export {
   AppRoute,
@@ -56,5 +57,6 @@ export {
   Modal,
   REVIEWS_SORTING_QUERY,
   COMMENT_MIN_LENGTH,
-  MAX_RATING
+  MAX_RATING,
+  MAX_PRODUCTS_COUNT_PER_SLIDE
 };

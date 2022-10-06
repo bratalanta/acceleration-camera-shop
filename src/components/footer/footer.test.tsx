@@ -1,10 +1,10 @@
 import { screen } from '@testing-library/react';
-import { renderWithRouter } from '../../tests/helpers/render-with-router';
+import { renderTestApp } from '../../tests/helpers/render-test-app';
 import Footer from './footer';
 
 describe('Component: Footer', () => {
   it('should render correctly', () => {
-    renderWithRouter(<Footer />);
+    renderTestApp(<Footer />, {});
 
     expect(screen.getByTestId('footer')).toBeInTheDocument();
   });

@@ -30,6 +30,7 @@ function ShowMoreButton({productId}: ShowMoreButtonProps) {
         type="button"
         onClick={handleShowMoreButtonClick}
         disabled={isReviewsLoadingStatusPending}
+        data-testid='show-btn'
       >
         Показать больше отзывов
       </button>

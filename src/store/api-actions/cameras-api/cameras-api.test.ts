@@ -33,7 +33,9 @@ describe('Cameras API', () => {
           _page: defaultPage
         }
       })
-      .reply(200, mockCameras);
+      .reply(200, mockCameras, {
+        'x-total-count': 10
+      });
 
     const store = mockStore();
 

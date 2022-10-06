@@ -1,16 +1,23 @@
 import { screen } from '@testing-library/react';
+import { NameSpace } from '../../../../../const';
 import { renderTestApp } from '../../../../../tests/helpers/render-test-app';
 import { makeFakeReview } from '../../../../../tests/mocks/mocks';
 import ReviewCardList from './review-card-list';
 
-const mockReview = makeFakeReview();
+const mockReviews = [makeFakeReview(), makeFakeReview(), makeFakeReview()];
 
-describe('Component: Header', () => {
+const mockState = {
+  [NameSpace.Reviews]: {
+    reviews: mockReviews
+  }
+};
+
+describe('Component: ReviewCardList', () => {
   it('should render correctly', () => {
-    renderTestApp(<ReviewCardList review={mockReview}/>, {});
+    renderTestApp(<ReviewCardList />, {
+      initialState: mockState
+    });
 
-    expect(screen.getByTestId('review-card')).toBeInTheDocument();
-    expect(screen.getByText(mockReview.review)).toBeInTheDocument();
-    expect(screen.getByText(mockReview.disadvantage)).toBeInTheDocument();
+    expect(screen.getAllByTestId('review-card')).toHaveLength(mockReviews.length);
   });
 });

@@ -21,7 +21,7 @@ function ProductCard({product}: ProductCardProps) {
   } = product;
 
   return (
-    <div className="product-card is-active">
+    <div className="product-card is-active" data-testid='product-card'>
       <div className="product-card__img">
         <picture>
           <source type="image/webp" srcSet={`/${previewImgWebp}, /${previewImgWebp2x} 2x`} />

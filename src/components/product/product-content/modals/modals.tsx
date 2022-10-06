@@ -12,7 +12,7 @@ function Modals() {
   const {activeModal, setActiveModal} = useReview();
 
   useEffect(() => {
-    if (isReviewPostingStatusFulfilled) {
+    if (activeModal && isReviewPostingStatusFulfilled) {
       setActiveModal(Modal.Success);
     }
   }, [isReviewPostingStatusFulfilled]);
