@@ -2,9 +2,12 @@ import { screen } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { AppRoute, DEFAULT_PAGE, LoadingStatus, NameSpace } from '../../const';
 import { renderTestApp } from '../../tests/helpers/render-test-app';
-import { makeFakeCamera } from '../../tests/mocks/mocks';
+import { makeFakeCamera, makeFakeReview } from '../../tests/mocks/mocks';
 import 'react-intersection-observer/test-utils';
 import AppRouter from '../../router/app-router';
+import { createAPI } from '../../services/api';
+import thunk from 'redux-thunk';
+import { configureMockStore } from '@jedmao/redux-mock-store';
 
 const mockCamera = makeFakeCamera();
 const mockCameras = [makeFakeCamera(), mockCamera];
@@ -21,6 +24,25 @@ const mockState = {
     cameraLoadingStatus: LoadingStatus.Fulfilled,
   }
 };
+
+const api = createAPI();
+const middlewares = [thunk.withExtraArgument(api)];
+const mockStore = configureMockStore(middlewares);
+const store = mockStore({
+  [NameSpace.Cameras]: {
+    camera: makeFakeCamera(),
+    similarCameras: [makeFakeCamera()]
+  },
+  [NameSpace.App]: {
+    currentCatalogPage: 1,
+    currentReviewPage: 2,
+    activeModal: null
+  },
+  [NameSpace.Reviews]: {
+    reviewsTotalCount: 5,
+    reviews: [makeFakeReview()]
+  }
+});
 
 describe('Application routing', () => {
   it('should render "Catalog" when user is navigated to "/catalog/page_:pageNumber"', () => {
@@ -44,10 +66,9 @@ describe('Application routing', () => {
   it('should render "Product" when user is navigated to "/product/:id"', async() => {
     renderTestApp(<AppRouter />, {
       initialRoute: generatePath(AppRoute.Product, {id: String(mockCamera.id)}),
+      mockStore: store
     });
 
-    const product = await screen.findByText(/Похожие товары/i);
-
-    expect(product).toBeInTheDocument();
+    expect(screen.getByText(/Похожие товары/i)).toBeInTheDocument();
   });
 });

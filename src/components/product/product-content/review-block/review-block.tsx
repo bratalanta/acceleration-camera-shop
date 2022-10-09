@@ -9,15 +9,16 @@ import styles from './review-block.module.css';
 import ReviewCardList from './review-card-list/review-card-list';
 import PostReviewButton from './post-review-button/post-review-button';
 import ShowMoreButton from './show-more-button/show-more-button';
-import { useReview } from '../../../../contexts/review-provider/review-provider';
+import { selectCurrentReviewPage } from '../../../../store/slices/app-slice/selectors';
+import { setCurrentReviewPage } from '../../../../store/slices/app-slice/app-slice';
 
 function ReviewBlock() {
   const {id} = useParams();
   const dispatch = useAppDispatch();
   const reviewsTotalCount = useAppSelector(selectReviewsTotalCount);
   const {isReviewsLoadingStatusPending} = useAppSelector(reviewsLoadingStatusSelector);
+  const currentPage = useAppSelector(selectCurrentReviewPage);
 
-  const {currentPage, setCurrentPage} = useReview();
   const {ref: inViewRef, entry} = useInView();
   const pagesCount = useMemo(() => Math.ceil(reviewsTotalCount / MAX_REVIEWS_COUNT_PER_PAGE),
     [reviewsTotalCount]);
@@ -32,7 +33,7 @@ function ReviewBlock() {
         page: currentPage
       }));
 
-      setCurrentPage((prevPage) => prevPage + 1);
+      dispatch(setCurrentReviewPage(currentPage + 1));
     }
   }, [entry?.isIntersecting]);
 

@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { COMMENT_MIN_LENGTH } from '../../../../../../const';
+import { COMMENT_MIN_LENGTH, NameSpace } from '../../../../../../const';
 import { createAPI } from '../../../../../../services/api';
 import { renderTestApp } from '../../../../../../tests/helpers/render-test-app';
 import ReviewForm from './review-form';
@@ -10,7 +10,11 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 const api = createAPI();
 const middlewares = [thunk.withExtraArgument(api)];
 const mockStore = configureMockStore(middlewares);
-const store = mockStore();
+const store = mockStore({
+  [NameSpace.App]: {
+    currentReviewPage: 1
+  }
+});
 
 describe('Component: ReviewForm', () => {
   it('should render correctly', () => {
@@ -49,7 +53,7 @@ describe('Component: ReviewForm', () => {
     expect(screen.queryByText(/Нужно указать недостатки/i)).not.toBeInTheDocument();
   });
 
-  it('should dispatch postReveiwAction', async () => {
+  it('should dispatch postReviewAction', async () => {
     renderTestApp(<ReviewForm />, {
       mockStore: store
     });

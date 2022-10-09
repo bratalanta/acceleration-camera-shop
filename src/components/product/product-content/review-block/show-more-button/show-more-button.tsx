@@ -1,7 +1,8 @@
 import { MAX_REVIEWS_COUNT_PER_PAGE } from '../../../../../const';
-import { useReview } from '../../../../../contexts/review-provider/review-provider';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks';
 import { fetchReviewsAction } from '../../../../../store/api-actions/reviews-api/reviews-api';
+import { setCurrentReviewPage } from '../../../../../store/slices/app-slice/app-slice';
+import { selectCurrentReviewPage } from '../../../../../store/slices/app-slice/selectors';
 import { reviewsLoadingStatusSelector } from '../../../../../store/slices/reviews-slice/selectors';
 
 type ShowMoreButtonProps = {
@@ -10,7 +11,7 @@ type ShowMoreButtonProps = {
 
 function ShowMoreButton({productId}: ShowMoreButtonProps) {
   const dispatch = useAppDispatch();
-  const {currentPage, setCurrentPage} = useReview();
+  const currentPage = useAppSelector(selectCurrentReviewPage);
   const {isReviewsLoadingStatusPending} = useAppSelector(reviewsLoadingStatusSelector);
 
   const handleShowMoreButtonClick = () => {
@@ -20,7 +21,7 @@ function ShowMoreButton({productId}: ShowMoreButtonProps) {
       page: currentPage
     }));
 
-    setCurrentPage((prevPage) => prevPage + 1);
+    dispatch(setCurrentReviewPage(currentPage + 1));
   };
 
   return (

@@ -1,15 +1,16 @@
 import { Modal } from '../../../../../const';
-import { useReview } from '../../../../../contexts/review-provider/review-provider';
+import { useAppDispatch } from '../../../../../hooks';
+import { setActiveModal } from '../../../../../store/slices/app-slice/app-slice';
 
 function PostReviewButton() {
-  const {setActiveModal} = useReview();
+  const dispatch = useAppDispatch();
 
   return (
     <button
       data-testid='open-modal-btn'
       className="btn"
       type="button"
-      onClick={() => setActiveModal(Modal.Form)}
+      onClick={() => dispatch(setActiveModal(Modal.Form))}
     >
       Оставить свой отзыв
     </button>

@@ -1,19 +1,19 @@
 import { useParams } from 'react-router-dom';
 import { useForm} from 'react-hook-form';
 import {TReviewPost} from '../../../../../../types/review';
-import { useAppDispatch } from '../../../../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../../../../hooks';
 import { postReviewAction } from '../../../../../../store/api-actions/reviews-api/reviews-api';
 import cn from 'classnames';
 import ReviewRateBar from './review-rate-bar.tsx/review-rate-bar';
-import { useReview } from '../../../../../../contexts/review-provider/review-provider';
 import { COMMENT_MIN_LENGTH } from '../../../../../../const';
+import { selectCurrentReviewPage } from '../../../../../../store/slices/app-slice/selectors';
 
 type TReviewPostKey = keyof TReviewPost;
 
 function ReviewForm() {
   const dispatch = useAppDispatch();
   const {id} = useParams();
-  const {currentPage} = useReview();
+  const currentPage = useAppSelector(selectCurrentReviewPage);
 
   const {
     register,

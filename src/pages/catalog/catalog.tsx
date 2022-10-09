@@ -45,7 +45,7 @@ function Catalog() {
 
   useEffect(() => {
     dispatch(fetchPromoAction());
-  }, []);
+  }, [dispatch]);
 
   if (!pagesCount && currentPage > 0 && isCamerasLoadingStatusPending) {
     return <FullPageLoader />;

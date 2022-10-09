@@ -12,6 +12,7 @@ import { cameraLoadingStatusSelector, selectCamera } from '../../store/slices/ca
 import { scrollToTop } from '../../utils/utils';
 import { Helmet } from 'react-helmet';
 import ErrorMessage from '../error-message/error-message';
+import { setCurrentReviewPage } from '../../store/slices/app-slice/app-slice';
 
 function Product() {
   const dispatch = useAppDispatch();
@@ -33,6 +34,9 @@ function Product() {
       replace: true
     }));
 
+    return () => {
+      dispatch(setCurrentReviewPage(Number(DEFAULT_PAGE) + 1));
+    };
   }, [dispatch, productId]);
 
   if (isCameraLoadingStatusPending) {

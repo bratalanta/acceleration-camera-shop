@@ -1,12 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace } from '../../../const';
+import { DEFAULT_PAGE, Modal, NameSpace } from '../../../const';
 
 type TAppSliceState = {
   currentCatalogPage: number;
+  currentReviewPage: number;
+  activeModal: null | Modal
 }
 
 const initialState: TAppSliceState = {
-  currentCatalogPage: 0
+  currentCatalogPage: 0,
+  activeModal: null,
+  currentReviewPage: Number(DEFAULT_PAGE) + 1,
+
 };
 
 const appSlice = createSlice({
@@ -15,6 +20,12 @@ const appSlice = createSlice({
   reducers: {
     setCurrentCatalogPage: (state, action) => {
       state.currentCatalogPage = action.payload;
+    },
+    setCurrentReviewPage: (state, action) => {
+      state.currentReviewPage = action.payload;
+    },
+    setActiveModal: (state, action) => {
+      state.activeModal = action.payload;
     }
   },
 });
@@ -24,7 +35,9 @@ export {
 };
 
 export const {
-  setCurrentCatalogPage
+  setCurrentCatalogPage,
+  setActiveModal,
+  setCurrentReviewPage
 } = appSlice.actions;
 
 export type {

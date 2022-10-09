@@ -1,5 +1,4 @@
 import ReactFocusLock from 'react-focus-lock';
-import ReviewProvider from '../../../contexts/review-provider/review-provider';
 import { useAppSelector } from '../../../hooks';
 import { selectSimilarCameras } from '../../../store/slices/cameras-slice/selectors';
 import { scrollToTop } from '../../../utils/utils';
@@ -18,12 +17,10 @@ function ProductContent() {
         <Breadcrumbs isProduct/>
         <ProductDetails />
         {similarCameras.length ? <SimilarProducts products={similarCameras}/> : ''}
-        <ReviewProvider>
-          <ReviewBlock />
-          <ReactFocusLock>
-            <Modals />
-          </ReactFocusLock>
-        </ReviewProvider>
+        <ReviewBlock />
+        <ReactFocusLock>
+          <Modals />
+        </ReactFocusLock>
       </div>
       <button
         className="up-btn"
