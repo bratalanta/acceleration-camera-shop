@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { LoadingStatus, NameSpace } from '../../../const';
-import { TCamera } from '../../../types/camera';
-import { fetchCameraAction, fetchCamerasAction, fetchSimilarCamerasAction } from '../../api-actions/cameras-api/cameras-api';
+import { TCamera, TLikelyCamera } from '../../../types/camera';
+import { fetchCameraAction, fetchCamerasAction, fetchLikelyCamerasAction, fetchSimilarCamerasAction } from '../../api-actions/cameras-api/cameras-api';
 
 type TCamerasSliceState = {
   cameras: TCamera[];
   camera: TCamera;
   similarCameras: TCamera[];
+  likelyCameras: TLikelyCamera[];
   camerasLoadingStatus: LoadingStatus;
   cameraLoadingStatus: LoadingStatus;
   camerasTotalCount: number;
@@ -16,9 +17,10 @@ const initialState: TCamerasSliceState = {
   cameras: [],
   camera: {} as TCamera,
   similarCameras: [],
+  likelyCameras: [],
   camerasLoadingStatus: LoadingStatus.Idle,
   cameraLoadingStatus: LoadingStatus.Idle,
-  camerasTotalCount: 0
+  camerasTotalCount: 0,
 };
 
 const camerasSlice = createSlice({
@@ -50,6 +52,9 @@ const camerasSlice = createSlice({
       })
       .addCase(fetchSimilarCamerasAction.fulfilled, (state, action) => {
         state.similarCameras = action.payload;
+      })
+      .addCase(fetchLikelyCamerasAction.fulfilled, (state, action) => {
+        state.likelyCameras = action.payload;
       });
   }
 });

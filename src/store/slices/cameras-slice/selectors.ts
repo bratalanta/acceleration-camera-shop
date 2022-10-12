@@ -12,6 +12,8 @@ const selectCameraLoadingStatus = (state: State) => state[NameSpace.Cameras].cam
 
 const selectSimilarCameras = (state: State) => state[NameSpace.Cameras].similarCameras;
 
+const selectLikelyCameras = (state: State) => state[NameSpace.Cameras].likelyCameras;
+
 const cameraLoadingStatusSelector = createSelector(
   [
     selectCameraLoadingStatus,
@@ -40,5 +42,6 @@ export {
   selectSimilarCameras,
   cameraLoadingStatusSelector,
   selectCamerasTotalCount,
-  camerasLoadingStatusSelector
+  camerasLoadingStatusSelector,
+  selectLikelyCameras
 };

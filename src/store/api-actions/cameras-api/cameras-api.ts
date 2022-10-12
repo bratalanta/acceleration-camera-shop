@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosInstance } from 'axios';
 import { AppDispatch, State } from '../../../types/state';
-import { TCamera, TFetchCamerasActionPayload, TFetchCamerasActionReturnedData } from '../../../types/camera';
-import { APIRoute, AppRoute } from '../../../const';
+import { TCamera, TFetchCamerasActionPayload, TFetchCamerasActionReturnedData, TFetchLikelyCamerasActionReturnedData } from '../../../types/camera';
+import { APIRoute, AppRoute, QueryParameter } from '../../../const';
 import { toast } from 'react-toastify';
 import browserHistory from '../../../browser-history';
 import { StatusCodes } from 'http-status-codes';
@@ -16,8 +16,8 @@ const fetchCamerasAction = createAsyncThunk<TFetchCamerasActionReturnedData, TFe
   async ({limit, page}, {extra: api}) => {
     const response = await api.get<TCamera[]>(APIRoute.Cameras, {
       params: {
-        _limit: limit,
-        _page: page
+        [QueryParameter.Limit]: limit,
+        [QueryParameter.Page]: page
       }
     });
 
@@ -25,6 +25,29 @@ const fetchCamerasAction = createAsyncThunk<TFetchCamerasActionReturnedData, TFe
       data: response.data,
       dataTotalCount: Number(response.headers['x-total-count'])
     };
+  }
+);
+
+const fetchLikelyCamerasAction = createAsyncThunk<TFetchLikelyCamerasActionReturnedData[], string, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'cameras/fetchLikelyCameras',
+  async (input, {extra: api}) => {
+    try {
+      const {data} = await api.get<TCamera[]>(APIRoute.Cameras, {
+        params: {
+          [QueryParameter.NameLike]: input
+        }
+      });
+
+      return data.map(({name, id}) => ({name, id}));
+    } catch (err) {
+      toast.warn('Не удалось загрузить подходящие товары');
+
+      throw err;
+    }
   }
 );
 
@@ -76,5 +99,6 @@ const fetchSimilarCamerasAction = createAsyncThunk<TCamera[], number, {
 export {
   fetchCameraAction,
   fetchCamerasAction,
-  fetchSimilarCamerasAction
+  fetchSimilarCamerasAction,
+  fetchLikelyCamerasAction
 };

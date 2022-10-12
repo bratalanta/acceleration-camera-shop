@@ -6,6 +6,7 @@ import HistoryRouter from './components/history-router/history-router';
 import { store } from './store';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { TOAST_MAX_COUNT } from './const';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -14,7 +15,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <HistoryRouter history={browserHistory}>
-      <ToastContainer />
+      <ToastContainer limit={TOAST_MAX_COUNT}/>
       <App />
     </HistoryRouter>
   </Provider>

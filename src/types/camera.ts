@@ -15,6 +15,11 @@ type TCamera = {
   reviewCount: number;
 };
 
+type TLikelyCamera = {
+  id: number;
+  name: string
+}
+
 type TFetchCamerasActionPayload = {
   limit: number;
   page: number;
@@ -25,8 +30,15 @@ type TFetchCamerasActionReturnedData = {
   dataTotalCount: number;
 }
 
+type TFetchLikelyCamerasActionReturnedData = {
+  id: number;
+  name: string;
+}
+
 export type {
   TFetchCamerasActionPayload,
   TCamera,
-  TFetchCamerasActionReturnedData
+  TLikelyCamera,
+  TFetchCamerasActionReturnedData,
+  TFetchLikelyCamerasActionReturnedData
 };

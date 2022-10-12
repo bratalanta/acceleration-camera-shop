@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosInstance } from 'axios';
-import { APIRoute, DEFAULT_PAGE, MAX_REVIEWS_COUNT_PER_PAGE, REVIEWS_SORTING_QUERY } from '../../../const';
+import { APIRoute, DEFAULT_PAGE, MAX_REVIEWS_COUNT_PER_PAGE, QueryParameter, REVIEWS_SORTING_QUERY } from '../../../const';
 import { TFetchReviewsActionPayload, TFetchReviewsActionReturnedData, TPostReviewActionPayload, TReview } from '../../../types/review';
 import { AppDispatch, State } from '../../../types/state';
 import {toast} from 'react-toastify';
@@ -57,8 +57,8 @@ const fetchReviewsAction = createAsyncThunk<TFetchReviewsActionReturnedData, TFe
       const response = await api.get<TReview[]>(
         `${APIRoute.Cameras}/${id}${APIRoute.Reviews}?${REVIEWS_SORTING_QUERY}`, {
           params: {
-            _limit: limit,
-            _page: page
+            [QueryParameter.Limit]: limit,
+            [QueryParameter.Page]: page
           },
         }
       );

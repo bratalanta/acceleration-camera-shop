@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Banner from '../../components/catalog/banner/banner';
 import Pagination from '../../components/catalog/pagination/pagination';
@@ -25,13 +25,13 @@ function Catalog() {
   const cameras = useAppSelector(selectCameras);
   const camerasTotalCount = useAppSelector(selectCamerasTotalCount);
   const {isCamerasLoadingStatusRejected, isCamerasLoadingStatusPending} = useAppSelector(camerasLoadingStatusSelector);
-  const {pathname} = useLocation();
+  const {pageNumber} = useParams();
 
   const pagesCount = useMemo(() => (
     Math.ceil(camerasTotalCount / MAX_PRODUCTS_COUNT_PER_PAGE)
   ), [camerasTotalCount]);
 
-  const currentPage = Number(pathname.split('_')[1]);
+  const currentPage = Number(pageNumber);
 
   useEffect(() => {
     if (currentPage) {

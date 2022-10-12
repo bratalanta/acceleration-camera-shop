@@ -10,6 +10,7 @@ type ProductTabsProps = {
 
 function ProductTabs({product}: ProductTabsProps) {
   const {hash} = useLocation();
+  const currentAnchor = hash ? hash : Anchor.Description;
 
   const {
     vendorCode,
@@ -23,13 +24,13 @@ function ProductTabs({product}: ProductTabsProps) {
     Element: cn(
       'tabs__element',
       {
-        'is-active': hash === Anchor.Features
+        'is-active': currentAnchor === Anchor.Features
       }
     ),
     Control: cn(
       'tabs__control',
       {
-        'is-active': hash === Anchor.Features
+        'is-active': currentAnchor === Anchor.Features
       }
     ),
   } as const;
@@ -38,13 +39,13 @@ function ProductTabs({product}: ProductTabsProps) {
     Element: cn(
       'tabs__element',
       {
-        'is-active': hash === Anchor.Description
+        'is-active': currentAnchor === Anchor.Description
       }
     ),
     Control: cn(
       'tabs__control',
       {
-        'is-active': hash === Anchor.Description
+        'is-active': currentAnchor === Anchor.Description
       }
     ),
   } as const;

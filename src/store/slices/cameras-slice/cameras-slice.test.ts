@@ -13,6 +13,7 @@ describe('Reducer: camerasSlice', () => {
 
   beforeEach(() => {
     state = {
+      likelyCameras: [],
       cameras: [],
       camera: {} as TCamera,
       similarCameras: [],

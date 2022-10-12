@@ -1,5 +1,5 @@
 const enum AppRoute {
-  Catalog = '/catalog/page_:pageNumber',
+  Catalog = '/catalog/page_:pageNumber/',
   Product = '/product/:id',
   NotFound = '*'
 }
@@ -16,6 +16,12 @@ const enum NameSpace {
   Cameras = 'cameras',
   Reviews = 'reviews',
   Promo = 'promo'
+}
+
+const enum QueryParameter {
+  Limit = '_limit',
+  Page = '_page',
+  NameLike = 'name_like'
 }
 
 const enum LoadingStatus {
@@ -43,6 +49,7 @@ const DEFAULT_TITLE = 'Каталог-Фотошоп';
 const REVIEWS_SORTING_QUERY = '_sort=createAt&_order=desc';
 const MAX_RATING = 5;
 const MAX_PRODUCTS_COUNT_PER_SLIDE = 3;
+const TOAST_MAX_COUNT = 1;
 
 export {
   AppRoute,
@@ -58,5 +65,7 @@ export {
   REVIEWS_SORTING_QUERY,
   COMMENT_MIN_LENGTH,
   MAX_RATING,
-  MAX_PRODUCTS_COUNT_PER_SLIDE
+  MAX_PRODUCTS_COUNT_PER_SLIDE,
+  TOAST_MAX_COUNT,
+  QueryParameter
 };
