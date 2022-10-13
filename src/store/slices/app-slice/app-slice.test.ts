@@ -1,12 +1,13 @@
 import { DEFAULT_PAGE } from '../../../const';
-import { appSlice, setCurrentCatalogPage, TAppSliceState } from './app-slice';
+import { TCurrentCatalogPath } from '../../../types/app';
+import { appSlice, setCurrentCatalogPath, TAppSliceState } from './app-slice';
 
 describe('Reducer: appSlice', () => {
   let state: TAppSliceState;
 
   beforeEach(() => {
     state = {
-      currentCatalogPage: 0,
+      currentCatalogPath: {} as TCurrentCatalogPath,
       currentReviewPage: Number(DEFAULT_PAGE) + 1,
       activeModal: null
     };
@@ -18,7 +19,7 @@ describe('Reducer: appSlice', () => {
   });
 
   it('should set current catalog page', () => {
-    expect(appSlice.reducer(state, setCurrentCatalogPage(4)))
+    expect(appSlice.reducer(state, setCurrentCatalogPath(1)))
       .toEqual({...state, currentCatalogPage: 4});
   });
 });

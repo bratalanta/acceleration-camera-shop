@@ -1,4 +1,44 @@
-function Sort() {
+import { ChangeEvent, useEffect, useState } from 'react';
+import { QueryParameter, SortOrder, SortType } from '../../../const';
+import { useAppSelector } from '../../../hooks';
+import { selectCurrentCatalogPath } from '../../../store/slices/app-slice/selectors';
+
+type SortProps = {
+  changeSearch: (parameter: QueryParameter, value: string) => void;
+}
+
+function Sort({changeSearch}: SortProps) {
+  const {search} = useAppSelector(selectCurrentCatalogPath);
+  const [sortActivatedBy, setSortActivatedBy] = useState<QueryParameter | null>();
+
+  const handleInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    const name = evt.target.name;
+    const value = evt.target.value;
+
+    switch(name) {
+      case QueryParameter.Sort:
+        changeSearch(QueryParameter.Sort, value);
+
+        return;
+      case QueryParameter.Order:
+        changeSearch(QueryParameter.Order, value);
+    }
+  };
+
+  useEffect(() => {
+    setSortActivatedBy(null);
+    const isSortSearch = search?.includes(QueryParameter.Sort) && !search?.includes(QueryParameter.Order);
+    const isOrderSearch = !search?.includes(QueryParameter.Sort) && search?.includes(QueryParameter.Order);
+
+    if (isSortSearch) {
+      setSortActivatedBy(QueryParameter.Sort);
+    }
+
+    if (isOrderSearch) {
+      setSortActivatedBy(QueryParameter.Order);
+    }
+  }, [search, sortActivatedBy]);
+
   return (
     <div className="catalog-sort" data-testid='sort'>
       <form action="#">
@@ -6,17 +46,39 @@ function Sort() {
           <p className="title title--h5">Сортировать:</p>
           <div className="catalog-sort__type">
             <div className="catalog-sort__btn-text">
-              <input type="radio" id="sortPrice" name="sort" defaultChecked />
+              <input
+                type="radio"
+                id="sortPrice"
+                name="_sort"
+                value="price"
+                onChange={handleInputChange}
+                checked={search?.includes(SortType.Price) || sortActivatedBy === QueryParameter.Order}
+              />
               <label htmlFor="sortPrice">по цене</label>
             </div>
             <div className="catalog-sort__btn-text">
-              <input type="radio" id="sortPopular" name="sort" />
+              <input
+                type="radio"
+                id="sortPopular"
+                name="_sort"
+                value="rating"
+                onChange={handleInputChange}
+                checked={search?.includes(SortType.Rating)}
+              />
               <label htmlFor="sortPopular">по популярности</label>
             </div>
           </div>
           <div className="catalog-sort__order">
             <div className="catalog-sort__btn catalog-sort__btn--up">
-              <input type="radio" id="up" name="sort-icon" defaultChecked aria-label="По возрастанию" />
+              <input
+                type="radio"
+                id="up"
+                name="_order"
+                value="asc"
+                aria-label="По возрастанию"
+                onChange={handleInputChange}
+                checked={search?.includes(SortOrder.Asc) || sortActivatedBy === QueryParameter.Sort}
+              />
               <label htmlFor="up">
                 <svg width={16} height={14} aria-hidden="true">
                   <use xlinkHref="#icon-sort" />
@@ -24,7 +86,15 @@ function Sort() {
               </label>
             </div>
             <div className="catalog-sort__btn catalog-sort__btn--down">
-              <input type="radio" id="down" name="sort-icon" aria-label="По убыванию" />
+              <input
+                type="radio"
+                id="down"
+                name="_order"
+                value="desc"
+                aria-label="По убыванию"
+                onChange={handleInputChange}
+                checked={search?.includes(SortOrder.Desc)}
+              />
               <label htmlFor="down">
                 <svg width={16} height={14} aria-hidden="true">
                   <use xlinkHref="#icon-sort" />

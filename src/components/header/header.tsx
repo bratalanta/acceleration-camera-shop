@@ -1,11 +1,11 @@
 import { generatePath, Link } from 'react-router-dom';
 import { AppRoute, DEFAULT_PAGE } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { selectCurrentCatalogPage } from '../../store/slices/app-slice/selectors';
+import { selectCurrentCatalogPath } from '../../store/slices/app-slice/selectors';
 import Search from './search/search';
 
 function Header() {
-  const currentCatalogPage = useAppSelector(selectCurrentCatalogPage);
+  const {currentPage, search} = useAppSelector(selectCurrentCatalogPath);
 
   return (
     <header className="header" id="header" data-testid='header'>
@@ -20,7 +20,10 @@ function Header() {
             <li className="main-nav__item">
               <Link
                 className="main-nav__link"
-                to={generatePath(AppRoute.Catalog, {pageNumber: currentCatalogPage ? String(currentCatalogPage) : DEFAULT_PAGE})}
+                to={{
+                  pathname: generatePath(AppRoute.Catalog, {pageNumber: currentPage ? String(currentPage) : DEFAULT_PAGE}),
+                  search
+                }}
               >
                 Каталог
               </Link>

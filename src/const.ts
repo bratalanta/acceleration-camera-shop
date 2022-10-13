@@ -21,7 +21,21 @@ const enum NameSpace {
 const enum QueryParameter {
   Limit = '_limit',
   Page = '_page',
-  NameLike = 'name_like'
+  NameLike = 'name_like',
+  Sort = '_sort',
+  Order = '_order',
+  Type = 'type',
+  Category = 'category'
+}
+
+const enum SortType {
+  Price = 'price',
+  Rating = 'rating'
+}
+
+const enum SortOrder {
+  Asc = 'asc',
+  Desc = 'desc'
 }
 
 const enum LoadingStatus {
@@ -40,6 +54,12 @@ const enum Modal {
   Form = 'form',
   Success = 'success'
 }
+
+const FilterBlock = {
+  'Категория': ['Фотоаппарат', 'Видеокамера'],
+  'Тип камеры': ['Цифровая', 'Плёночная', 'Моментальная', 'Коллекционная'],
+  'Уровень': ['Нулевой', 'Любительский', 'Профессиональный'],
+} as const;
 
 const MAX_PRODUCTS_COUNT_PER_PAGE = 9;
 const MAX_REVIEWS_COUNT_PER_PAGE = 3;
@@ -67,5 +87,8 @@ export {
   MAX_RATING,
   MAX_PRODUCTS_COUNT_PER_SLIDE,
   TOAST_MAX_COUNT,
-  QueryParameter
+  QueryParameter,
+  SortType,
+  FilterBlock,
+  SortOrder
 };

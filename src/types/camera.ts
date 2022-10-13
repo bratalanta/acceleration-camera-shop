@@ -23,6 +23,8 @@ type TLikelyCamera = {
 type TFetchCamerasActionPayload = {
   limit: number;
   page: number;
+  order: string | null;
+  sort: string | null;
 }
 
 type TFetchCamerasActionReturnedData = {

@@ -11,7 +11,9 @@ function AppRouter() {
         path='/'
         element={
           <Navigate
-            to={generatePath(AppRoute.Catalog, {pageNumber: DEFAULT_PAGE})}
+            to={{
+              pathname: generatePath(AppRoute.Catalog, {pageNumber: DEFAULT_PAGE})
+            }}
           />
         }
       />

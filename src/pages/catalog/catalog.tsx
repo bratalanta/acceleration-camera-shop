@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Banner from '../../components/catalog/banner/banner';
 import Pagination from '../../components/catalog/pagination/pagination';
@@ -7,11 +7,11 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import FullPageLoader from '../../components/loaders/full-page-loader/full-page-loader';
 import ProductCardList from '../../components/product-card-list/product-card-list';
-import { DEFAULT_TITLE, MAX_PRODUCTS_COUNT_PER_PAGE } from '../../const';
+import { DEFAULT_TITLE, MAX_PRODUCTS_COUNT_PER_PAGE, QueryParameter } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCamerasAction } from '../../store/api-actions/cameras-api/cameras-api';
 import { fetchPromoAction } from '../../store/api-actions/promo-api/promo-api';
-import { setCurrentCatalogPage } from '../../store/slices/app-slice/app-slice';
+import { setCurrentCatalogPath } from '../../store/slices/app-slice/app-slice';
 import { camerasLoadingStatusSelector, selectCameras, selectCamerasTotalCount } from '../../store/slices/cameras-slice/selectors';
 import NotFound from '../not-found/not-found';
 import { Helmet } from 'react-helmet';
@@ -26,6 +26,9 @@ function Catalog() {
   const camerasTotalCount = useAppSelector(selectCamerasTotalCount);
   const {isCamerasLoadingStatusRejected, isCamerasLoadingStatusPending} = useAppSelector(camerasLoadingStatusSelector);
   const {pageNumber} = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const sortType = searchParams.get(QueryParameter.Sort);
+  const orderType = searchParams.get(QueryParameter.Order);
 
   const pagesCount = useMemo(() => (
     Math.ceil(camerasTotalCount / MAX_PRODUCTS_COUNT_PER_PAGE)
@@ -35,13 +38,18 @@ function Catalog() {
 
   useEffect(() => {
     if (currentPage) {
-      dispatch(setCurrentCatalogPage(currentPage));
+      dispatch(setCurrentCatalogPath({
+        currentPage,
+        search: searchParams.toString()
+      }));
       dispatch(fetchCamerasAction({
         limit: MAX_PRODUCTS_COUNT_PER_PAGE,
-        page: currentPage
+        page: currentPage,
+        sort: sortType,
+        order: orderType
       }));
     }
-  }, [currentPage, dispatch]);
+  }, [currentPage, dispatch, searchParams]);
 
   useEffect(() => {
     dispatch(fetchPromoAction());
@@ -76,7 +84,16 @@ function Catalog() {
                 <div className="page-content__columns">
                   <Filter />
                   <div className="catalog__content">
-                    <Sort />
+                    <Sort
+                      changeSearch={
+                        (parameter: QueryParameter, value: string) => {
+                          setSearchParams({
+                            ...Object.fromEntries(searchParams),
+                            [parameter]: value
+                          });
+                        }
+                      }
+                    />
                     <div className="cards catalog__cards">
                       <ProductCardList cameras={cameras} />
                     </div>

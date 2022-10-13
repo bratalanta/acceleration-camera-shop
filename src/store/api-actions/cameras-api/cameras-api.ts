@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosInstance } from 'axios';
 import { AppDispatch, State } from '../../../types/state';
 import { TCamera, TFetchCamerasActionPayload, TFetchCamerasActionReturnedData, TFetchLikelyCamerasActionReturnedData } from '../../../types/camera';
-import { APIRoute, AppRoute, QueryParameter } from '../../../const';
+import { APIRoute, AppRoute, QueryParameter, SortType } from '../../../const';
 import { toast } from 'react-toastify';
 import browserHistory from '../../../browser-history';
 import { StatusCodes } from 'http-status-codes';
@@ -13,11 +13,13 @@ const fetchCamerasAction = createAsyncThunk<TFetchCamerasActionReturnedData, TFe
   extra: AxiosInstance
 }>(
   'cameras/fetchCameras',
-  async ({limit, page}, {extra: api}) => {
+  async ({limit, page, sort, order}, {extra: api}) => {
     const response = await api.get<TCamera[]>(APIRoute.Cameras, {
       params: {
         [QueryParameter.Limit]: limit,
-        [QueryParameter.Page]: page
+        [QueryParameter.Page]: page,
+        [QueryParameter.Sort]: (sort ? sort : '') || (order ? SortType.Price : ''),
+        [QueryParameter.Order]: order ? order : '',
       }
     });
 

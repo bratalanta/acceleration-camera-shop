@@ -2,7 +2,7 @@ import {Action} from 'redux';
 import thunk, {ThunkDispatch} from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import {configureMockStore} from '@jedmao/redux-mock-store';
-import {APIRoute, DEFAULT_PAGE, MAX_PRODUCTS_COUNT_PER_PAGE} from '../../../const';
+import {APIRoute, DEFAULT_PAGE, MAX_PRODUCTS_COUNT_PER_PAGE, SortType} from '../../../const';
 import { makeFakeCamera } from '../../../tests/mocks/mocks';
 import { fetchCameraAction, fetchCamerasAction, fetchSimilarCamerasAction } from './cameras-api';
 import { createAPI } from '../../../services/api';
@@ -41,7 +41,9 @@ describe('Cameras API', () => {
 
     await store.dispatch(fetchCamerasAction({
       limit: MAX_PRODUCTS_COUNT_PER_PAGE,
-      page: defaultPage
+      page: defaultPage,
+      order: '',
+      sort: SortType.Price
     }));
 
     const actions = store.getActions().map(({type}) => type);
