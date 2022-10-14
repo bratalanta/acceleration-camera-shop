@@ -27,8 +27,15 @@ function Catalog() {
   const {isCamerasLoadingStatusRejected, isCamerasLoadingStatusPending} = useAppSelector(camerasLoadingStatusSelector);
   const {pageNumber} = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
-  const sortType = searchParams.get(QueryParameter.Sort);
-  const orderType = searchParams.get(QueryParameter.Order);
+  const queryParams = {
+    sortType: searchParams.get(QueryParameter.Sort),
+    orderType: searchParams.get(QueryParameter.Order),
+    category: searchParams.get(QueryParameter.Category),
+    level: searchParams.get(QueryParameter.Level),
+    priceCeil: searchParams.get(QueryParameter.PriceCeil),
+    priceFloor: searchParams.get(QueryParameter.PriceFloor),
+    type: searchParams.get(QueryParameter.Type),
+  }
 
   const pagesCount = useMemo(() => (
     Math.ceil(camerasTotalCount / MAX_PRODUCTS_COUNT_PER_PAGE)
@@ -44,9 +51,8 @@ function Catalog() {
       }));
       dispatch(fetchCamerasAction({
         limit: MAX_PRODUCTS_COUNT_PER_PAGE,
-        page: currentPage,
-        sort: sortType,
-        order: orderType
+        currentPage,
+        queryParams
       }));
     }
   }, [currentPage, dispatch, searchParams]);

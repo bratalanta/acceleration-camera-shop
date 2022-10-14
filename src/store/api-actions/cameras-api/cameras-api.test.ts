@@ -41,9 +41,9 @@ describe('Cameras API', () => {
 
     await store.dispatch(fetchCamerasAction({
       limit: MAX_PRODUCTS_COUNT_PER_PAGE,
-      page: defaultPage,
-      order: '',
-      sort: SortType.Price
+      currentPage: defaultPage,
+      sortOrder: '',
+      sortType: SortType.Price
     }));
 
     const actions = store.getActions().map(({type}) => type);

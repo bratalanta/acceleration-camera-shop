@@ -13,13 +13,27 @@ const fetchCamerasAction = createAsyncThunk<TFetchCamerasActionReturnedData, TFe
   extra: AxiosInstance
 }>(
   'cameras/fetchCameras',
-  async ({limit, page, sort, order}, {extra: api}) => {
+  async ({currentPage, limit, queryParams}, {extra: api}) => {
+    const {
+      sortType,
+      orderType,
+      category,
+      level,
+      priceCeil,
+      priceFloor,
+      type
+    } = queryParams;
     const response = await api.get<TCamera[]>(APIRoute.Cameras, {
       params: {
         [QueryParameter.Limit]: limit,
-        [QueryParameter.Page]: page,
-        [QueryParameter.Sort]: (sort ? sort : '') || (order ? SortType.Price : ''),
-        [QueryParameter.Order]: order ? order : '',
+        [QueryParameter.Page]: currentPage,
+        [QueryParameter.Sort]: (sortType ? sortType : '') || (orderType ? SortType.Price : ''),
+        [QueryParameter.Order]: orderType ? orderType : '',
+        [QueryParameter.Category]: category ? category : '',
+        [QueryParameter.Level]: level ? level : '',
+        [QueryParameter.PriceCeil]: priceCeil ? priceCeil : '',
+        [QueryParameter.PriceFloor]: priceFloor ? priceFloor : '',
+        [QueryParameter.Type]: type ? type : '',
       }
     });
 

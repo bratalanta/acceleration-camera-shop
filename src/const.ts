@@ -25,7 +25,10 @@ const enum QueryParameter {
   Sort = '_sort',
   Order = '_order',
   Type = 'type',
-  Category = 'category'
+  Category = 'category',
+  Level = 'level',
+  PriceFloor = 'price_gte',
+  PriceCeil = 'price_lte'
 }
 
 const enum SortType {

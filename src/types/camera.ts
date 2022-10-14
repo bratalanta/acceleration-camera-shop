@@ -21,10 +21,17 @@ type TLikelyCamera = {
 }
 
 type TFetchCamerasActionPayload = {
+  currentPage: number;
   limit: number;
-  page: number;
-  order: string | null;
-  sort: string | null;
+  queryParams: {
+    sortType: string | null
+    orderType: string | null
+    category: string | null
+    level: string | null
+    priceCeil: string | null
+    priceFloor: string | null
+    type: string | null
+  }
 }
 
 type TFetchCamerasActionReturnedData = {
