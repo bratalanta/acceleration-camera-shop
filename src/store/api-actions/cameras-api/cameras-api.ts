@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosInstance } from 'axios';
 import { AppDispatch, State } from '../../../types/state';
-import { TCamera, TFetchCamerasActionPayload, TFetchCamerasActionReturnedData, TFetchLikelyCamerasActionReturnedData } from '../../../types/camera';
+import { TCamera, TCamerasPriceRange, TFetchCamerasActionPayload, TFetchCamerasActionReturnedData, TFetchLikelyCamerasActionReturnedData, TFetchMinMaxCameraPricesActionPayload } from '../../../types/camera';
 import { APIRoute, AppRoute, QueryParameter, SortType } from '../../../const';
 import { toast } from 'react-toastify';
 import browserHistory from '../../../browser-history';
@@ -16,30 +16,64 @@ const fetchCamerasAction = createAsyncThunk<TFetchCamerasActionReturnedData, TFe
   async ({currentPage, limit, queryParams}, {extra: api}) => {
     const {
       sortType,
-      orderType,
+      sortOrder,
       category,
       level,
       priceCeil,
       priceFloor,
       type
     } = queryParams;
+
     const response = await api.get<TCamera[]>(APIRoute.Cameras, {
       params: {
         [QueryParameter.Limit]: limit,
         [QueryParameter.Page]: currentPage,
-        [QueryParameter.Sort]: (sortType ? sortType : '') || (orderType ? SortType.Price : ''),
-        [QueryParameter.Order]: orderType ? orderType : '',
-        [QueryParameter.Category]: category ? category : '',
-        [QueryParameter.Level]: level ? level : '',
-        [QueryParameter.PriceCeil]: priceCeil ? priceCeil : '',
-        [QueryParameter.PriceFloor]: priceFloor ? priceFloor : '',
-        [QueryParameter.Type]: type ? type : '',
+        [QueryParameter.Sort]: sortType || (sortOrder && SortType.Price),
+        [QueryParameter.Order]: sortOrder,
+        [QueryParameter.Category]: category,
+        [QueryParameter.Level]: level,
+        [QueryParameter.PriceCeil]: priceCeil,
+        [QueryParameter.PriceFloor]: priceFloor,
+        [QueryParameter.Type]: type,
       }
     });
 
     return {
       data: response.data,
       dataTotalCount: Number(response.headers['x-total-count'])
+    };
+  }
+);
+
+const fetchMinMaxCameraPricesAction = createAsyncThunk<TCamerasPriceRange, TFetchMinMaxCameraPricesActionPayload, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'cameras/fetchMinMaxCameraPrices',
+  async (queryParams, {extra: api}) => {
+    const {
+      category,
+      level,
+      priceCeil,
+      priceFloor,
+      type
+    } = queryParams;
+
+    const {data} = await api.get<TCamera[]>(APIRoute.Cameras, {
+      params: {
+        [QueryParameter.Sort]: SortType.Price,
+        [QueryParameter.Category]: category,
+        [QueryParameter.Level]: level,
+        [QueryParameter.PriceCeil]: priceCeil,
+        [QueryParameter.PriceFloor]: priceFloor,
+        [QueryParameter.Type]: type,
+      }
+    });
+
+    return {
+      minPrice: data.at(0)?.price,
+      maxPrice: data.at(-1)?.price
     };
   }
 );
@@ -116,5 +150,6 @@ export {
   fetchCameraAction,
   fetchCamerasAction,
   fetchSimilarCamerasAction,
-  fetchLikelyCamerasAction
+  fetchLikelyCamerasAction,
+  fetchMinMaxCameraPricesAction
 };

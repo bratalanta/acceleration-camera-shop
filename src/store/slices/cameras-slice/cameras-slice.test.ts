@@ -19,7 +19,8 @@ describe('Reducer: camerasSlice', () => {
       similarCameras: [],
       camerasLoadingStatus: LoadingStatus.Idle,
       cameraLoadingStatus: LoadingStatus.Idle,
-      camerasTotalCount: 0
+      camerasTotalCount: 0,
+      camerasPriceRange: {}
     };
   });
 

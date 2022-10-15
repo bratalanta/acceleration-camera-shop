@@ -1,4 +1,5 @@
 import { ChangeEvent, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { QueryParameter, SortOrder, SortType } from '../../../const';
 import { useAppSelector } from '../../../hooks';
 import { selectCurrentCatalogPath } from '../../../store/slices/app-slice/selectors';
@@ -9,6 +10,7 @@ type SortProps = {
 
 function Sort({changeSearch}: SortProps) {
   const {search} = useAppSelector(selectCurrentCatalogPath);
+  const [searchParams] = useSearchParams();
   const [sortActivatedBy, setSortActivatedBy] = useState<QueryParameter | null>();
 
   const handleInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +54,8 @@ function Sort({changeSearch}: SortProps) {
                 name="_sort"
                 value="price"
                 onChange={handleInputChange}
-                checked={search?.includes(SortType.Price) || sortActivatedBy === QueryParameter.Order}
+                checked={(searchParams.get(QueryParameter.Sort) && search?.includes(SortType.Price)) ||
+                   sortActivatedBy === QueryParameter.Order}
               />
               <label htmlFor="sortPrice">по цене</label>
             </div>

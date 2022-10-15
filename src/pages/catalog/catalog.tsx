@@ -9,7 +9,7 @@ import FullPageLoader from '../../components/loaders/full-page-loader/full-page-
 import ProductCardList from '../../components/product-card-list/product-card-list';
 import { DEFAULT_TITLE, MAX_PRODUCTS_COUNT_PER_PAGE, QueryParameter } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchCamerasAction } from '../../store/api-actions/cameras-api/cameras-api';
+import { fetchCamerasAction, fetchMinMaxCameraPricesAction } from '../../store/api-actions/cameras-api/cameras-api';
 import { fetchPromoAction } from '../../store/api-actions/promo-api/promo-api';
 import { setCurrentCatalogPath } from '../../store/slices/app-slice/app-slice';
 import { camerasLoadingStatusSelector, selectCameras, selectCamerasTotalCount } from '../../store/slices/cameras-slice/selectors';
@@ -27,15 +27,21 @@ function Catalog() {
   const {isCamerasLoadingStatusRejected, isCamerasLoadingStatusPending} = useAppSelector(camerasLoadingStatusSelector);
   const {pageNumber} = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
-  const queryParams = {
+
+  const sortParams = {
     sortType: searchParams.get(QueryParameter.Sort),
-    orderType: searchParams.get(QueryParameter.Order),
-    category: searchParams.get(QueryParameter.Category),
-    level: searchParams.get(QueryParameter.Level),
+    sortOrder: searchParams.get(QueryParameter.Order),
+  };
+
+  const filterParams = {
+    category: searchParams.getAll(QueryParameter.Category),
+    level: searchParams.getAll(QueryParameter.Level),
     priceCeil: searchParams.get(QueryParameter.PriceCeil),
     priceFloor: searchParams.get(QueryParameter.PriceFloor),
-    type: searchParams.get(QueryParameter.Type),
-  }
+    type: searchParams.getAll(QueryParameter.Type),
+  };
+
+  const filterJSON = JSON.stringify(filterParams);
 
   const pagesCount = useMemo(() => (
     Math.ceil(camerasTotalCount / MAX_PRODUCTS_COUNT_PER_PAGE)
@@ -47,12 +53,15 @@ function Catalog() {
     if (currentPage) {
       dispatch(setCurrentCatalogPath({
         currentPage,
-        search: searchParams.toString()
+        search: decodeURI(searchParams.toString())
       }));
       dispatch(fetchCamerasAction({
         limit: MAX_PRODUCTS_COUNT_PER_PAGE,
         currentPage,
-        queryParams
+        queryParams: {
+          ...sortParams,
+          ...filterParams
+        }
       }));
     }
   }, [currentPage, dispatch, searchParams]);
@@ -60,6 +69,11 @@ function Catalog() {
   useEffect(() => {
     dispatch(fetchPromoAction());
   }, [dispatch]);
+
+  useEffect(() => {
+    console.log(1);
+    dispatch(fetchMinMaxCameraPricesAction(filterParams));
+  }, [filterJSON]);
 
   if (!pagesCount && currentPage > 0 && isCamerasLoadingStatusPending) {
     return <FullPageLoader />;

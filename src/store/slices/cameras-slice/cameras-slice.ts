@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { LoadingStatus, NameSpace } from '../../../const';
-import { TCamera, TLikelyCamera } from '../../../types/camera';
-import { fetchCameraAction, fetchCamerasAction, fetchLikelyCamerasAction, fetchSimilarCamerasAction } from '../../api-actions/cameras-api/cameras-api';
+import { TCamerasPriceRange, TCamera, TLikelyCamera } from '../../../types/camera';
+import { fetchCameraAction, fetchCamerasAction, fetchLikelyCamerasAction, fetchMinMaxCameraPricesAction, fetchSimilarCamerasAction } from '../../api-actions/cameras-api/cameras-api';
 
 type TCamerasSliceState = {
   cameras: TCamera[];
@@ -11,6 +11,7 @@ type TCamerasSliceState = {
   camerasLoadingStatus: LoadingStatus;
   cameraLoadingStatus: LoadingStatus;
   camerasTotalCount: number;
+  camerasPriceRange: TCamerasPriceRange
 }
 
 const initialState: TCamerasSliceState = {
@@ -21,6 +22,7 @@ const initialState: TCamerasSliceState = {
   camerasLoadingStatus: LoadingStatus.Idle,
   cameraLoadingStatus: LoadingStatus.Idle,
   camerasTotalCount: 0,
+  camerasPriceRange: {} as TCamerasPriceRange
 };
 
 const camerasSlice = createSlice({
@@ -55,6 +57,9 @@ const camerasSlice = createSlice({
       })
       .addCase(fetchLikelyCamerasAction.fulfilled, (state, action) => {
         state.likelyCameras = action.payload;
+      })
+      .addCase(fetchMinMaxCameraPricesAction.fulfilled, (state, action) => {
+        state.camerasPriceRange = action.payload;
       });
   }
 });

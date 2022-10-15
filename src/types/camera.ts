@@ -25,13 +25,21 @@ type TFetchCamerasActionPayload = {
   limit: number;
   queryParams: {
     sortType: string | null
-    orderType: string | null
-    category: string | null
-    level: string | null
+    sortOrder: string | null
+    category: string | null | string[]
+    level: string | null | string[]
     priceCeil: string | null
     priceFloor: string | null
-    type: string | null
+    type: string | null | string[]
   }
+}
+
+type TFetchMinMaxCameraPricesActionPayload = {
+  category: string | null | string[]
+  level: string | null | string[]
+  priceCeil: string | null
+  priceFloor: string | null
+  type: string | null | string[]
 }
 
 type TFetchCamerasActionReturnedData = {
@@ -44,10 +52,17 @@ type TFetchLikelyCamerasActionReturnedData = {
   name: string;
 }
 
+type TCamerasPriceRange = {
+  maxPrice?: number;
+  minPrice?: number;
+}
+
 export type {
   TFetchCamerasActionPayload,
   TCamera,
   TLikelyCamera,
   TFetchCamerasActionReturnedData,
-  TFetchLikelyCamerasActionReturnedData
+  TFetchLikelyCamerasActionReturnedData,
+  TCamerasPriceRange,
+  TFetchMinMaxCameraPricesActionPayload
 };

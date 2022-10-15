@@ -64,6 +64,28 @@ const FilterBlock = {
   'Уровень': ['Нулевой', 'Любительский', 'Профессиональный'],
 } as const;
 
+const FilterTitle: {[k: string]: QueryParameter} = {
+  'Категория': QueryParameter.Category,
+  'Тип камеры': QueryParameter.Type,
+  'Уровень': QueryParameter.Level
+} as const;
+
+const FILTER_PARAMS: string[] = [
+  QueryParameter.Level,
+  QueryParameter.Type,
+  QueryParameter.Category,
+  QueryParameter.PriceFloor,
+  QueryParameter.PriceCeil
+];
+
+const LimitedFilter = {
+  Category: 'Видеокамера',
+  Type: {
+    'Моментальная': 'Моментальная',
+    'Плёночная': 'Плёночная'
+  }
+} as const;
+
 const MAX_PRODUCTS_COUNT_PER_PAGE = 9;
 const MAX_REVIEWS_COUNT_PER_PAGE = 3;
 const COMMENT_MIN_LENGTH = 5;
@@ -93,5 +115,8 @@ export {
   QueryParameter,
   SortType,
   FilterBlock,
-  SortOrder
+  SortOrder,
+  FilterTitle,
+  FILTER_PARAMS,
+  LimitedFilter
 };

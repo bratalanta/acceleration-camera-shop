@@ -5,7 +5,7 @@ import { State } from '../../../types/state';
 const selectCameras = (state: State) => state[NameSpace.Cameras].cameras;
 const selectCamerasLoadingStatus = (state: State) => state[NameSpace.Cameras].camerasLoadingStatus;
 const selectCamerasTotalCount = (state: State) => state[NameSpace.Cameras].camerasTotalCount;
-
+const selectCamerasPriceRange = (state: State) => state[NameSpace.Cameras].camerasPriceRange;
 
 const selectCamera = (state: State) => state[NameSpace.Cameras].camera;
 const selectCameraLoadingStatus = (state: State) => state[NameSpace.Cameras].cameraLoadingStatus;
@@ -43,5 +43,6 @@ export {
   cameraLoadingStatusSelector,
   selectCamerasTotalCount,
   camerasLoadingStatusSelector,
-  selectLikelyCameras
+  selectLikelyCameras,
+  selectCamerasPriceRange
 };
