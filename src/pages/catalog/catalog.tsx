@@ -1,5 +1,5 @@
-import { useEffect, useMemo } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useEffect, useMemo, useRef } from 'react';
+import { generatePath, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Banner from '../../components/catalog/banner/banner';
 import Pagination from '../../components/catalog/pagination/pagination';
@@ -7,7 +7,7 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import FullPageLoader from '../../components/loaders/full-page-loader/full-page-loader';
 import ProductCardList from '../../components/product-card-list/product-card-list';
-import { DEFAULT_TITLE, MAX_PRODUCTS_COUNT_PER_PAGE, QueryParameter } from '../../const';
+import { AppRoute, DEFAULT_PAGE, DEFAULT_TITLE, MAX_PRODUCTS_COUNT_PER_PAGE, QueryParameter } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCamerasAction, fetchMinMaxCameraPricesAction } from '../../store/api-actions/cameras-api/cameras-api';
 import { fetchPromoAction } from '../../store/api-actions/promo-api/promo-api';
@@ -18,6 +18,8 @@ import { Helmet } from 'react-helmet';
 import ErrorMessage from '../error-message/error-message';
 import Sort from '../../components/catalog/sort/sort';
 import Filter from '../../components/catalog/filter/filter';
+import InnerLoader from '../../components/loaders/inner-loader/inner-loader';
+import NoCameras from '../../components/catalog/no-cameras/no-cameras';
 
 function Catalog() {
   const dispatch = useAppDispatch();
@@ -27,6 +29,8 @@ function Catalog() {
   const {isCamerasLoadingStatusRejected, isCamerasLoadingStatusPending} = useAppSelector(camerasLoadingStatusSelector);
   const {pageNumber} = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const isMounted = useRef(false);
 
   const sortParams = {
     sortType: searchParams.get(QueryParameter.Sort),
@@ -40,15 +44,13 @@ function Catalog() {
     priceFloor: searchParams.get(QueryParameter.PriceFloor),
     type: searchParams.getAll(QueryParameter.Type),
   };
-
-  const filterJSON = JSON.stringify(filterParams);
+  const filterParamsJSON = JSON.stringify(filterParams);
 
   const pagesCount = useMemo(() => (
     Math.ceil(camerasTotalCount / MAX_PRODUCTS_COUNT_PER_PAGE)
   ), [camerasTotalCount]);
 
   const currentPage = Number(pageNumber);
-
   useEffect(() => {
     if (currentPage) {
       dispatch(setCurrentCatalogPath({
@@ -61,7 +63,7 @@ function Catalog() {
         queryParams: {
           ...sortParams,
           ...filterParams
-        }
+        },
       }));
     }
   }, [currentPage, dispatch, searchParams]);
@@ -71,11 +73,17 @@ function Catalog() {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log(1);
-    dispatch(fetchMinMaxCameraPricesAction(filterParams));
-  }, [filterJSON]);
+    if (pagesCount) {
+      navigate({
+        pathname: generatePath(AppRoute.Catalog, {pageNumber: DEFAULT_PAGE}),
+        search: decodeURI(searchParams.toString())
+      });
+    }
 
-  if (!pagesCount && currentPage > 0 && isCamerasLoadingStatusPending) {
+    dispatch(fetchMinMaxCameraPricesAction(filterParams));
+  }, [filterParamsJSON]);
+
+  if (isCamerasLoadingStatusPending && !pagesCount && !isMounted.current) {
     return <FullPageLoader />;
   }
 
@@ -83,9 +91,11 @@ function Catalog() {
     return <ErrorMessage />;
   }
 
-  if (currentPage > pagesCount || currentPage < 1) {
+  if ((currentPage > pagesCount || currentPage < 1) && pagesCount !== 0) {
     return <NotFound />;
   }
+
+  isMounted.current = true;
 
   return (
     <>
@@ -114,10 +124,15 @@ function Catalog() {
                         }
                       }
                     />
-                    <div className="cards catalog__cards">
-                      <ProductCardList cameras={cameras} />
-                    </div>
-                    <Pagination pagesCount={pagesCount} />
+                    {isCamerasLoadingStatusPending ? <InnerLoader /> : ''}
+                    {cameras.length && !isCamerasLoadingStatusPending ?
+                      <>
+                        <div className="cards catalog__cards">
+                          <ProductCardList cameras={cameras} />
+                        </div>
+                        <Pagination pagesCount={pagesCount} />
+                      </> : ''}
+                    {!cameras.length && !isCamerasLoadingStatusPending ? <NoCameras /> : ''}
                   </div>
                 </div>
               </div>

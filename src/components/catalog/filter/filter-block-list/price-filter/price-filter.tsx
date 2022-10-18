@@ -1,39 +1,84 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { QueryParameter } from '../../../../../const';
 import { useAppSelector } from '../../../../../hooks';
+import useKeydown from '../../../../../hooks/use-keydown';
 import { selectCamerasPriceRange } from '../../../../../store/slices/cameras-slice/selectors';
 
 function PriceFilter() {
   const {minPrice = 0, maxPrice = 0} = useAppSelector(selectCamerasPriceRange);
   const [searchParams, setSearchParams] = useSearchParams();
+  const minPriceInputRef = useRef<HTMLInputElement>(null);
+  const maxPriceInputRef = useRef<HTMLInputElement>(null);
 
-  const handlePriceInputChange = ({target}: ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = target;
-    const numValue = Number(value);
+  const minPriceSearch = searchParams.get(QueryParameter.PriceFloor);
+  const maxPriceSearch = searchParams.get(QueryParameter.PriceCeil);
 
-    if (numValue < minPrice || numValue > maxPrice) {
-      const borderValue = String(name === QueryParameter.PriceFloor ? minPrice : maxPrice);
+  const changePrice = () => {
+    const minPriceInputValue = minPriceInputRef.current?.value;
+    const maxPriceInputValue = maxPriceInputRef.current?.value;
 
-      if (searchParams.get(name) !== borderValue) {
-        searchParams.set(name, borderValue);
-        setSearchParams(searchParams);
+    if (minPriceInputValue) {
+      searchParams.set(QueryParameter.PriceFloor, minPriceInputValue);
 
-        return;
+      if (Number(minPriceInputValue) < minPrice) {
+        searchParams.set(QueryParameter.PriceFloor, String(minPrice));
       }
 
-      return;
+      if (Number(minPriceInputValue) > maxPrice) {
+        searchParams.set(QueryParameter.PriceFloor, String(minPrice));
+      }
     }
 
-    switch (searchParams.has(name)) {
-      case true:
-        searchParams.set(name, value);
-        break;
-      case false:
-        searchParams.append(name, value);
+    if (maxPriceInputValue) {
+      searchParams.set(QueryParameter.PriceCeil, maxPriceInputValue);
+
+      if (Number(maxPriceInputValue) > maxPrice) {
+        maxPriceInputRef.current.value = String(maxPrice);
+        searchParams.set(QueryParameter.PriceCeil, String(maxPrice));
+      }
+
+      if (Number(maxPriceInputValue) < minPrice) {
+        searchParams.set(QueryParameter.PriceCeil, String(minPrice));
+      }
+
+      if (Number(maxPriceInputValue) < Number(minPriceInputValue)) {
+        maxPriceInputRef.current.value = String(maxPrice);
+        searchParams.set(QueryParameter.PriceCeil, String(maxPrice));
+      }
     }
 
     setSearchParams(searchParams);
+  };
+
+  useKeydown('Enter', changePrice);
+
+  useEffect(() => {
+    if (maxPriceInputRef.current?.value) {
+      if (Number(maxPriceInputRef.current?.value) > maxPrice) {
+        maxPriceInputRef.current.value = String(maxPrice);
+      }
+
+      if (Number(maxPriceInputRef.current?.value) < minPrice) {
+        maxPriceInputRef.current.value = String(minPrice);
+      }
+    }
+
+    if (minPriceInputRef.current?.value) {
+      if (Number(minPriceInputRef.current?.value) < minPrice) {
+        minPriceInputRef.current.value = String(minPrice);
+      }
+
+      if (Number(minPriceInputRef.current?.value) > maxPrice) {
+        minPriceInputRef.current.value = String(minPrice);
+      }
+    }
+  });
+
+  const handleInputChange = ({target}: ChangeEvent<HTMLInputElement>) => {
+    if (Number(target.value) < 0) {
+      target.value = '';
+    }
   };
 
   return (
@@ -45,8 +90,10 @@ function PriceFilter() {
             <input
               type="number"
               name="price_gte"
+              ref={minPriceInputRef}
+              onChange={handleInputChange}
               placeholder={String(minPrice)}
-              onChange={handlePriceInputChange}
+              defaultValue={minPriceSearch ? minPriceSearch : ''}
             />
           </label>
         </div>
@@ -55,8 +102,10 @@ function PriceFilter() {
             <input
               type="number"
               name="price_lte"
+              ref={maxPriceInputRef}
+              onChange={handleInputChange}
               placeholder={String(maxPrice)}
-              onChange={handlePriceInputChange}
+              defaultValue={maxPriceSearch ? maxPriceSearch : ''}
             />
           </label>
         </div>

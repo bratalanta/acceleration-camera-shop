@@ -41,6 +41,7 @@ function Sort({changeSearch}: SortProps) {
     }
   }, [search, sortActivatedBy]);
 
+  console.log(sortActivatedBy);
   return (
     <div className="catalog-sort" data-testid='sort'>
       <form action="#">

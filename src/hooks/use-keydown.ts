@@ -1,17 +1,17 @@
 import { useCallback, useEffect } from 'react';
 
 function useKeydown(key: string, action: () => void) {
-  const handleModalClose = useCallback((evt: KeyboardEvent) => {
+  const handler = useCallback((evt: KeyboardEvent) => {
     if (evt.key === key) {
       action();
     }
   }, [action, key]);
 
   useEffect(() => {
-    document.addEventListener('keydown', handleModalClose);
+    document.addEventListener('keydown', handler);
 
-    return () => document.removeEventListener('keydown', handleModalClose);
-  }, [handleModalClose]);
+    return () => document.removeEventListener('keydown', handler);
+  }, [handler]);
 
 }
 
