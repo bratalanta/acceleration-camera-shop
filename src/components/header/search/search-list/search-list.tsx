@@ -11,6 +11,7 @@ function SearchList() {
     <ul className="form-search__select-list">
       {likelyCameras.map(({name, id}) => (
         <li
+          data-testid='likely'
           key={id}
           className="form-search__select-item"
           tabIndex={0}

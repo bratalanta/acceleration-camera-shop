@@ -3,9 +3,11 @@ import { useSearchParams } from 'react-router-dom';
 import { QueryParameter } from '../../../../../const';
 import { useAppSelector } from '../../../../../hooks';
 import useKeydown from '../../../../../hooks/use-keydown';
+import useResetPage from '../../../../../hooks/use-reset-page';
 import { selectCamerasPriceRange } from '../../../../../store/slices/cameras-slice/selectors';
 
 function PriceFilter() {
+  const resetPage = useResetPage();
   const {minPrice = 0, maxPrice = 0} = useAppSelector(selectCamerasPriceRange);
   const [searchParams, setSearchParams] = useSearchParams();
   const minPriceInputRef = useRef<HTMLInputElement>(null);
@@ -49,6 +51,7 @@ function PriceFilter() {
     }
 
     setSearchParams(searchParams);
+    resetPage(searchParams);
   };
 
   useKeydown('Enter', changePrice);
@@ -82,7 +85,7 @@ function PriceFilter() {
   };
 
   return (
-    <fieldset className="catalog-filter__block">
+    <fieldset className="catalog-filter__block" data-testid="price-filter">
       <legend className="title title--h5">Цена, ₽</legend>
       <div className="catalog-filter__price-range">
         <div className="custom-input">
@@ -91,6 +94,7 @@ function PriceFilter() {
               type="number"
               name="price_gte"
               ref={minPriceInputRef}
+              data-testid='input-min'
               onChange={handleInputChange}
               placeholder={String(minPrice)}
               defaultValue={minPriceSearch ? minPriceSearch : ''}
@@ -104,6 +108,7 @@ function PriceFilter() {
               name="price_lte"
               ref={maxPriceInputRef}
               onChange={handleInputChange}
+              data-testid='input-max'
               placeholder={String(maxPrice)}
               defaultValue={maxPriceSearch ? maxPriceSearch : ''}
             />

@@ -14,10 +14,13 @@ const mockStore = configureMockStore(middlewares);
 const store = mockStore({
   [NameSpace.Cameras]: {
     camera: makeFakeCamera(),
-    similarCameras: [makeFakeCamera()]
+    similarCameras: [makeFakeCamera()],
+    likelyCameras: [makeFakeCamera()],
   },
   [NameSpace.App]: {
-    currentCatalogPage: 1,
+    currentCatalogPath: {
+      currentPage: 1
+    },
     currentReviewPage: 2,
     activeModal: null
   },

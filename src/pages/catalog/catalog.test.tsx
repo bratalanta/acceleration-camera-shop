@@ -8,7 +8,12 @@ const mockState = {
   [NameSpace.Cameras]: {
     cameras: [makeFakeCamera()],
     camera: makeFakeCamera(),
-    camerasTotalCount: 1
+    camerasTotalCount: 1,
+    likelyCameras: [makeFakeCamera()],
+    camerasPriceRange: {
+      min: 0,
+      max: 0
+    }
   }
 };
 

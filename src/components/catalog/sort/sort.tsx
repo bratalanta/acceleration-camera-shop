@@ -1,47 +1,39 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { QueryParameter, SortOrder, SortType } from '../../../const';
 import { useAppSelector } from '../../../hooks';
 import { selectCurrentCatalogPath } from '../../../store/slices/app-slice/selectors';
 
-type SortProps = {
-  changeSearch: (parameter: QueryParameter, value: string) => void;
-}
-
-function Sort({changeSearch}: SortProps) {
+function Sort() {
   const {search} = useAppSelector(selectCurrentCatalogPath);
-  const [searchParams] = useSearchParams();
-  const [sortActivatedBy, setSortActivatedBy] = useState<QueryParameter | null>();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    const name = evt.target.name;
-    const value = evt.target.value;
+  useEffect(() => {
+    if (searchParams.has(QueryParameter.Sort) && !searchParams.has(QueryParameter.Order)) {
+      searchParams.set(QueryParameter.Order, SortOrder.Asc);
+      setSearchParams(searchParams);
+    }
+
+    if (!searchParams.has(QueryParameter.Sort) && searchParams.has(QueryParameter.Order)) {
+      searchParams.set(QueryParameter.Sort, SortType.Price);
+      setSearchParams(searchParams);
+    }
+  }, [searchParams, setSearchParams]);
+
+  const handleInputChange = ({target}: ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = target;
 
     switch(name) {
       case QueryParameter.Sort:
-        changeSearch(QueryParameter.Sort, value);
-
-        return;
+        searchParams.set(QueryParameter.Sort, value);
+        break;
       case QueryParameter.Order:
-        changeSearch(QueryParameter.Order, value);
+        searchParams.set(QueryParameter.Order, value);
     }
+
+    setSearchParams(searchParams);
   };
 
-  useEffect(() => {
-    setSortActivatedBy(null);
-    const isSortSearch = search?.includes(QueryParameter.Sort) && !search?.includes(QueryParameter.Order);
-    const isOrderSearch = !search?.includes(QueryParameter.Sort) && search?.includes(QueryParameter.Order);
-
-    if (isSortSearch) {
-      setSortActivatedBy(QueryParameter.Sort);
-    }
-
-    if (isOrderSearch) {
-      setSortActivatedBy(QueryParameter.Order);
-    }
-  }, [search, sortActivatedBy]);
-
-  console.log(sortActivatedBy);
   return (
     <div className="catalog-sort" data-testid='sort'>
       <form action="#">
@@ -50,13 +42,13 @@ function Sort({changeSearch}: SortProps) {
           <div className="catalog-sort__type">
             <div className="catalog-sort__btn-text">
               <input
+                data-testid="sort-price"
                 type="radio"
                 id="sortPrice"
                 name="_sort"
                 value="price"
                 onChange={handleInputChange}
-                checked={(searchParams.get(QueryParameter.Sort) && search?.includes(SortType.Price)) ||
-                   sortActivatedBy === QueryParameter.Order}
+                checked={search?.includes(`${QueryParameter.Sort}=${SortType.Price}`)}
               />
               <label htmlFor="sortPrice">по цене</label>
             </div>
@@ -75,13 +67,14 @@ function Sort({changeSearch}: SortProps) {
           <div className="catalog-sort__order">
             <div className="catalog-sort__btn catalog-sort__btn--up">
               <input
+                data-testid="sort-asc"
                 type="radio"
                 id="up"
                 name="_order"
                 value="asc"
                 aria-label="По возрастанию"
                 onChange={handleInputChange}
-                checked={search?.includes(SortOrder.Asc) || sortActivatedBy === QueryParameter.Sort}
+                checked={search?.includes(SortOrder.Asc)}
               />
               <label htmlFor="up">
                 <svg width={16} height={14} aria-hidden="true">

@@ -1,12 +1,20 @@
 import { LoadingStatus } from '../../../const';
 import { makeFakeCamera } from '../../../tests/mocks/mocks';
-import { TCamera } from '../../../types/camera';
-import { fetchCameraAction, fetchCamerasAction, fetchSimilarCamerasAction } from '../../api-actions/cameras-api/cameras-api';
+import { TCamera, TCamerasPriceRange } from '../../../types/camera';
+import { fetchCameraAction, fetchCamerasAction, fetchLikelyCamerasAction, fetchMinMaxCameraPricesAction, fetchSimilarCamerasAction } from '../../api-actions/cameras-api/cameras-api';
 import { camerasSlice, TCamerasSliceState } from './cameras-slice';
 
 const mockCameras = [makeFakeCamera(), makeFakeCamera()];
 const mockCamera = makeFakeCamera();
 const mockCamerasTotalCount = 10;
+const mockLikelyCameras = [{
+  id: mockCamera.id,
+  name: mockCamera.name
+}];
+const mockCamerasPriceRange: TCamerasPriceRange = {
+  maxPrice: 1000,
+  minPrice: 0
+};
 
 describe('Reducer: camerasSlice', () => {
   let state: TCamerasSliceState;
@@ -109,6 +117,32 @@ describe('Reducer: camerasSlice', () => {
         .toEqual({
           ...state,
           similarCameras: mockCameras
+        });
+    });
+  });
+
+  describe('fetchLikelyCamerasAction test', () => {
+    it('should set likelyCameras with given cameras if fetchLikelyCamerasAction is fulfilled', () => {
+      expect(camerasSlice.reducer(state, {
+        payload: mockLikelyCameras,
+        type: fetchLikelyCamerasAction.fulfilled.type
+      }))
+        .toEqual({
+          ...state,
+          likelyCameras: mockLikelyCameras
+        });
+    });
+  });
+
+  describe('fetchMinMaxCameraPricesAction test', () => {
+    it('should set camerasPriceRange with given cameras if fetchMinMaxCameraPricesAction is fulfilled', () => {
+      expect(camerasSlice.reducer(state, {
+        payload: mockCamerasPriceRange,
+        type: fetchMinMaxCameraPricesAction.fulfilled.type
+      }))
+        .toEqual({
+          ...state,
+          camerasPriceRange: mockCamerasPriceRange
         });
     });
   });

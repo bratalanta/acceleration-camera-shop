@@ -1,4 +1,4 @@
-import styles from './no-camera.module.css';
+import styles from './no-cameras.module.css';
 
 function NoCameras() {
   return (

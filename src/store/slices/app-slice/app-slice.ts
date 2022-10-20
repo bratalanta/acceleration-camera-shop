@@ -5,14 +5,13 @@ import { TCurrentCatalogPath } from '../../../types/app';
 type TAppSliceState = {
   currentCatalogPath: TCurrentCatalogPath;
   currentReviewPage: number;
-  activeModal: null | Modal
+  activeModal: null | Modal;
 }
 
 const initialState: TAppSliceState = {
   currentCatalogPath: {} as TCurrentCatalogPath,
   activeModal: null,
   currentReviewPage: Number(DEFAULT_PAGE) + 1,
-
 };
 
 const appSlice = createSlice({
@@ -27,7 +26,7 @@ const appSlice = createSlice({
     },
     setActiveModal: (state, action) => {
       state.activeModal = action.payload;
-    }
+    },
   },
 });
 
@@ -38,7 +37,7 @@ export {
 export const {
   setCurrentCatalogPath,
   setActiveModal,
-  setCurrentReviewPage
+  setCurrentReviewPage,
 } = appSlice.actions;
 
 export type {

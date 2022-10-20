@@ -27,13 +27,14 @@ function Search() {
   );
 
   return (
-    <div className={searchBlockCn}>
+    <div className={searchBlockCn} data-testid="search">
       <form>
         <label>
           <svg className="form-search__icon" width={16} height={16} aria-hidden="true">
             <use xlinkHref="#icon-lens" />
           </svg>
           <input
+            data-testid="search-input"
             className="form-search__input"
             type="text"
             value={name}
@@ -47,6 +48,7 @@ function Search() {
       <button
         className="form-search__reset"
         type="reset"
+        data-testid="reset"
         onClick={() => setName('')}
       >
         <svg width={10} height={10} aria-hidden="true">

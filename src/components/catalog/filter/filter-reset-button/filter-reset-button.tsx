@@ -21,6 +21,7 @@ function FilterResetButton({resetForm}: FilterResetButtonProps) {
       type="reset"
       onClick={handleResetBtnClick}
       disabled={!FILTER_PARAMS.some((param) => searchParams.get(param))}
+      data-testid="btn-reset"
     >
       Сбросить фильтры
     </button>

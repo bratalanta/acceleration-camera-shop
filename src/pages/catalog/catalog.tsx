@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { generatePath, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Banner from '../../components/catalog/banner/banner';
 import Pagination from '../../components/catalog/pagination/pagination';
@@ -7,7 +7,7 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import FullPageLoader from '../../components/loaders/full-page-loader/full-page-loader';
 import ProductCardList from '../../components/product-card-list/product-card-list';
-import { AppRoute, DEFAULT_PAGE, DEFAULT_TITLE, MAX_PRODUCTS_COUNT_PER_PAGE, QueryParameter } from '../../const';
+import { DEFAULT_TITLE, MAX_PRODUCTS_COUNT_PER_PAGE, QueryParameter } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCamerasAction, fetchMinMaxCameraPricesAction } from '../../store/api-actions/cameras-api/cameras-api';
 import { fetchPromoAction } from '../../store/api-actions/promo-api/promo-api';
@@ -28,8 +28,7 @@ function Catalog() {
   const camerasTotalCount = useAppSelector(selectCamerasTotalCount);
   const {isCamerasLoadingStatusRejected, isCamerasLoadingStatusPending} = useAppSelector(camerasLoadingStatusSelector);
   const {pageNumber} = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const isMounted = useRef(false);
 
   const sortParams = {
@@ -51,6 +50,7 @@ function Catalog() {
   ), [camerasTotalCount]);
 
   const currentPage = Number(pageNumber);
+
   useEffect(() => {
     if (currentPage) {
       dispatch(setCurrentCatalogPath({
@@ -73,15 +73,12 @@ function Catalog() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (pagesCount) {
-      navigate({
-        pathname: generatePath(AppRoute.Catalog, {pageNumber: DEFAULT_PAGE}),
-        search: decodeURI(searchParams.toString())
-      });
-    }
-
     dispatch(fetchMinMaxCameraPricesAction(filterParams));
   }, [filterParamsJSON]);
+
+  if (currentPage === 0) {
+    return <NotFound />;
+  }
 
   if (isCamerasLoadingStatusPending && !pagesCount && !isMounted.current) {
     return <FullPageLoader />;
@@ -114,16 +111,7 @@ function Catalog() {
                 <div className="page-content__columns">
                   <Filter />
                   <div className="catalog__content">
-                    <Sort
-                      changeSearch={
-                        (parameter: QueryParameter, value: string) => {
-                          setSearchParams({
-                            ...Object.fromEntries(searchParams),
-                            [parameter]: value
-                          });
-                        }
-                      }
-                    />
+                    <Sort />
                     {isCamerasLoadingStatusPending ? <InnerLoader /> : ''}
                     {cameras.length && !isCamerasLoadingStatusPending ?
                       <>

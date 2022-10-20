@@ -11,6 +11,7 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 
 const mockCamera = makeFakeCamera();
 const mockCameras = [makeFakeCamera(), mockCamera];
+const mockLikelyCameras = [makeFakeCamera(), mockCamera];
 const mockSimilarCameras = [makeFakeCamera(), mockCamera];
 const mockCamerasTotalCount = 15;
 
@@ -22,6 +23,16 @@ const mockState = {
     similarCameras: mockSimilarCameras,
     camerasLoadingStatus: LoadingStatus.Fulfilled,
     cameraLoadingStatus: LoadingStatus.Fulfilled,
+    likelyCameras: mockLikelyCameras,
+    camerasPriceRange: {
+      minPrice: 0,
+      maxPrice: 0
+    }
+  },
+  [NameSpace.App]: {
+    currentCatalogPath: {
+      currentPage: 1
+    }
   }
 };
 
@@ -31,10 +42,13 @@ const mockStore = configureMockStore(middlewares);
 const store = mockStore({
   [NameSpace.Cameras]: {
     camera: makeFakeCamera(),
-    similarCameras: [makeFakeCamera()]
+    similarCameras: [makeFakeCamera()],
+    likelyCameras: mockLikelyCameras
   },
   [NameSpace.App]: {
-    currentCatalogPage: 1,
+    currentCatalogPath: {
+      currentPage: 1
+    },
     currentReviewPage: 2,
     activeModal: null
   },

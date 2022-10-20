@@ -9,7 +9,9 @@ const currentCatalogPage = 3;
 
 const mockState = {
   [NameSpace.App]: {
-    currentCatalogPage: currentCatalogPage
+    currentCatalogPath: {
+      currentPage: 1
+    }
   },
   [NameSpace.Cameras]: {
     camerasLoadingStatus: LoadingStatus.Fulfilled
@@ -28,7 +30,9 @@ describe('Component: Pagination', () => {
   it('should not render prev-link when user on the first page', async () => {
     const mockStateFirstPage = {
       [NameSpace.App]: {
-        currentCatalogPage: 1
+        currentCatalogPath: {
+          currentPage: 1
+        },
       },
       [NameSpace.Cameras]: {
         camerasLoadingStatus: LoadingStatus.Fulfilled
@@ -47,7 +51,9 @@ describe('Component: Pagination', () => {
   it('should not render next-link when user on the last page', async () => {
     const mockStateLastPage = {
       [NameSpace.App]: {
-        currentCatalogPage: mockPagesCount
+        currentCatalogPath: {
+          currentPage: mockPagesCount
+        },
       },
       [NameSpace.Cameras]: {
         camerasLoadingStatus: LoadingStatus.Fulfilled

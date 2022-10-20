@@ -2,9 +2,9 @@ import {Action} from 'redux';
 import thunk, {ThunkDispatch} from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import {configureMockStore} from '@jedmao/redux-mock-store';
-import {APIRoute, DEFAULT_PAGE, MAX_PRODUCTS_COUNT_PER_PAGE} from '../../../const';
+import {APIRoute, DEFAULT_PAGE, MAX_PRODUCTS_COUNT_PER_PAGE, QueryParameter} from '../../../const';
 import { makeFakeCamera } from '../../../tests/mocks/mocks';
-import { fetchCameraAction, fetchCamerasAction, fetchSimilarCamerasAction } from './cameras-api';
+import { fetchCameraAction, fetchCamerasAction, fetchLikelyCamerasAction, fetchSimilarCamerasAction } from './cameras-api';
 import { createAPI } from '../../../services/api';
 import { State } from '../../../types/state';
 
@@ -29,8 +29,15 @@ describe('Cameras API', () => {
     mockAPI
       .onGet(APIRoute.Cameras, {
         params: {
-          _limit: MAX_PRODUCTS_COUNT_PER_PAGE,
-          _page: defaultPage
+          [QueryParameter.Limit]: MAX_PRODUCTS_COUNT_PER_PAGE,
+          [QueryParameter.Page]: defaultPage,
+          [QueryParameter.Sort]: null,
+          [QueryParameter.Order]: null,
+          [QueryParameter.Category]: null,
+          [QueryParameter.Level]: null,
+          [QueryParameter.PriceCeil]: null,
+          [QueryParameter.PriceFloor]: null,
+          [QueryParameter.Type]: null,
         }
       })
       .reply(200, mockCameras, {
@@ -43,13 +50,13 @@ describe('Cameras API', () => {
       limit: MAX_PRODUCTS_COUNT_PER_PAGE,
       currentPage: defaultPage,
       queryParams: {
-        sortType: '',
-        sortOrder: '',
-        category: '',
-        level: '',
-        priceCeil: '',
-        priceFloor: '',
-        type: ''
+        sortType: null,
+        sortOrder: null,
+        category: null,
+        level: null,
+        priceCeil: null,
+        priceFloor: null,
+        type: null
       }
     }));
 
@@ -92,6 +99,27 @@ describe('Cameras API', () => {
     expect(actions).toEqual([
       fetchCameraAction.pending.type,
       fetchCameraAction.fulfilled.type
+    ]);
+  });
+
+  it('should dispatch fetchLikelyCamerasAction when GET /cameras/?name_like', async () => {
+    mockAPI
+      .onGet(APIRoute.Cameras, {
+        params: {
+          [QueryParameter.NameLike]: mockCamera.name
+        }
+      })
+      .reply(200, [mockCamera.name]);
+
+    const store = mockStore();
+
+    await store.dispatch(fetchLikelyCamerasAction(mockCamera.name));
+
+    const actions = store.getActions().map(({type}) => type);
+
+    expect(actions).toEqual([
+      fetchLikelyCamerasAction.pending.type,
+      fetchLikelyCamerasAction.fulfilled.type
     ]);
   });
 });
