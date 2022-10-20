@@ -90,6 +90,7 @@ const MAX_PRODUCTS_COUNT_PER_PAGE = 9;
 const MAX_REVIEWS_COUNT_PER_PAGE = 3;
 const COMMENT_MIN_LENGTH = 5;
 const DEFAULT_PAGE = '1';
+const REVIEW_DEFAULT_PAGE = 2;
 const DEFAULT_TITLE = 'Каталог-Фотошоп';
 const REVIEWS_SORTING_QUERY = '_sort=createAt&_order=desc';
 const MAX_RATING = 5;
@@ -118,5 +119,6 @@ export {
   SortOrder,
   FilterTitle,
   FILTER_PARAMS,
-  LimitedFilter
+  LimitedFilter,
+  REVIEW_DEFAULT_PAGE
 };

@@ -10,7 +10,7 @@ function Filter() {
       <div className="catalog-filter">
         <form action="#" ref={formRef}>
           <FilterBlockList />
-          <FilterResetButton resetForm={() => formRef.current && formRef.current.reset()}/>
+          <FilterResetButton onFormReset={() => formRef.current && formRef.current.reset()}/>
         </form>
       </div>
     </div>

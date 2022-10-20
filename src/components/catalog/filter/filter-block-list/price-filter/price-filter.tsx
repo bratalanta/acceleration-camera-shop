@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { QueryParameter } from '../../../../../const';
 import { useAppSelector } from '../../../../../hooks';
 import useKeydown from '../../../../../hooks/use-keydown';
+import useOnOutsidePriceFilterClick from '../../../../../hooks/use-on-outside-price-filter-click';
 import useResetPage from '../../../../../hooks/use-reset-page';
 import { selectCamerasPriceRange } from '../../../../../store/slices/cameras-slice/selectors';
 
@@ -20,34 +21,47 @@ function PriceFilter() {
     const minPriceInputValue = minPriceInputRef.current?.value;
     const maxPriceInputValue = maxPriceInputRef.current?.value;
 
+    if(minPriceInputValue && maxPriceInputValue) {
+
+      if (minPriceInputValue === maxPriceInputValue) {
+        searchParams.set(QueryParameter.PriceFloor, minPriceInputValue);
+        searchParams.set(QueryParameter.PriceCeil, maxPriceInputValue);
+
+        setSearchParams(searchParams);
+        resetPage(searchParams);
+
+        return;
+      }
+    }
+
     if (minPriceInputValue) {
       searchParams.set(QueryParameter.PriceFloor, minPriceInputValue);
 
-      if (Number(minPriceInputValue) < minPrice) {
-        searchParams.set(QueryParameter.PriceFloor, String(minPrice));
-      }
+      // if (Number(minPriceInputValue) < minPrice) {
+      //   searchParams.set(QueryParameter.PriceFloor, String(minPrice));
+      // }
 
-      if (Number(minPriceInputValue) > maxPrice) {
-        searchParams.set(QueryParameter.PriceFloor, String(minPrice));
-      }
+      // if (Number(minPriceInputValue) > maxPrice) {
+      //   searchParams.set(QueryParameter.PriceFloor, String(minPrice));
+      // }
     }
 
     if (maxPriceInputValue) {
       searchParams.set(QueryParameter.PriceCeil, maxPriceInputValue);
 
-      if (Number(maxPriceInputValue) > maxPrice) {
-        maxPriceInputRef.current.value = String(maxPrice);
-        searchParams.set(QueryParameter.PriceCeil, String(maxPrice));
-      }
+      // if (Number(maxPriceInputValue) > maxPrice) {
+      //   maxPriceInputRef.current.value = String(maxPrice);
+      //   searchParams.set(QueryParameter.PriceCeil, String(maxPrice));
+      // }
 
-      if (Number(maxPriceInputValue) < minPrice) {
-        searchParams.set(QueryParameter.PriceCeil, String(minPrice));
-      }
+      // if (Number(maxPriceInputValue) < minPrice) {
+      //   searchParams.set(QueryParameter.PriceCeil, String(minPrice));
+      // }
 
-      if (Number(maxPriceInputValue) < Number(minPriceInputValue)) {
-        maxPriceInputRef.current.value = String(maxPrice);
-        searchParams.set(QueryParameter.PriceCeil, String(maxPrice));
-      }
+      // if (Number(maxPriceInputValue) < Number(minPriceInputValue)) {
+      //   maxPriceInputRef.current.value = String(maxPrice);
+      //   searchParams.set(QueryParameter.PriceCeil, String(maxPrice));
+      // }
     }
 
     setSearchParams(searchParams);
@@ -55,6 +69,7 @@ function PriceFilter() {
   };
 
   useKeydown('Enter', changePrice);
+  useOnOutsidePriceFilterClick(minPriceInputRef, maxPriceInputRef, changePrice);
 
   useEffect(() => {
     if (maxPriceInputRef.current?.value) {

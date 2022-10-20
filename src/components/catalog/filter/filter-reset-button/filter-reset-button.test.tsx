@@ -7,7 +7,7 @@ const resetForm = jest.fn();
 
 describe('Component: FilterResetButton', () => {
   it('should render correctly', () => {
-    renderTestApp(<FilterResetButton resetForm={resetForm} />, {
+    renderTestApp(<FilterResetButton onFormReset={resetForm} />, {
       initialState: {}
     });
 
@@ -15,7 +15,7 @@ describe('Component: FilterResetButton', () => {
   });
 
   it('should invoke handler when user clicks on button', async () => {
-    renderTestApp(<FilterResetButton resetForm={resetForm} />, {
+    renderTestApp(<FilterResetButton onFormReset={resetForm} />, {
       initialState: {}
     });
 

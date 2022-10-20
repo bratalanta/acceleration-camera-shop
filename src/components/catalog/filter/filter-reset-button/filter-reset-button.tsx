@@ -2,17 +2,17 @@ import { useSearchParams } from 'react-router-dom';
 import { FILTER_PARAMS } from '../../../../const';
 
 type FilterResetButtonProps = {
-  resetForm: () => void;
+  onFormReset: () => void;
 }
 
-function FilterResetButton({resetForm}: FilterResetButtonProps) {
+function FilterResetButton({onFormReset}: FilterResetButtonProps) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleResetBtnClick = () => {
     const newParams = Array.from(searchParams.entries())
       .filter(([key]) => !FILTER_PARAMS.includes(key));
     setSearchParams(newParams);
-    resetForm();
+    onFormReset();
   };
 
   return (
