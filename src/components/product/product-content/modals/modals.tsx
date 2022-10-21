@@ -17,7 +17,7 @@ function Modals() {
     if (activeModal && isReviewPostingStatusFulfilled) {
       dispatch(setActiveModal(Modal.Success));
     }
-  }, [isReviewPostingStatusFulfilled]);
+  }, [activeModal, dispatch, isReviewPostingStatusFulfilled]);
 
   return (
     <RemoveScroll enabled={activeModal === Modal.Form || activeModal === Modal.Success}>

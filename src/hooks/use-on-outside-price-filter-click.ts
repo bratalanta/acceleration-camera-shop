@@ -40,7 +40,7 @@ const useOnOutsidePriceFilterClick = <T extends HTMLElement = HTMLElement>(
       document.removeEventListener('mousedown', handleMaxPriceOutsideClick);
       document.removeEventListener('touchstart', handleMaxPriceOutsideClick);
     };
-  }, [handler, minPriceInputRef]);
+  }, [handler, maxPriceInputRef, minPriceInputRef]);
 };
 
 export default useOnOutsidePriceFilterClick;

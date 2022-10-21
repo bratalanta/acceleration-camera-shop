@@ -35,7 +35,7 @@ function ReviewBlock() {
 
       dispatch(setCurrentReviewPage(currentPage + 1));
     }
-  }, [entry?.isIntersecting]);
+  });
 
   return (
     <>

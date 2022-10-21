@@ -11,6 +11,7 @@ function PriceFilter() {
   const resetPage = useResetPage();
   const {minPrice = 0, maxPrice = 0} = useAppSelector(selectCamerasPriceRange);
   const [searchParams, setSearchParams] = useSearchParams();
+  const isFilterActivated = useRef(false);
   const minPriceInputRef = useRef<HTMLInputElement>(null);
   const maxPriceInputRef = useRef<HTMLInputElement>(null);
 
@@ -18,50 +19,47 @@ function PriceFilter() {
   const maxPriceSearch = searchParams.get(QueryParameter.PriceCeil);
 
   const changePrice = () => {
-    const minPriceInputValue = minPriceInputRef.current?.value;
+    if (!minPriceInputRef.current || !maxPriceInputRef.current || !isFilterActivated.current) {
+      return;
+    }
+
     const maxPriceInputValue = maxPriceInputRef.current?.value;
+    const minPriceInputValue = minPriceInputRef.current?.value;
 
-    if(minPriceInputValue && maxPriceInputValue) {
+    if (!maxPriceInputValue && !minPriceInputValue) {
+      return;
+    }
 
-      if (minPriceInputValue === maxPriceInputValue) {
-        searchParams.set(QueryParameter.PriceFloor, minPriceInputValue);
-        searchParams.set(QueryParameter.PriceCeil, maxPriceInputValue);
+    isFilterActivated.current = false;
 
-        setSearchParams(searchParams);
-        resetPage(searchParams);
+    if (minPriceInputValue === maxPriceInputValue) {
+      searchParams.set(QueryParameter.PriceFloor, minPriceInputValue);
+      searchParams.set(QueryParameter.PriceCeil, maxPriceInputValue);
 
-        return;
-      }
+      setSearchParams(searchParams);
+      resetPage(searchParams);
+
+      return;
     }
 
     if (minPriceInputValue) {
       searchParams.set(QueryParameter.PriceFloor, minPriceInputValue);
+      minPriceInputRef.current.value = String(minPrice);
 
-      // if (Number(minPriceInputValue) < minPrice) {
-      //   searchParams.set(QueryParameter.PriceFloor, String(minPrice));
-      // }
-
-      // if (Number(minPriceInputValue) > maxPrice) {
-      //   searchParams.set(QueryParameter.PriceFloor, String(minPrice));
-      // }
+      if (Number(minPriceInputValue) > maxPrice) {
+        minPriceInputRef.current.value = String(minPrice);
+        searchParams.set(QueryParameter.PriceFloor, String(minPrice));
+      }
     }
 
     if (maxPriceInputValue) {
       searchParams.set(QueryParameter.PriceCeil, maxPriceInputValue);
+      maxPriceInputRef.current.value = String(maxPrice);
 
-      // if (Number(maxPriceInputValue) > maxPrice) {
-      //   maxPriceInputRef.current.value = String(maxPrice);
-      //   searchParams.set(QueryParameter.PriceCeil, String(maxPrice));
-      // }
-
-      // if (Number(maxPriceInputValue) < minPrice) {
-      //   searchParams.set(QueryParameter.PriceCeil, String(minPrice));
-      // }
-
-      // if (Number(maxPriceInputValue) < Number(minPriceInputValue)) {
-      //   maxPriceInputRef.current.value = String(maxPrice);
-      //   searchParams.set(QueryParameter.PriceCeil, String(maxPrice));
-      // }
+      if (Number(maxPriceInputValue) < minPrice) {
+        maxPriceInputRef.current.value = String(maxPrice);
+        searchParams.set(QueryParameter.PriceCeil, String(maxPrice));
+      }
     }
 
     setSearchParams(searchParams);
@@ -73,30 +71,20 @@ function PriceFilter() {
 
   useEffect(() => {
     if (maxPriceInputRef.current?.value) {
-      if (Number(maxPriceInputRef.current?.value) > maxPrice) {
-        maxPriceInputRef.current.value = String(maxPrice);
-      }
-
-      if (Number(maxPriceInputRef.current?.value) < minPrice) {
-        maxPriceInputRef.current.value = String(minPrice);
-      }
+      maxPriceInputRef.current.value = String(maxPrice);
     }
 
     if (minPriceInputRef.current?.value) {
-      if (Number(minPriceInputRef.current?.value) < minPrice) {
-        minPriceInputRef.current.value = String(minPrice);
-      }
-
-      if (Number(minPriceInputRef.current?.value) > maxPrice) {
-        minPriceInputRef.current.value = String(minPrice);
-      }
+      minPriceInputRef.current.value = String(minPrice);
     }
-  });
+  }, [maxPrice, minPrice]);
 
   const handleInputChange = ({target}: ChangeEvent<HTMLInputElement>) => {
     if (Number(target.value) < 0) {
       target.value = '';
     }
+
+    isFilterActivated.current = true;
   };
 
   return (
