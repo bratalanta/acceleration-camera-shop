@@ -27,7 +27,6 @@ function SearchList() {
         <li
           data-testid='likely'
           key={id}
-          data-id={id}
           className="form-search__select-item"
           tabIndex={0}
           onClick={() => navigate({
