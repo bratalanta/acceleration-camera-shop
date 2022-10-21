@@ -4,7 +4,7 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import FullPageLoader from '../../components/loaders/full-page-loader/full-page-loader';
 import ProductContent from '../../components/product/product-content/product-content';
-import { DEFAULT_PAGE, MAX_REVIEWS_COUNT_PER_PAGE } from '../../const';
+import { DEFAULT_PAGE, MAX_REVIEWS_COUNT_PER_PAGE, REVIEW_DEFAULT_PAGE } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCameraAction, fetchSimilarCamerasAction } from '../../store/api-actions/cameras-api/cameras-api';
 import { fetchReviewsAction } from '../../store/api-actions/reviews-api/reviews-api';
@@ -35,7 +35,7 @@ function Product() {
     }));
 
     return () => {
-      dispatch(setCurrentReviewPage(Number(DEFAULT_PAGE) + 1));
+      dispatch(setCurrentReviewPage(REVIEW_DEFAULT_PAGE));
     };
   }, [dispatch, productId]);
 
