@@ -1,10 +1,13 @@
-import { useAppSelector } from '../../../../hooks';
+import { ProductModal } from '../../../../const';
+import { useAppDispatch, useAppSelector } from '../../../../hooks';
+import { setProductActiveModal } from '../../../../store/slices/app-slice/app-slice';
 import { selectCamera } from '../../../../store/slices/cameras-slice/selectors';
 import RatingStars from '../../../rating-stars/rating-stars';
 import ProductTabs from './product-tabs/product-tabs';
 import ReviewsTotalCount from './reviews-total-count/reviews-total-count';
 
 function ProductDetails() {
+  const dispatch = useAppDispatch();
   const camera = useAppSelector(selectCamera);
   const {
     name,
@@ -16,6 +19,13 @@ function ProductDetails() {
     reviewCount,
     price,
   } = camera;
+
+  const handleAddToBasketBtnClick = () => {
+    dispatch(setProductActiveModal(ProductModal.Add));
+    dispatch(setProductActiveModal({
+      productDetails: camera
+    }));
+  };
 
   return (
     <div className="page-content__section" data-testid='details'>
@@ -41,7 +51,11 @@ function ProductDetails() {
               <ReviewsTotalCount reviewCount={reviewCount}/>
             </div>
             <p className="product__price"><span className="visually-hidden">Цена:</span>{price} ₽</p>
-            <button className="btn btn--purple" type="button">
+            <button
+              className="btn btn--purple"
+              type="button"
+              onClick={handleAddToBasketBtnClick}
+            >
               <svg width={24} height={16} aria-hidden="true">
                 <use xlinkHref="#icon-add-basket" />
               </svg>Добавить в корзину

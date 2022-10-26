@@ -1,7 +1,6 @@
-import { generatePath, Link } from 'react-router-dom';
-import { Anchor, AppRoute } from '../../const';
 import { TCamera } from '../../types/camera';
 import RatingStars from '../rating-stars/rating-stars';
+import ProductCardButtons from './product-card-buttons/product-card-buttons';
 
 type ProductCardProps = {
   product: TCamera;
@@ -9,7 +8,6 @@ type ProductCardProps = {
 
 function ProductCard({product}: ProductCardProps) {
   const {
-    id,
     rating,
     previewImgWebp,
     previewImgWebp2x,
@@ -17,7 +15,8 @@ function ProductCard({product}: ProductCardProps) {
     previewImg2x,
     name,
     reviewCount,
-    price
+    price,
+    category
   } = product;
 
   return (
@@ -25,7 +24,7 @@ function ProductCard({product}: ProductCardProps) {
       <div className="product-card__img">
         <picture>
           <source type="image/webp" srcSet={`/${previewImgWebp}, /${previewImgWebp2x} 2x`} />
-          <img src={previewImg} srcSet={`${previewImg2x} 2x`} width={280} height={240} alt={name} />
+          <img src={previewImg} srcSet={`${previewImg2x} 2x`} width={280} height={240} alt={`${category} ${name}`} />
         </picture>
       </div>
       <div className="product-card__info">
@@ -38,19 +37,7 @@ function ProductCard({product}: ProductCardProps) {
         <p className="product-card__price"><span className="visually-hidden">Цена:</span>{price} ₽
         </p>
       </div>
-      <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button">Купить
-        </button>
-        <Link
-          className="btn btn--transparent"
-          to={{
-            pathname: generatePath(AppRoute.Product, {id: String(id)}),
-            hash: Anchor.Description,
-          }}
-        >
-          Подробнее
-        </Link>
-      </div>
+      <ProductCardButtons product={product}/>
     </div>
   );
 }

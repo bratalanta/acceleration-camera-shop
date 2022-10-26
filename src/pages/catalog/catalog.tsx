@@ -23,7 +23,6 @@ import NoCameras from '../../components/catalog/no-cameras/no-cameras';
 
 function Catalog() {
   const dispatch = useAppDispatch();
-
   const cameras = useAppSelector(selectCameras);
   const camerasTotalCount = useAppSelector(selectCamerasTotalCount);
   const {isCamerasLoadingStatusRejected, isCamerasLoadingStatusPending} = useAppSelector(camerasLoadingStatusSelector);

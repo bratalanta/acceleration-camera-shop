@@ -1,5 +1,5 @@
 import { DEFAULT_PAGE } from '../../../const';
-import { appSlice, setCurrentCatalogPath, TAppSliceState } from './app-slice';
+import { appSlice, setCurrentCatalogPath, TAppSliceState, TBasketModal, TProductModal } from './app-slice';
 
 describe('Reducer: appSlice', () => {
   let state: TAppSliceState;
@@ -10,7 +10,9 @@ describe('Reducer: appSlice', () => {
         currentPage: 1
       },
       currentReviewPage: Number(DEFAULT_PAGE) + 1,
-      activeModal: null,
+      productActiveModal: {} as TProductModal,
+      reviewActiveModal: null,
+      basketActiveModal: {} as TBasketModal
     };
   });
 

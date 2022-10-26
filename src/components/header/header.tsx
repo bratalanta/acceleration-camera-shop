@@ -2,6 +2,7 @@ import { generatePath, Link } from 'react-router-dom';
 import { AppRoute, DEFAULT_PAGE } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { selectCurrentCatalogPath } from '../../store/slices/app-slice/selectors';
+import HeaderBasketCount from './header-basket-count/header-basket-count';
 import Search from './search/search';
 
 function Header() {
@@ -37,10 +38,14 @@ function Header() {
           </ul>
         </nav>
         <Search />
-        <Link className="header__basket-link" to="#">
+        <Link
+          className="header__basket-link"
+          to={AppRoute.Basket}
+        >
           <svg width={16} height={16} aria-hidden="true">
             <use xlinkHref="#icon-basket" />
-          </svg><span className="header__basket-count">3</span>
+          </svg>
+          <HeaderBasketCount />
         </Link>
       </div>
     </header>

@@ -20,7 +20,11 @@ function ReviewModal({isModalActive, closeModal}: ReviewModalProps) {
   return (
     <div className={modalCn} data-testid='review-modal'>
       <div className="modal__wrapper">
-        <div className="modal__overlay" onClick={() => closeModal()} data-testid='overlay'/>
+        <div
+          className="modal__overlay"
+          onClick={() => closeModal()}
+          data-testid='overlay'
+        />
         <div className="modal__content">
           <p className="title title--h4">Оставить отзыв</p>
           <ReviewForm />

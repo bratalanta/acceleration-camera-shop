@@ -3,7 +3,7 @@ import { useAppSelector } from '../../../hooks';
 import { selectSimilarCameras } from '../../../store/slices/cameras-slice/selectors';
 import { scrollToTop } from '../../../utils/utils';
 import Breadcrumbs from '../../breadcrumbs/breadcrumbs';
-import Modals from './modals/modals';
+import ReviewModals from './review-modals/review-modals';
 import ProductDetails from './product-details/product-details';
 import ReviewBlock from './review-block/review-block';
 import SimilarProducts from './similar-products/similar-products';
@@ -18,9 +18,6 @@ function ProductContent() {
         <ProductDetails />
         {similarCameras.length ? <SimilarProducts products={similarCameras}/> : ''}
         <ReviewBlock />
-        <ReactFocusLock>
-          <Modals />
-        </ReactFocusLock>
       </div>
       <button
         className="up-btn"
@@ -30,6 +27,9 @@ function ProductContent() {
           <use xlinkHref="#icon-arrow2" />
         </svg>
       </button>
+      <ReactFocusLock>
+        <ReviewModals />
+      </ReactFocusLock>
     </main>
   );
 }

@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import { renderTestApp } from '../../../../../tests/helpers/render-test-app';
 import PostReviewButton from './post-review-button';
-import { Modal } from '../../../../../const';
+import { PostReviewModal } from '../../../../../const';
 
 const openModal = jest.fn();
 
@@ -15,7 +15,7 @@ describe('Component: PostReviewButton', () => {
   it('should open modal when user click on button', async () => {
     renderTestApp(<PostReviewButton />, {});
 
-    openModal(Modal.Form);
+    openModal(PostReviewModal.Form);
     expect(openModal).toBeCalledTimes(1);
   });
 });
