@@ -19,7 +19,7 @@ function AddSuccessModal({isModalActive, closeModal}: AddSuccessModalProps) {
   const modalCn = cn('modal modal--narrow', { 'is-active': isModalActive });
 
   return (
-    <div className={modalCn}>
+    <div className={modalCn} data-testid="success">
       <div className="modal__wrapper">
         <div
           className="modal__overlay"

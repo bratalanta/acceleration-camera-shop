@@ -10,9 +10,9 @@ import thunk from 'redux-thunk';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 
 const mockCamera = makeFakeCamera();
-const mockCameras = [makeFakeCamera(), mockCamera];
-const mockLikelyCameras = [makeFakeCamera(), mockCamera];
-const mockSimilarCameras = [makeFakeCamera(), mockCamera];
+const mockCameras = [makeFakeCamera(), makeFakeCamera()];
+const mockLikelyCameras = [makeFakeCamera(), makeFakeCamera()];
+const mockSimilarCameras = [makeFakeCamera(), makeFakeCamera()];
 const mockCamerasTotalCount = 15;
 
 const mockState = {
@@ -32,6 +32,9 @@ const mockState = {
   [NameSpace.App]: {
     currentCatalogPath: {
       currentPage: 1
+    },
+    productActiveModal: {
+      activeModal: null
     }
   }
 };
@@ -50,11 +53,19 @@ const store = mockStore({
       currentPage: 1
     },
     currentReviewPage: 2,
-    activeModal: null
+    productActiveModal: {
+      activeModal: null
+    }
   },
   [NameSpace.Reviews]: {
     reviewsTotalCount: 5,
     reviews: [makeFakeReview()]
+  },
+  [NameSpace.Basket]: {
+    basketProducts: [{
+      product: makeFakeCamera(),
+      productCount: 1
+    }]
   }
 });
 

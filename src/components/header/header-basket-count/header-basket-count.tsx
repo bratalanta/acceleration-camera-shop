@@ -5,7 +5,7 @@ function HeaderBasketCount() {
   const basketProductsTotalCount = useAppSelector(basketProductsTotalCountSelector);
 
   return (
-    <span className="header__basket-count">{basketProductsTotalCount}</span>
+    <span className="header__basket-count" data-testid="cnt">{basketProductsTotalCount}</span>
   );
 }
 

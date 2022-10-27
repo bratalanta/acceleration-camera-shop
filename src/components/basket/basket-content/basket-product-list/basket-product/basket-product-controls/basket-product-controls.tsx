@@ -87,7 +87,7 @@ function BasketProductControls({productCount, product}: BasketProductControlsPro
   };
 
   return (
-    <div className="quantity">
+    <div className="quantity" data-testid="controls">
       <button
         className="btn-icon btn-icon--prev"
         aria-label="уменьшить количество товара"

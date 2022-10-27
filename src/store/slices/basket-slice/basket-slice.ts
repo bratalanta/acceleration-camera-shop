@@ -1,11 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../../const';
-import { TCamera } from '../../../types/camera';
-
-type TBasketProduct = {
-  product: TCamera,
-  productCount: number
-}
+import { TBasketProduct } from '../../../types/basket';
 
 type TBasketSliceState = {
   basketProducts: TBasketProduct[],

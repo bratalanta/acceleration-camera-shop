@@ -30,7 +30,7 @@ function BasketRemoveProductModal() {
 
   return (
     <ReactRemoveScroll>
-      <div className="modal is-active">
+      <div className="modal is-active" data-testid="b-remove">
         <div className="modal__wrapper">
           <div
             className="modal__overlay"

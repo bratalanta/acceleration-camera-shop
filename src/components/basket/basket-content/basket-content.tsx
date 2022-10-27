@@ -8,7 +8,7 @@ import BasketSummary from './basket-summary/basket-summary';
 function BasketContent() {
   return (
     <main>
-      <div className="page-content">
+      <div className="page-content" data-testid="b-content">
         <Breadcrumbs isBasket/>
         <section className="basket">
           <div className="container">

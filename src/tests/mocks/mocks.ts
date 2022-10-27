@@ -1,5 +1,7 @@
 import faker from 'faker';
+import { TBasketProduct } from '../../types/basket';
 import { TCamera } from '../../types/camera';
+import { TPostOrderActionPayload } from '../../types/order';
 import { TPromo } from '../../types/promo';
 import { TReview, TReviewPost } from '../../types/review';
 
@@ -51,11 +53,23 @@ const makeFakeReviewPost = (): TReviewPost => ({
   rating: faker.datatype.number(MAX_CAMERA_RATING),
 });
 
+const makeFakeOrder = (): TPostOrderActionPayload => ({
+  camerasIds: [faker.datatype.number(10)],
+  coupon: null
+});
+
+const makeFakeBasketProduct = (): TBasketProduct => ({
+  product: makeFakeCamera(),
+  productCount: 1
+});
+
 window.scrollTo = jest.fn();
 
 export {
   makeFakeCamera,
   makeFakePromo,
   makeFakeReview,
-  makeFakeReviewPost
+  makeFakeReviewPost,
+  makeFakeOrder,
+  makeFakeBasketProduct
 };

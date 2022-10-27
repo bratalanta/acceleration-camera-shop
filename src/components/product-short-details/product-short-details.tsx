@@ -23,7 +23,7 @@ function ProductShortDetails({product, isModal, isBasket}: ProductShortDetailsPr
 
   return (
     <>
-      <div className="basket-item__img">
+      <div className="basket-item__img" data-testid="short">
         <picture>
           <source type="image/webp" srcSet={`/${previewImgWebp}, /${previewImgWebp2x} 2x`} />
           <img src={previewImg} srcSet={`${previewImg2x} 2x`} width={280} height={240} alt={`${category} ${name}`} />

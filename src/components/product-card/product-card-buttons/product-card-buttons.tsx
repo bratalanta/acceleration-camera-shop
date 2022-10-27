@@ -23,7 +23,7 @@ function ProductCardButtons({product: camera}: ProductCardButtonsProps) {
   };
 
   return (
-    <div className="product-card__buttons">
+    <div className="product-card__buttons" data-testid="btn">
       {isProductInBasket === -1 ?
         <button
           className="btn btn--purple product-card__btn"

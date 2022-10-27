@@ -3,7 +3,7 @@ import BasketCoupon from './basket-coupon/basket-coupon';
 
 function BasketSummary() {
   return (
-    <div className="basket__summary">
+    <div className="basket__summary" data-testid="summary">
       <BasketCoupon />
       <BasketOrder />
     </div>

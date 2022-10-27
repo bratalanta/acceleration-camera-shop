@@ -15,7 +15,7 @@ function BasketProduct({product, productCount}: BasketProductProps) {
   const productTotalPrice = product.price * productCount;
 
   return (
-    <li className="basket-item">
+    <li className="basket-item" data-testid="basket-product">
       <ProductShortDetails product={product} isBasket/>
       <BasketProductControls productCount={productCount} product={product}/>
       <div className="basket-item__total-price">

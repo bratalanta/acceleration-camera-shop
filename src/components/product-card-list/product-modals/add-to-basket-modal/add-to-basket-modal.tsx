@@ -27,7 +27,7 @@ function AddToBasketModal({isModalActive, closeModal}: AddToBasketModalProps) {
   const modalCn = cn('modal', { 'is-active': isModalActive });
 
   return (
-    <div className={modalCn}>
+    <div className={modalCn} data-testid="add">
       <div className="modal__wrapper">
         <div
           className="modal__overlay"

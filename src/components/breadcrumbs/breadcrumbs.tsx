@@ -3,7 +3,7 @@ import { BreadcrumbName } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { selectCamera } from '../../store/slices/cameras-slice/selectors';
 import BreadcrumbItem from './breadcrumb-item/breadcrumb-item';
-import CatalogBreadcrumbLink from './catalog-breadcrumb-link/catalog-link';
+import CatalogBreadcrumbLink from './catalog-breadcrumb-link/catalog-breadcrumb-link';
 
 type BreadcrumbsProps = {
   isCatalog?: boolean;
@@ -15,7 +15,7 @@ function Breadcrumbs({isCatalog, isProduct, isBasket}: BreadcrumbsProps) {
   const {name} = useAppSelector(selectCamera);
 
   return (
-    <div className="breadcrumbs" data-testid={'breadcrumbs'}>
+    <div className="breadcrumbs" data-testid='breadcrumbs'>
       <div className="container">
         <ul className="breadcrumbs__list">
           <li className="breadcrumbs__item">

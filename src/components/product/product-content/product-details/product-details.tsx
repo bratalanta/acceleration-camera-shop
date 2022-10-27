@@ -21,8 +21,8 @@ function ProductDetails() {
   } = camera;
 
   const handleAddToBasketBtnClick = () => {
-    dispatch(setProductActiveModal(ProductModal.Add));
     dispatch(setProductActiveModal({
+      activeModal: ProductModal.Add,
       productDetails: camera
     }));
   };

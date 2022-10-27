@@ -22,11 +22,19 @@ const store = mockStore({
       currentPage: 1
     },
     currentReviewPage: 2,
-    activeModal: null
+    productActiveModal: {
+      activeModal: null
+    }
   },
   [NameSpace.Reviews]: {
     reviewsTotalCount: 5,
     reviews: [makeFakeReview()]
+  },
+  [NameSpace.Basket]: {
+    basketProducts: [{
+      product: makeFakeCamera(),
+      productCount: 1
+    }]
   }
 });
 
