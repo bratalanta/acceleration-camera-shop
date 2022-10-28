@@ -28,12 +28,6 @@ function BasketProductControls({productCount, product}: BasketProductControlsPro
 
     if (Number(value) < PurchaseProductCount.MinCount) {
       target.value = '';
-
-      return;
-    }
-
-    if (value === '') {
-      target.value = '';
       dispatch(replaceBasketProductCount({
         product,
         value: PurchaseProductCount.MinCount,
@@ -66,6 +60,10 @@ function BasketProductControls({productCount, product}: BasketProductControlsPro
 
   const handleIncreaseBtnClick = () => {
     if (!inputRef.current) {
+      return;
+    }
+
+    if (Number(inputRef.current.value) === PurchaseProductCount.MaxCount) {
       return;
     }
 

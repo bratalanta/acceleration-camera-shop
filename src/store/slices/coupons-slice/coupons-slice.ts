@@ -21,6 +21,9 @@ const couponsSlice = createSlice({
     setCurrentCoupon: (state, {payload}) => {
       state.currentCoupon = payload;
     },
+    resetCouponPostingStatus: (state) => {
+      state.couponPostingStatus = LoadingStatus.Idle;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -32,6 +35,7 @@ const couponsSlice = createSlice({
         state.couponPostingStatus = LoadingStatus.Pending;
       })
       .addCase(postCouponAction.rejected, (state) => {
+        state.discount = 0;
         state.couponPostingStatus = LoadingStatus.Rejected;
       });
   }
@@ -46,5 +50,6 @@ export type {
 };
 
 export const {
+  resetCouponPostingStatus,
   setCurrentCoupon
 } = couponsSlice.actions;

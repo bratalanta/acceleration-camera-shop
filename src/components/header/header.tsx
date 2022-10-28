@@ -11,7 +11,14 @@ function Header() {
   return (
     <header className="header" id="header" data-testid='header'>
       <div className="container">
-        <Link className="header__logo" to="index.html" aria-label="Переход на главную">
+        <Link
+          className="header__logo"
+          to={{
+            pathname: generatePath(AppRoute.Catalog, {pageNumber: currentPage ? String(currentPage) : DEFAULT_PAGE}),
+            search
+          }}
+          aria-label="Переход на главную"
+        >
           <svg width={100} height={36} aria-hidden="true">
             <use xlinkHref="#icon-logo" />
           </svg>
@@ -29,11 +36,38 @@ function Header() {
                 Каталог
               </Link>
             </li>
-            <li className="main-nav__item"><Link className="main-nav__link" to="#">Гарантии</Link>
+            <li className="main-nav__item">
+              <Link
+                className="main-nav__link"
+                to={{
+                  pathname: generatePath(AppRoute.Catalog, {pageNumber: currentPage ? String(currentPage) : DEFAULT_PAGE}),
+                  search
+                }}
+              >
+                  Гарантии
+              </Link>
             </li>
-            <li className="main-nav__item"><Link className="main-nav__link" to="#">Доставка</Link>
+            <li className="main-nav__item">
+              <Link
+                className="main-nav__link"
+                to={{
+                  pathname: generatePath(AppRoute.Catalog, {pageNumber: currentPage ? String(currentPage) : DEFAULT_PAGE}),
+                  search
+                }}
+              >
+                Доставка
+              </Link>
             </li>
-            <li className="main-nav__item"><Link className="main-nav__link" to="#">О компании</Link>
+            <li className="main-nav__item">
+              <Link
+                className="main-nav__link"
+                to={{
+                  pathname: generatePath(AppRoute.Catalog, {pageNumber: currentPage ? String(currentPage) : DEFAULT_PAGE}),
+                  search
+                }}
+              >
+                О компании
+              </Link>
             </li>
           </ul>
         </nav>

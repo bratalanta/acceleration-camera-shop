@@ -14,6 +14,13 @@ function BasketProduct({product, productCount}: BasketProductProps) {
   const dispatch = useAppDispatch();
   const productTotalPrice = product.price * productCount;
 
+  const handleRemoveBtnCLick = () => {
+    dispatch(setBasketActiveModal({
+      activeModal: BasketModal.Remove,
+      productDetails: product
+    }));
+  };
+
   return (
     <li className="basket-item" data-testid="basket-product">
       <ProductShortDetails product={product} isBasket/>
@@ -25,10 +32,7 @@ function BasketProduct({product, productCount}: BasketProductProps) {
         className="cross-btn"
         type="button"
         aria-label="Удалить товар"
-        onClick={() => dispatch(setBasketActiveModal({
-          activeModal: BasketModal.Remove,
-          productDetails: product
-        }))}
+        onClick={handleRemoveBtnCLick}
       >
         <svg width={10} height={10} aria-hidden="true">
           <use xlinkHref="#icon-close" />

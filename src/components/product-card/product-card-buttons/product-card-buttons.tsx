@@ -13,7 +13,7 @@ function ProductCardButtons({product: camera}: ProductCardButtonsProps) {
   const dispatch = useAppDispatch();
   const basketProducts = useAppSelector(selectBasketProducts);
 
-  const isProductInBasket = basketProducts.findIndex(({product}) => product.id === camera.id);
+  const isProductInBasket = basketProducts.find(({product}) => product.id === camera.id);
 
   const handleBuyBtnClick = () => {
     dispatch(setProductActiveModal({
@@ -24,23 +24,25 @@ function ProductCardButtons({product: camera}: ProductCardButtonsProps) {
 
   return (
     <div className="product-card__buttons" data-testid="btn">
-      {isProductInBasket === -1 ?
-        <button
-          className="btn btn--purple product-card__btn"
-          type="button"
-          onClick={handleBuyBtnClick}
-        >
+      {
+        isProductInBasket ?
+          <Link
+            className="btn btn--purple-border product-card__btn product-card__btn--in-cart"
+            to={AppRoute.Basket}
+          >
+            <svg width={16} height={16} aria-hidden="true">
+              <use xlinkHref="#icon-basket" />
+            </svg>В корзине
+          </Link>
+          :
+          <button
+            className="btn btn--purple product-card__btn"
+            type="button"
+            onClick={handleBuyBtnClick}
+          >
           Купить
-        </button>
-        :
-        <Link
-          className="btn btn--purple-border product-card__btn product-card__btn--in-cart"
-          to={AppRoute.Basket}
-        >
-          <svg width={16} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-basket" />
-          </svg>В корзине
-        </Link>}
+          </button>
+      }
       <Link
         className="btn btn--transparent"
         to={{

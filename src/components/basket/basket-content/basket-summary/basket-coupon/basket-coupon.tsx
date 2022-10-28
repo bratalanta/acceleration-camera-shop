@@ -3,7 +3,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { AvailableCoupon } from '../../../../../const';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks';
 import { postCouponAction } from '../../../../../store/api-actions/coupons-api/coupons-api';
-import { setCurrentCoupon } from '../../../../../store/slices/coupons-slice/coupons-slice';
+import { resetCouponPostingStatus, setCurrentCoupon } from '../../../../../store/slices/coupons-slice/coupons-slice';
 import { couponPostingStatusSelector, selectCurrentCoupon } from '../../../../../store/slices/coupons-slice/selectors';
 
 function BasketCoupon() {
@@ -32,6 +32,10 @@ function BasketCoupon() {
 
     if (value.includes(' ')) {
       return;
+    }
+
+    if (isCouponPostingStatusRejected) {
+      dispatch(resetCouponPostingStatus());
     }
 
     setInputValue(value);
