@@ -25,7 +25,7 @@ const basketDiscountPriceSelector = createSelector(
     basketTotalPriceSelector,
     selectDiscountPercent,
     couponPostingStatusSelector
-  ], (totalPrice, discount) => totalPrice * discount
+  ], (totalPrice, discount) => Math.round(totalPrice * discount)
 );
 
 const basketPriceToPaySelector = createSelector(
