@@ -1,6 +1,6 @@
 # Мой выпускной проект в HTML Academy
 
-Проект выложен на [Vercel](https://vercel.com/bratalanta/acceleration-camera-shop).
+Проект выложен на [Vercel](https://denisov-camera-shop.vercel.app/catalog/page_1/)
 
 ## Дополнительно
 
